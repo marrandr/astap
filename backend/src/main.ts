@@ -18,9 +18,9 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
   const config = new DocumentBuilder()
-  .setTitle("ERP HONEY")
+  .setTitle("Hamarino")
   .setDescription('API complète Hamarino')
-    .setVersion('2.0')
+    .setVersion('1.0')
     .addBearerAuth()
     .build()
     ;
