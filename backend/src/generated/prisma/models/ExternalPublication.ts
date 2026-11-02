@@ -28,13 +28,13 @@ export type AggregateExternalPublication = {
 
 export type ExternalPublicationAvgAggregateOutputType = {
   id: number | null
-  postId: number | null
+  articleId: number | null
   userId: number | null
 }
 
 export type ExternalPublicationSumAggregateOutputType = {
   id: number | null
-  postId: number | null
+  articleId: number | null
   userId: number | null
 }
 
@@ -47,7 +47,7 @@ export type ExternalPublicationMinAggregateOutputType = {
   excerpt: string | null
   externalPostedAt: Date | null
   collectedAt: Date | null
-  postId: number | null
+  articleId: number | null
   userId: number | null
 }
 
@@ -60,7 +60,7 @@ export type ExternalPublicationMaxAggregateOutputType = {
   excerpt: string | null
   externalPostedAt: Date | null
   collectedAt: Date | null
-  postId: number | null
+  articleId: number | null
   userId: number | null
 }
 
@@ -73,7 +73,7 @@ export type ExternalPublicationCountAggregateOutputType = {
   excerpt: number
   externalPostedAt: number
   collectedAt: number
-  postId: number
+  articleId: number
   userId: number
   _all: number
 }
@@ -81,13 +81,13 @@ export type ExternalPublicationCountAggregateOutputType = {
 
 export type ExternalPublicationAvgAggregateInputType = {
   id?: true
-  postId?: true
+  articleId?: true
   userId?: true
 }
 
 export type ExternalPublicationSumAggregateInputType = {
   id?: true
-  postId?: true
+  articleId?: true
   userId?: true
 }
 
@@ -100,7 +100,7 @@ export type ExternalPublicationMinAggregateInputType = {
   excerpt?: true
   externalPostedAt?: true
   collectedAt?: true
-  postId?: true
+  articleId?: true
   userId?: true
 }
 
@@ -113,7 +113,7 @@ export type ExternalPublicationMaxAggregateInputType = {
   excerpt?: true
   externalPostedAt?: true
   collectedAt?: true
-  postId?: true
+  articleId?: true
   userId?: true
 }
 
@@ -126,7 +126,7 @@ export type ExternalPublicationCountAggregateInputType = {
   excerpt?: true
   externalPostedAt?: true
   collectedAt?: true
-  postId?: true
+  articleId?: true
   userId?: true
   _all?: true
 }
@@ -226,7 +226,7 @@ export type ExternalPublicationGroupByOutputType = {
   excerpt: string | null
   externalPostedAt: Date | null
   collectedAt: Date
-  postId: number
+  articleId: number
   userId: number
   _count: ExternalPublicationCountAggregateOutputType | null
   _avg: ExternalPublicationAvgAggregateOutputType | null
@@ -262,9 +262,9 @@ export type ExternalPublicationWhereInput = {
   excerpt?: Prisma.StringNullableFilter<"ExternalPublication"> | string | null
   externalPostedAt?: Prisma.DateTimeNullableFilter<"ExternalPublication"> | Date | string | null
   collectedAt?: Prisma.DateTimeFilter<"ExternalPublication"> | Date | string
-  postId?: Prisma.IntFilter<"ExternalPublication"> | number
+  articleId?: Prisma.IntFilter<"ExternalPublication"> | number
   userId?: Prisma.IntFilter<"ExternalPublication"> | number
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   images?: Prisma.ImageListRelationFilter
   analyses?: Prisma.AiAnalysisListRelationFilter
@@ -279,9 +279,9 @@ export type ExternalPublicationOrderByWithRelationInput = {
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   externalPostedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   collectedAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  post?: Prisma.PostOrderByWithRelationInput
+  article?: Prisma.ArticleOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   images?: Prisma.ImageOrderByRelationAggregateInput
   analyses?: Prisma.AiAnalysisOrderByRelationAggregateInput
@@ -299,9 +299,9 @@ export type ExternalPublicationWhereUniqueInput = Prisma.AtLeast<{
   excerpt?: Prisma.StringNullableFilter<"ExternalPublication"> | string | null
   externalPostedAt?: Prisma.DateTimeNullableFilter<"ExternalPublication"> | Date | string | null
   collectedAt?: Prisma.DateTimeFilter<"ExternalPublication"> | Date | string
-  postId?: Prisma.IntFilter<"ExternalPublication"> | number
+  articleId?: Prisma.IntFilter<"ExternalPublication"> | number
   userId?: Prisma.IntFilter<"ExternalPublication"> | number
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   images?: Prisma.ImageListRelationFilter
   analyses?: Prisma.AiAnalysisListRelationFilter
@@ -316,7 +316,7 @@ export type ExternalPublicationOrderByWithAggregationInput = {
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   externalPostedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   collectedAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.ExternalPublicationCountOrderByAggregateInput
   _avg?: Prisma.ExternalPublicationAvgOrderByAggregateInput
@@ -337,7 +337,7 @@ export type ExternalPublicationScalarWhereWithAggregatesInput = {
   excerpt?: Prisma.StringNullableWithAggregatesFilter<"ExternalPublication"> | string | null
   externalPostedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExternalPublication"> | Date | string | null
   collectedAt?: Prisma.DateTimeWithAggregatesFilter<"ExternalPublication"> | Date | string
-  postId?: Prisma.IntWithAggregatesFilter<"ExternalPublication"> | number
+  articleId?: Prisma.IntWithAggregatesFilter<"ExternalPublication"> | number
   userId?: Prisma.IntWithAggregatesFilter<"ExternalPublication"> | number
 }
 
@@ -349,7 +349,7 @@ export type ExternalPublicationCreateInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutExternalPublicationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutExternalPublicationsInput
   user: Prisma.UserCreateNestedOneWithoutExternalPublicationsInput
   images?: Prisma.ImageCreateNestedManyWithoutPublicationInput
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutPublicationInput
@@ -364,7 +364,7 @@ export type ExternalPublicationUncheckedCreateInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
   userId: number
   images?: Prisma.ImageUncheckedCreateNestedManyWithoutPublicationInput
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutPublicationInput
@@ -378,7 +378,7 @@ export type ExternalPublicationUpdateInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutExternalPublicationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutExternalPublicationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutExternalPublicationsNestedInput
   images?: Prisma.ImageUpdateManyWithoutPublicationNestedInput
   analyses?: Prisma.AiAnalysisUpdateManyWithoutPublicationNestedInput
@@ -393,7 +393,7 @@ export type ExternalPublicationUncheckedUpdateInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.ImageUncheckedUpdateManyWithoutPublicationNestedInput
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutPublicationNestedInput
@@ -408,7 +408,7 @@ export type ExternalPublicationCreateManyInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
   userId: number
 }
 
@@ -431,7 +431,7 @@ export type ExternalPublicationUncheckedUpdateManyInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -454,13 +454,13 @@ export type ExternalPublicationCountOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   externalPostedAt?: Prisma.SortOrder
   collectedAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type ExternalPublicationAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -473,7 +473,7 @@ export type ExternalPublicationMaxOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   externalPostedAt?: Prisma.SortOrder
   collectedAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -486,13 +486,13 @@ export type ExternalPublicationMinOrderByAggregateInput = {
   excerpt?: Prisma.SortOrder
   externalPostedAt?: Prisma.SortOrder
   collectedAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type ExternalPublicationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -543,45 +543,45 @@ export type ExternalPublicationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ExternalPublicationScalarWhereInput | Prisma.ExternalPublicationScalarWhereInput[]
 }
 
-export type ExternalPublicationCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput> | Prisma.ExternalPublicationCreateWithoutPostInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutPostInput | Prisma.ExternalPublicationCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.ExternalPublicationCreateManyPostInputEnvelope
+export type ExternalPublicationCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput> | Prisma.ExternalPublicationCreateWithoutArticleInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput | Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.ExternalPublicationCreateManyArticleInputEnvelope
   connect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
 }
 
-export type ExternalPublicationUncheckedCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput> | Prisma.ExternalPublicationCreateWithoutPostInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutPostInput | Prisma.ExternalPublicationCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.ExternalPublicationCreateManyPostInputEnvelope
+export type ExternalPublicationUncheckedCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput> | Prisma.ExternalPublicationCreateWithoutArticleInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput | Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.ExternalPublicationCreateManyArticleInputEnvelope
   connect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
 }
 
-export type ExternalPublicationUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput> | Prisma.ExternalPublicationCreateWithoutPostInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutPostInput | Prisma.ExternalPublicationCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutPostInput | Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.ExternalPublicationCreateManyPostInputEnvelope
+export type ExternalPublicationUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput> | Prisma.ExternalPublicationCreateWithoutArticleInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput | Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutArticleInput | Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.ExternalPublicationCreateManyArticleInputEnvelope
   set?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   disconnect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   delete?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   connect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
-  update?: Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutPostInput | Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.ExternalPublicationUpdateManyWithWhereWithoutPostInput | Prisma.ExternalPublicationUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutArticleInput | Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.ExternalPublicationUpdateManyWithWhereWithoutArticleInput | Prisma.ExternalPublicationUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.ExternalPublicationScalarWhereInput | Prisma.ExternalPublicationScalarWhereInput[]
 }
 
-export type ExternalPublicationUncheckedUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput> | Prisma.ExternalPublicationCreateWithoutPostInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutPostInput | Prisma.ExternalPublicationCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutPostInput | Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.ExternalPublicationCreateManyPostInputEnvelope
+export type ExternalPublicationUncheckedUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput> | Prisma.ExternalPublicationCreateWithoutArticleInput[] | Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput | Prisma.ExternalPublicationCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutArticleInput | Prisma.ExternalPublicationUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.ExternalPublicationCreateManyArticleInputEnvelope
   set?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   disconnect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   delete?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
   connect?: Prisma.ExternalPublicationWhereUniqueInput | Prisma.ExternalPublicationWhereUniqueInput[]
-  update?: Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutPostInput | Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.ExternalPublicationUpdateManyWithWhereWithoutPostInput | Prisma.ExternalPublicationUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutArticleInput | Prisma.ExternalPublicationUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.ExternalPublicationUpdateManyWithWhereWithoutArticleInput | Prisma.ExternalPublicationUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.ExternalPublicationScalarWhereInput | Prisma.ExternalPublicationScalarWhereInput[]
 }
 
@@ -625,7 +625,7 @@ export type ExternalPublicationCreateWithoutUserInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutExternalPublicationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutExternalPublicationsInput
   images?: Prisma.ImageCreateNestedManyWithoutPublicationInput
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutPublicationInput
 }
@@ -639,7 +639,7 @@ export type ExternalPublicationUncheckedCreateWithoutUserInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
   images?: Prisma.ImageUncheckedCreateNestedManyWithoutPublicationInput
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutPublicationInput
 }
@@ -682,11 +682,11 @@ export type ExternalPublicationScalarWhereInput = {
   excerpt?: Prisma.StringNullableFilter<"ExternalPublication"> | string | null
   externalPostedAt?: Prisma.DateTimeNullableFilter<"ExternalPublication"> | Date | string | null
   collectedAt?: Prisma.DateTimeFilter<"ExternalPublication"> | Date | string
-  postId?: Prisma.IntFilter<"ExternalPublication"> | number
+  articleId?: Prisma.IntFilter<"ExternalPublication"> | number
   userId?: Prisma.IntFilter<"ExternalPublication"> | number
 }
 
-export type ExternalPublicationCreateWithoutPostInput = {
+export type ExternalPublicationCreateWithoutArticleInput = {
   platform: string
   url: string
   authorName?: string | null
@@ -699,7 +699,7 @@ export type ExternalPublicationCreateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutPublicationInput
 }
 
-export type ExternalPublicationUncheckedCreateWithoutPostInput = {
+export type ExternalPublicationUncheckedCreateWithoutArticleInput = {
   id?: number
   platform: string
   url: string
@@ -713,30 +713,30 @@ export type ExternalPublicationUncheckedCreateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutPublicationInput
 }
 
-export type ExternalPublicationCreateOrConnectWithoutPostInput = {
+export type ExternalPublicationCreateOrConnectWithoutArticleInput = {
   where: Prisma.ExternalPublicationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput>
+  create: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput>
 }
 
-export type ExternalPublicationCreateManyPostInputEnvelope = {
-  data: Prisma.ExternalPublicationCreateManyPostInput | Prisma.ExternalPublicationCreateManyPostInput[]
+export type ExternalPublicationCreateManyArticleInputEnvelope = {
+  data: Prisma.ExternalPublicationCreateManyArticleInput | Prisma.ExternalPublicationCreateManyArticleInput[]
   skipDuplicates?: boolean
 }
 
-export type ExternalPublicationUpsertWithWhereUniqueWithoutPostInput = {
+export type ExternalPublicationUpsertWithWhereUniqueWithoutArticleInput = {
   where: Prisma.ExternalPublicationWhereUniqueInput
-  update: Prisma.XOR<Prisma.ExternalPublicationUpdateWithoutPostInput, Prisma.ExternalPublicationUncheckedUpdateWithoutPostInput>
-  create: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutPostInput, Prisma.ExternalPublicationUncheckedCreateWithoutPostInput>
+  update: Prisma.XOR<Prisma.ExternalPublicationUpdateWithoutArticleInput, Prisma.ExternalPublicationUncheckedUpdateWithoutArticleInput>
+  create: Prisma.XOR<Prisma.ExternalPublicationCreateWithoutArticleInput, Prisma.ExternalPublicationUncheckedCreateWithoutArticleInput>
 }
 
-export type ExternalPublicationUpdateWithWhereUniqueWithoutPostInput = {
+export type ExternalPublicationUpdateWithWhereUniqueWithoutArticleInput = {
   where: Prisma.ExternalPublicationWhereUniqueInput
-  data: Prisma.XOR<Prisma.ExternalPublicationUpdateWithoutPostInput, Prisma.ExternalPublicationUncheckedUpdateWithoutPostInput>
+  data: Prisma.XOR<Prisma.ExternalPublicationUpdateWithoutArticleInput, Prisma.ExternalPublicationUncheckedUpdateWithoutArticleInput>
 }
 
-export type ExternalPublicationUpdateManyWithWhereWithoutPostInput = {
+export type ExternalPublicationUpdateManyWithWhereWithoutArticleInput = {
   where: Prisma.ExternalPublicationScalarWhereInput
-  data: Prisma.XOR<Prisma.ExternalPublicationUpdateManyMutationInput, Prisma.ExternalPublicationUncheckedUpdateManyWithoutPostInput>
+  data: Prisma.XOR<Prisma.ExternalPublicationUpdateManyMutationInput, Prisma.ExternalPublicationUncheckedUpdateManyWithoutArticleInput>
 }
 
 export type ExternalPublicationCreateWithoutImagesInput = {
@@ -747,7 +747,7 @@ export type ExternalPublicationCreateWithoutImagesInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutExternalPublicationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutExternalPublicationsInput
   user: Prisma.UserCreateNestedOneWithoutExternalPublicationsInput
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutPublicationInput
 }
@@ -761,7 +761,7 @@ export type ExternalPublicationUncheckedCreateWithoutImagesInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
   userId: number
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutPublicationInput
 }
@@ -790,7 +790,7 @@ export type ExternalPublicationUpdateWithoutImagesInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutExternalPublicationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutExternalPublicationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutExternalPublicationsNestedInput
   analyses?: Prisma.AiAnalysisUpdateManyWithoutPublicationNestedInput
 }
@@ -804,7 +804,7 @@ export type ExternalPublicationUncheckedUpdateWithoutImagesInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutPublicationNestedInput
 }
@@ -817,7 +817,7 @@ export type ExternalPublicationCreateWithoutAnalysesInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutExternalPublicationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutExternalPublicationsInput
   user: Prisma.UserCreateNestedOneWithoutExternalPublicationsInput
   images?: Prisma.ImageCreateNestedManyWithoutPublicationInput
 }
@@ -831,7 +831,7 @@ export type ExternalPublicationUncheckedCreateWithoutAnalysesInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
   userId: number
   images?: Prisma.ImageUncheckedCreateNestedManyWithoutPublicationInput
 }
@@ -860,7 +860,7 @@ export type ExternalPublicationUpdateWithoutAnalysesInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutExternalPublicationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutExternalPublicationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutExternalPublicationsNestedInput
   images?: Prisma.ImageUpdateManyWithoutPublicationNestedInput
 }
@@ -874,7 +874,7 @@ export type ExternalPublicationUncheckedUpdateWithoutAnalysesInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.ImageUncheckedUpdateManyWithoutPublicationNestedInput
 }
@@ -888,7 +888,7 @@ export type ExternalPublicationCreateManyUserInput = {
   excerpt?: string | null
   externalPostedAt?: Date | string | null
   collectedAt?: Date | string
-  postId: number
+  articleId: number
 }
 
 export type ExternalPublicationUpdateWithoutUserInput = {
@@ -899,7 +899,7 @@ export type ExternalPublicationUpdateWithoutUserInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutExternalPublicationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutExternalPublicationsNestedInput
   images?: Prisma.ImageUpdateManyWithoutPublicationNestedInput
   analyses?: Prisma.AiAnalysisUpdateManyWithoutPublicationNestedInput
 }
@@ -913,7 +913,7 @@ export type ExternalPublicationUncheckedUpdateWithoutUserInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   images?: Prisma.ImageUncheckedUpdateManyWithoutPublicationNestedInput
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutPublicationNestedInput
 }
@@ -927,10 +927,10 @@ export type ExternalPublicationUncheckedUpdateManyWithoutUserInput = {
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalPostedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   collectedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type ExternalPublicationCreateManyPostInput = {
+export type ExternalPublicationCreateManyArticleInput = {
   id?: number
   platform: string
   url: string
@@ -942,7 +942,7 @@ export type ExternalPublicationCreateManyPostInput = {
   userId: number
 }
 
-export type ExternalPublicationUpdateWithoutPostInput = {
+export type ExternalPublicationUpdateWithoutArticleInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
   authorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -955,7 +955,7 @@ export type ExternalPublicationUpdateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUpdateManyWithoutPublicationNestedInput
 }
 
-export type ExternalPublicationUncheckedUpdateWithoutPostInput = {
+export type ExternalPublicationUncheckedUpdateWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -969,7 +969,7 @@ export type ExternalPublicationUncheckedUpdateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutPublicationNestedInput
 }
 
-export type ExternalPublicationUncheckedUpdateManyWithoutPostInput = {
+export type ExternalPublicationUncheckedUpdateManyWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1030,9 +1030,9 @@ export type ExternalPublicationSelect<ExtArgs extends runtime.Types.Extensions.I
   excerpt?: boolean
   externalPostedAt?: boolean
   collectedAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   userId?: boolean
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   images?: boolean | Prisma.ExternalPublication$imagesArgs<ExtArgs>
   analyses?: boolean | Prisma.ExternalPublication$analysesArgs<ExtArgs>
@@ -1048,9 +1048,9 @@ export type ExternalPublicationSelectCreateManyAndReturn<ExtArgs extends runtime
   excerpt?: boolean
   externalPostedAt?: boolean
   collectedAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   userId?: boolean
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["externalPublication"]>
 
@@ -1063,9 +1063,9 @@ export type ExternalPublicationSelectUpdateManyAndReturn<ExtArgs extends runtime
   excerpt?: boolean
   externalPostedAt?: boolean
   collectedAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   userId?: boolean
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["externalPublication"]>
 
@@ -1078,31 +1078,31 @@ export type ExternalPublicationSelectScalar = {
   excerpt?: boolean
   externalPostedAt?: boolean
   collectedAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   userId?: boolean
 }
 
-export type ExternalPublicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "platform" | "url" | "authorName" | "authorType" | "excerpt" | "externalPostedAt" | "collectedAt" | "postId" | "userId", ExtArgs["result"]["externalPublication"]>
+export type ExternalPublicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "platform" | "url" | "authorName" | "authorType" | "excerpt" | "externalPostedAt" | "collectedAt" | "articleId" | "userId", ExtArgs["result"]["externalPublication"]>
 export type ExternalPublicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   images?: boolean | Prisma.ExternalPublication$imagesArgs<ExtArgs>
   analyses?: boolean | Prisma.ExternalPublication$analysesArgs<ExtArgs>
   _count?: boolean | Prisma.ExternalPublicationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ExternalPublicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ExternalPublicationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ExternalPublicationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ExternalPublication"
   objects: {
-    post: Prisma.$PostPayload<ExtArgs>
+    article: Prisma.$ArticlePayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
     images: Prisma.$ImagePayload<ExtArgs>[]
     analyses: Prisma.$AiAnalysisPayload<ExtArgs>[]
@@ -1116,7 +1116,7 @@ export type $ExternalPublicationPayload<ExtArgs extends runtime.Types.Extensions
     excerpt: string | null
     externalPostedAt: Date | null
     collectedAt: Date
-    postId: number
+    articleId: number
     userId: number
   }, ExtArgs["result"]["externalPublication"]>
   composites: {}
@@ -1512,7 +1512,7 @@ readonly fields: ExternalPublicationFieldRefs;
  */
 export interface Prisma__ExternalPublicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  post<T extends Prisma.PostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PostDefaultArgs<ExtArgs>>): Prisma.Prisma__PostClient<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  article<T extends Prisma.ArticleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ArticleDefaultArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   images<T extends Prisma.ExternalPublication$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExternalPublication$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   analyses<T extends Prisma.ExternalPublication$analysesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExternalPublication$analysesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiAnalysisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1553,7 +1553,7 @@ export interface ExternalPublicationFieldRefs {
   readonly excerpt: Prisma.FieldRef<"ExternalPublication", 'String'>
   readonly externalPostedAt: Prisma.FieldRef<"ExternalPublication", 'DateTime'>
   readonly collectedAt: Prisma.FieldRef<"ExternalPublication", 'DateTime'>
-  readonly postId: Prisma.FieldRef<"ExternalPublication", 'Int'>
+  readonly articleId: Prisma.FieldRef<"ExternalPublication", 'Int'>
   readonly userId: Prisma.FieldRef<"ExternalPublication", 'Int'>
 }
     

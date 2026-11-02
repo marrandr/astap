@@ -28,13 +28,13 @@ export type AggregateImage = {
 
 export type ImageAvgAggregateOutputType = {
   id: number | null
-  postId: number | null
+  articleId: number | null
   publicationId: number | null
 }
 
 export type ImageSumAggregateOutputType = {
   id: number | null
-  postId: number | null
+  articleId: number | null
   publicationId: number | null
 }
 
@@ -43,7 +43,7 @@ export type ImageMinAggregateOutputType = {
   fileUrl: string | null
   perceptualHash: string | null
   firstSeenAt: Date | null
-  postId: number | null
+  articleId: number | null
   publicationId: number | null
 }
 
@@ -52,7 +52,7 @@ export type ImageMaxAggregateOutputType = {
   fileUrl: string | null
   perceptualHash: string | null
   firstSeenAt: Date | null
-  postId: number | null
+  articleId: number | null
   publicationId: number | null
 }
 
@@ -61,7 +61,7 @@ export type ImageCountAggregateOutputType = {
   fileUrl: number
   perceptualHash: number
   firstSeenAt: number
-  postId: number
+  articleId: number
   publicationId: number
   _all: number
 }
@@ -69,13 +69,13 @@ export type ImageCountAggregateOutputType = {
 
 export type ImageAvgAggregateInputType = {
   id?: true
-  postId?: true
+  articleId?: true
   publicationId?: true
 }
 
 export type ImageSumAggregateInputType = {
   id?: true
-  postId?: true
+  articleId?: true
   publicationId?: true
 }
 
@@ -84,7 +84,7 @@ export type ImageMinAggregateInputType = {
   fileUrl?: true
   perceptualHash?: true
   firstSeenAt?: true
-  postId?: true
+  articleId?: true
   publicationId?: true
 }
 
@@ -93,7 +93,7 @@ export type ImageMaxAggregateInputType = {
   fileUrl?: true
   perceptualHash?: true
   firstSeenAt?: true
-  postId?: true
+  articleId?: true
   publicationId?: true
 }
 
@@ -102,7 +102,7 @@ export type ImageCountAggregateInputType = {
   fileUrl?: true
   perceptualHash?: true
   firstSeenAt?: true
-  postId?: true
+  articleId?: true
   publicationId?: true
   _all?: true
 }
@@ -198,7 +198,7 @@ export type ImageGroupByOutputType = {
   fileUrl: string
   perceptualHash: string | null
   firstSeenAt: Date | null
-  postId: number | null
+  articleId: number | null
   publicationId: number | null
   _count: ImageCountAggregateOutputType | null
   _avg: ImageAvgAggregateOutputType | null
@@ -230,9 +230,9 @@ export type ImageWhereInput = {
   fileUrl?: Prisma.StringFilter<"Image"> | string
   perceptualHash?: Prisma.StringNullableFilter<"Image"> | string | null
   firstSeenAt?: Prisma.DateTimeNullableFilter<"Image"> | Date | string | null
-  postId?: Prisma.IntNullableFilter<"Image"> | number | null
+  articleId?: Prisma.IntNullableFilter<"Image"> | number | null
   publicationId?: Prisma.IntNullableFilter<"Image"> | number | null
-  post?: Prisma.XOR<Prisma.PostNullableScalarRelationFilter, Prisma.PostWhereInput> | null
+  article?: Prisma.XOR<Prisma.ArticleNullableScalarRelationFilter, Prisma.ArticleWhereInput> | null
   publication?: Prisma.XOR<Prisma.ExternalPublicationNullableScalarRelationFilter, Prisma.ExternalPublicationWhereInput> | null
   analyses?: Prisma.AiAnalysisListRelationFilter
 }
@@ -242,9 +242,9 @@ export type ImageOrderByWithRelationInput = {
   fileUrl?: Prisma.SortOrder
   perceptualHash?: Prisma.SortOrderInput | Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  postId?: Prisma.SortOrderInput | Prisma.SortOrder
+  articleId?: Prisma.SortOrderInput | Prisma.SortOrder
   publicationId?: Prisma.SortOrderInput | Prisma.SortOrder
-  post?: Prisma.PostOrderByWithRelationInput
+  article?: Prisma.ArticleOrderByWithRelationInput
   publication?: Prisma.ExternalPublicationOrderByWithRelationInput
   analyses?: Prisma.AiAnalysisOrderByRelationAggregateInput
 }
@@ -257,9 +257,9 @@ export type ImageWhereUniqueInput = Prisma.AtLeast<{
   fileUrl?: Prisma.StringFilter<"Image"> | string
   perceptualHash?: Prisma.StringNullableFilter<"Image"> | string | null
   firstSeenAt?: Prisma.DateTimeNullableFilter<"Image"> | Date | string | null
-  postId?: Prisma.IntNullableFilter<"Image"> | number | null
+  articleId?: Prisma.IntNullableFilter<"Image"> | number | null
   publicationId?: Prisma.IntNullableFilter<"Image"> | number | null
-  post?: Prisma.XOR<Prisma.PostNullableScalarRelationFilter, Prisma.PostWhereInput> | null
+  article?: Prisma.XOR<Prisma.ArticleNullableScalarRelationFilter, Prisma.ArticleWhereInput> | null
   publication?: Prisma.XOR<Prisma.ExternalPublicationNullableScalarRelationFilter, Prisma.ExternalPublicationWhereInput> | null
   analyses?: Prisma.AiAnalysisListRelationFilter
 }, "id">
@@ -269,7 +269,7 @@ export type ImageOrderByWithAggregationInput = {
   fileUrl?: Prisma.SortOrder
   perceptualHash?: Prisma.SortOrderInput | Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  postId?: Prisma.SortOrderInput | Prisma.SortOrder
+  articleId?: Prisma.SortOrderInput | Prisma.SortOrder
   publicationId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ImageCountOrderByAggregateInput
   _avg?: Prisma.ImageAvgOrderByAggregateInput
@@ -286,7 +286,7 @@ export type ImageScalarWhereWithAggregatesInput = {
   fileUrl?: Prisma.StringWithAggregatesFilter<"Image"> | string
   perceptualHash?: Prisma.StringNullableWithAggregatesFilter<"Image"> | string | null
   firstSeenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Image"> | Date | string | null
-  postId?: Prisma.IntNullableWithAggregatesFilter<"Image"> | number | null
+  articleId?: Prisma.IntNullableWithAggregatesFilter<"Image"> | number | null
   publicationId?: Prisma.IntNullableWithAggregatesFilter<"Image"> | number | null
 }
 
@@ -294,7 +294,7 @@ export type ImageCreateInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  post?: Prisma.PostCreateNestedOneWithoutImagesInput
+  article?: Prisma.ArticleCreateNestedOneWithoutImagesInput
   publication?: Prisma.ExternalPublicationCreateNestedOneWithoutImagesInput
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutImageInput
 }
@@ -304,7 +304,7 @@ export type ImageUncheckedCreateInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  postId?: number | null
+  articleId?: number | null
   publicationId?: number | null
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutImageInput
 }
@@ -313,7 +313,7 @@ export type ImageUpdateInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  post?: Prisma.PostUpdateOneWithoutImagesNestedInput
+  article?: Prisma.ArticleUpdateOneWithoutImagesNestedInput
   publication?: Prisma.ExternalPublicationUpdateOneWithoutImagesNestedInput
   analyses?: Prisma.AiAnalysisUpdateManyWithoutImageNestedInput
 }
@@ -323,7 +323,7 @@ export type ImageUncheckedUpdateInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  articleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   publicationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutImageNestedInput
 }
@@ -333,7 +333,7 @@ export type ImageCreateManyInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  postId?: number | null
+  articleId?: number | null
   publicationId?: number | null
 }
 
@@ -348,7 +348,7 @@ export type ImageUncheckedUpdateManyInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  articleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   publicationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -367,13 +367,13 @@ export type ImageCountOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   perceptualHash?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   publicationId?: Prisma.SortOrder
 }
 
 export type ImageAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   publicationId?: Prisma.SortOrder
 }
 
@@ -382,7 +382,7 @@ export type ImageMaxOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   perceptualHash?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   publicationId?: Prisma.SortOrder
 }
 
@@ -391,13 +391,13 @@ export type ImageMinOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   perceptualHash?: Prisma.SortOrder
   firstSeenAt?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   publicationId?: Prisma.SortOrder
 }
 
 export type ImageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   publicationId?: Prisma.SortOrder
 }
 
@@ -406,45 +406,45 @@ export type ImageNullableScalarRelationFilter = {
   isNot?: Prisma.ImageWhereInput | null
 }
 
-export type ImageCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput> | Prisma.ImageCreateWithoutPostInput[] | Prisma.ImageUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutPostInput | Prisma.ImageCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.ImageCreateManyPostInputEnvelope
+export type ImageCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput> | Prisma.ImageCreateWithoutArticleInput[] | Prisma.ImageUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutArticleInput | Prisma.ImageCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.ImageCreateManyArticleInputEnvelope
   connect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
 }
 
-export type ImageUncheckedCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput> | Prisma.ImageCreateWithoutPostInput[] | Prisma.ImageUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutPostInput | Prisma.ImageCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.ImageCreateManyPostInputEnvelope
+export type ImageUncheckedCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput> | Prisma.ImageCreateWithoutArticleInput[] | Prisma.ImageUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutArticleInput | Prisma.ImageCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.ImageCreateManyArticleInputEnvelope
   connect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
 }
 
-export type ImageUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput> | Prisma.ImageCreateWithoutPostInput[] | Prisma.ImageUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutPostInput | Prisma.ImageCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.ImageUpsertWithWhereUniqueWithoutPostInput | Prisma.ImageUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.ImageCreateManyPostInputEnvelope
+export type ImageUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput> | Prisma.ImageCreateWithoutArticleInput[] | Prisma.ImageUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutArticleInput | Prisma.ImageCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.ImageUpsertWithWhereUniqueWithoutArticleInput | Prisma.ImageUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.ImageCreateManyArticleInputEnvelope
   set?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   disconnect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   delete?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   connect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
-  update?: Prisma.ImageUpdateWithWhereUniqueWithoutPostInput | Prisma.ImageUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.ImageUpdateManyWithWhereWithoutPostInput | Prisma.ImageUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.ImageUpdateWithWhereUniqueWithoutArticleInput | Prisma.ImageUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.ImageUpdateManyWithWhereWithoutArticleInput | Prisma.ImageUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.ImageScalarWhereInput | Prisma.ImageScalarWhereInput[]
 }
 
-export type ImageUncheckedUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput> | Prisma.ImageCreateWithoutPostInput[] | Prisma.ImageUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutPostInput | Prisma.ImageCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.ImageUpsertWithWhereUniqueWithoutPostInput | Prisma.ImageUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.ImageCreateManyPostInputEnvelope
+export type ImageUncheckedUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput> | Prisma.ImageCreateWithoutArticleInput[] | Prisma.ImageUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.ImageCreateOrConnectWithoutArticleInput | Prisma.ImageCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.ImageUpsertWithWhereUniqueWithoutArticleInput | Prisma.ImageUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.ImageCreateManyArticleInputEnvelope
   set?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   disconnect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   delete?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
   connect?: Prisma.ImageWhereUniqueInput | Prisma.ImageWhereUniqueInput[]
-  update?: Prisma.ImageUpdateWithWhereUniqueWithoutPostInput | Prisma.ImageUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.ImageUpdateManyWithWhereWithoutPostInput | Prisma.ImageUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.ImageUpdateWithWhereUniqueWithoutArticleInput | Prisma.ImageUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.ImageUpdateManyWithWhereWithoutArticleInput | Prisma.ImageUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.ImageScalarWhereInput | Prisma.ImageScalarWhereInput[]
 }
 
@@ -506,7 +506,7 @@ export type ImageUpdateOneWithoutAnalysesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ImageUpdateToOneWithWhereWithoutAnalysesInput, Prisma.ImageUpdateWithoutAnalysesInput>, Prisma.ImageUncheckedUpdateWithoutAnalysesInput>
 }
 
-export type ImageCreateWithoutPostInput = {
+export type ImageCreateWithoutArticleInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
@@ -514,7 +514,7 @@ export type ImageCreateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutImageInput
 }
 
-export type ImageUncheckedCreateWithoutPostInput = {
+export type ImageUncheckedCreateWithoutArticleInput = {
   id?: number
   fileUrl: string
   perceptualHash?: string | null
@@ -523,30 +523,30 @@ export type ImageUncheckedCreateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutImageInput
 }
 
-export type ImageCreateOrConnectWithoutPostInput = {
+export type ImageCreateOrConnectWithoutArticleInput = {
   where: Prisma.ImageWhereUniqueInput
-  create: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput>
+  create: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput>
 }
 
-export type ImageCreateManyPostInputEnvelope = {
-  data: Prisma.ImageCreateManyPostInput | Prisma.ImageCreateManyPostInput[]
+export type ImageCreateManyArticleInputEnvelope = {
+  data: Prisma.ImageCreateManyArticleInput | Prisma.ImageCreateManyArticleInput[]
   skipDuplicates?: boolean
 }
 
-export type ImageUpsertWithWhereUniqueWithoutPostInput = {
+export type ImageUpsertWithWhereUniqueWithoutArticleInput = {
   where: Prisma.ImageWhereUniqueInput
-  update: Prisma.XOR<Prisma.ImageUpdateWithoutPostInput, Prisma.ImageUncheckedUpdateWithoutPostInput>
-  create: Prisma.XOR<Prisma.ImageCreateWithoutPostInput, Prisma.ImageUncheckedCreateWithoutPostInput>
+  update: Prisma.XOR<Prisma.ImageUpdateWithoutArticleInput, Prisma.ImageUncheckedUpdateWithoutArticleInput>
+  create: Prisma.XOR<Prisma.ImageCreateWithoutArticleInput, Prisma.ImageUncheckedCreateWithoutArticleInput>
 }
 
-export type ImageUpdateWithWhereUniqueWithoutPostInput = {
+export type ImageUpdateWithWhereUniqueWithoutArticleInput = {
   where: Prisma.ImageWhereUniqueInput
-  data: Prisma.XOR<Prisma.ImageUpdateWithoutPostInput, Prisma.ImageUncheckedUpdateWithoutPostInput>
+  data: Prisma.XOR<Prisma.ImageUpdateWithoutArticleInput, Prisma.ImageUncheckedUpdateWithoutArticleInput>
 }
 
-export type ImageUpdateManyWithWhereWithoutPostInput = {
+export type ImageUpdateManyWithWhereWithoutArticleInput = {
   where: Prisma.ImageScalarWhereInput
-  data: Prisma.XOR<Prisma.ImageUpdateManyMutationInput, Prisma.ImageUncheckedUpdateManyWithoutPostInput>
+  data: Prisma.XOR<Prisma.ImageUpdateManyMutationInput, Prisma.ImageUncheckedUpdateManyWithoutArticleInput>
 }
 
 export type ImageScalarWhereInput = {
@@ -557,7 +557,7 @@ export type ImageScalarWhereInput = {
   fileUrl?: Prisma.StringFilter<"Image"> | string
   perceptualHash?: Prisma.StringNullableFilter<"Image"> | string | null
   firstSeenAt?: Prisma.DateTimeNullableFilter<"Image"> | Date | string | null
-  postId?: Prisma.IntNullableFilter<"Image"> | number | null
+  articleId?: Prisma.IntNullableFilter<"Image"> | number | null
   publicationId?: Prisma.IntNullableFilter<"Image"> | number | null
 }
 
@@ -565,7 +565,7 @@ export type ImageCreateWithoutPublicationInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  post?: Prisma.PostCreateNestedOneWithoutImagesInput
+  article?: Prisma.ArticleCreateNestedOneWithoutImagesInput
   analyses?: Prisma.AiAnalysisCreateNestedManyWithoutImageInput
 }
 
@@ -574,7 +574,7 @@ export type ImageUncheckedCreateWithoutPublicationInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  postId?: number | null
+  articleId?: number | null
   analyses?: Prisma.AiAnalysisUncheckedCreateNestedManyWithoutImageInput
 }
 
@@ -608,7 +608,7 @@ export type ImageCreateWithoutAnalysesInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  post?: Prisma.PostCreateNestedOneWithoutImagesInput
+  article?: Prisma.ArticleCreateNestedOneWithoutImagesInput
   publication?: Prisma.ExternalPublicationCreateNestedOneWithoutImagesInput
 }
 
@@ -617,7 +617,7 @@ export type ImageUncheckedCreateWithoutAnalysesInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  postId?: number | null
+  articleId?: number | null
   publicationId?: number | null
 }
 
@@ -641,7 +641,7 @@ export type ImageUpdateWithoutAnalysesInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  post?: Prisma.PostUpdateOneWithoutImagesNestedInput
+  article?: Prisma.ArticleUpdateOneWithoutImagesNestedInput
   publication?: Prisma.ExternalPublicationUpdateOneWithoutImagesNestedInput
 }
 
@@ -650,11 +650,11 @@ export type ImageUncheckedUpdateWithoutAnalysesInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  articleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   publicationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type ImageCreateManyPostInput = {
+export type ImageCreateManyArticleInput = {
   id?: number
   fileUrl: string
   perceptualHash?: string | null
@@ -662,7 +662,7 @@ export type ImageCreateManyPostInput = {
   publicationId?: number | null
 }
 
-export type ImageUpdateWithoutPostInput = {
+export type ImageUpdateWithoutArticleInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -670,7 +670,7 @@ export type ImageUpdateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUpdateManyWithoutImageNestedInput
 }
 
-export type ImageUncheckedUpdateWithoutPostInput = {
+export type ImageUncheckedUpdateWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -679,7 +679,7 @@ export type ImageUncheckedUpdateWithoutPostInput = {
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutImageNestedInput
 }
 
-export type ImageUncheckedUpdateManyWithoutPostInput = {
+export type ImageUncheckedUpdateManyWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -692,14 +692,14 @@ export type ImageCreateManyPublicationInput = {
   fileUrl: string
   perceptualHash?: string | null
   firstSeenAt?: Date | string | null
-  postId?: number | null
+  articleId?: number | null
 }
 
 export type ImageUpdateWithoutPublicationInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  post?: Prisma.PostUpdateOneWithoutImagesNestedInput
+  article?: Prisma.ArticleUpdateOneWithoutImagesNestedInput
   analyses?: Prisma.AiAnalysisUpdateManyWithoutImageNestedInput
 }
 
@@ -708,7 +708,7 @@ export type ImageUncheckedUpdateWithoutPublicationInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  articleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   analyses?: Prisma.AiAnalysisUncheckedUpdateManyWithoutImageNestedInput
 }
 
@@ -717,7 +717,7 @@ export type ImageUncheckedUpdateManyWithoutPublicationInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   perceptualHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   firstSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  postId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  articleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -756,9 +756,9 @@ export type ImageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   fileUrl?: boolean
   perceptualHash?: boolean
   firstSeenAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   publicationId?: boolean
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
   analyses?: boolean | Prisma.Image$analysesArgs<ExtArgs>
   _count?: boolean | Prisma.ImageCountOutputTypeDefaultArgs<ExtArgs>
@@ -769,9 +769,9 @@ export type ImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   fileUrl?: boolean
   perceptualHash?: boolean
   firstSeenAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   publicationId?: boolean
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
 }, ExtArgs["result"]["image"]>
 
@@ -780,9 +780,9 @@ export type ImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   fileUrl?: boolean
   perceptualHash?: boolean
   firstSeenAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   publicationId?: boolean
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
 }, ExtArgs["result"]["image"]>
 
@@ -791,30 +791,30 @@ export type ImageSelectScalar = {
   fileUrl?: boolean
   perceptualHash?: boolean
   firstSeenAt?: boolean
-  postId?: boolean
+  articleId?: boolean
   publicationId?: boolean
 }
 
-export type ImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileUrl" | "perceptualHash" | "firstSeenAt" | "postId" | "publicationId", ExtArgs["result"]["image"]>
+export type ImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileUrl" | "perceptualHash" | "firstSeenAt" | "articleId" | "publicationId", ExtArgs["result"]["image"]>
 export type ImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
   analyses?: boolean | Prisma.Image$analysesArgs<ExtArgs>
   _count?: boolean | Prisma.ImageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
 }
 export type ImageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  post?: boolean | Prisma.Image$postArgs<ExtArgs>
+  article?: boolean | Prisma.Image$articleArgs<ExtArgs>
   publication?: boolean | Prisma.Image$publicationArgs<ExtArgs>
 }
 
 export type $ImagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Image"
   objects: {
-    post: Prisma.$PostPayload<ExtArgs> | null
+    article: Prisma.$ArticlePayload<ExtArgs> | null
     publication: Prisma.$ExternalPublicationPayload<ExtArgs> | null
     analyses: Prisma.$AiAnalysisPayload<ExtArgs>[]
   }
@@ -823,7 +823,7 @@ export type $ImagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     fileUrl: string
     perceptualHash: string | null
     firstSeenAt: Date | null
-    postId: number | null
+    articleId: number | null
     publicationId: number | null
   }, ExtArgs["result"]["image"]>
   composites: {}
@@ -1219,7 +1219,7 @@ readonly fields: ImageFieldRefs;
  */
 export interface Prisma__ImageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  post<T extends Prisma.Image$postArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Image$postArgs<ExtArgs>>): Prisma.Prisma__PostClient<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  article<T extends Prisma.Image$articleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Image$articleArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   publication<T extends Prisma.Image$publicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Image$publicationArgs<ExtArgs>>): Prisma.Prisma__ExternalPublicationClient<runtime.Types.Result.GetResult<Prisma.$ExternalPublicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   analyses<T extends Prisma.Image$analysesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Image$analysesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiAnalysisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1255,7 +1255,7 @@ export interface ImageFieldRefs {
   readonly fileUrl: Prisma.FieldRef<"Image", 'String'>
   readonly perceptualHash: Prisma.FieldRef<"Image", 'String'>
   readonly firstSeenAt: Prisma.FieldRef<"Image", 'DateTime'>
-  readonly postId: Prisma.FieldRef<"Image", 'Int'>
+  readonly articleId: Prisma.FieldRef<"Image", 'Int'>
   readonly publicationId: Prisma.FieldRef<"Image", 'Int'>
 }
     
@@ -1658,22 +1658,22 @@ export type ImageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Image.post
+ * Image.article
  */
-export type Image$postArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Image$articleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Post
+   * Select specific fields to fetch from the Article
    */
-  select?: Prisma.PostSelect<ExtArgs> | null
+  select?: Prisma.ArticleSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Post
+   * Omit specific fields from the Article
    */
-  omit?: Prisma.PostOmit<ExtArgs> | null
+  omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PostInclude<ExtArgs> | null
-  where?: Prisma.PostWhereInput
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  where?: Prisma.ArticleWhereInput
 }
 
 /**

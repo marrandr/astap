@@ -29,13 +29,13 @@ export type AggregateVerification = {
 export type VerificationAvgAggregateOutputType = {
   id: number | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
 }
 
 export type VerificationSumAggregateOutputType = {
   id: number | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
 }
 
 export type VerificationMinAggregateOutputType = {
@@ -44,7 +44,7 @@ export type VerificationMinAggregateOutputType = {
   justification: string | null
   verifiedAt: Date | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
 }
 
 export type VerificationMaxAggregateOutputType = {
@@ -53,7 +53,7 @@ export type VerificationMaxAggregateOutputType = {
   justification: string | null
   verifiedAt: Date | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
 }
 
 export type VerificationCountAggregateOutputType = {
@@ -62,7 +62,7 @@ export type VerificationCountAggregateOutputType = {
   justification: number
   verifiedAt: number
   userId: number
-  postId: number
+  articleId: number
   _all: number
 }
 
@@ -70,13 +70,13 @@ export type VerificationCountAggregateOutputType = {
 export type VerificationAvgAggregateInputType = {
   id?: true
   userId?: true
-  postId?: true
+  articleId?: true
 }
 
 export type VerificationSumAggregateInputType = {
   id?: true
   userId?: true
-  postId?: true
+  articleId?: true
 }
 
 export type VerificationMinAggregateInputType = {
@@ -85,7 +85,7 @@ export type VerificationMinAggregateInputType = {
   justification?: true
   verifiedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
 }
 
 export type VerificationMaxAggregateInputType = {
@@ -94,7 +94,7 @@ export type VerificationMaxAggregateInputType = {
   justification?: true
   verifiedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
 }
 
 export type VerificationCountAggregateInputType = {
@@ -103,7 +103,7 @@ export type VerificationCountAggregateInputType = {
   justification?: true
   verifiedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
   _all?: true
 }
 
@@ -199,7 +199,7 @@ export type VerificationGroupByOutputType = {
   justification: string
   verifiedAt: Date
   userId: number
-  postId: number
+  articleId: number
   _count: VerificationCountAggregateOutputType | null
   _avg: VerificationAvgAggregateOutputType | null
   _sum: VerificationSumAggregateOutputType | null
@@ -231,9 +231,9 @@ export type VerificationWhereInput = {
   justification?: Prisma.StringFilter<"Verification"> | string
   verifiedAt?: Prisma.DateTimeFilter<"Verification"> | Date | string
   userId?: Prisma.IntFilter<"Verification"> | number
-  postId?: Prisma.IntFilter<"Verification"> | number
+  articleId?: Prisma.IntFilter<"Verification"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   evidences?: Prisma.EvidenceListRelationFilter
 }
 
@@ -243,15 +243,15 @@ export type VerificationOrderByWithRelationInput = {
   justification?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  post?: Prisma.PostOrderByWithRelationInput
+  article?: Prisma.ArticleOrderByWithRelationInput
   evidences?: Prisma.EvidenceOrderByRelationAggregateInput
 }
 
 export type VerificationWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userId_postId?: Prisma.VerificationUserIdPostIdCompoundUniqueInput
+  userId_articleId?: Prisma.VerificationUserIdArticleIdCompoundUniqueInput
   AND?: Prisma.VerificationWhereInput | Prisma.VerificationWhereInput[]
   OR?: Prisma.VerificationWhereInput[]
   NOT?: Prisma.VerificationWhereInput | Prisma.VerificationWhereInput[]
@@ -259,11 +259,11 @@ export type VerificationWhereUniqueInput = Prisma.AtLeast<{
   justification?: Prisma.StringFilter<"Verification"> | string
   verifiedAt?: Prisma.DateTimeFilter<"Verification"> | Date | string
   userId?: Prisma.IntFilter<"Verification"> | number
-  postId?: Prisma.IntFilter<"Verification"> | number
+  articleId?: Prisma.IntFilter<"Verification"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   evidences?: Prisma.EvidenceListRelationFilter
-}, "id" | "userId_postId">
+}, "id" | "userId_articleId">
 
 export type VerificationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -271,7 +271,7 @@ export type VerificationOrderByWithAggregationInput = {
   justification?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   _count?: Prisma.VerificationCountOrderByAggregateInput
   _avg?: Prisma.VerificationAvgOrderByAggregateInput
   _max?: Prisma.VerificationMaxOrderByAggregateInput
@@ -288,7 +288,7 @@ export type VerificationScalarWhereWithAggregatesInput = {
   justification?: Prisma.StringWithAggregatesFilter<"Verification"> | string
   verifiedAt?: Prisma.DateTimeWithAggregatesFilter<"Verification"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"Verification"> | number
-  postId?: Prisma.IntWithAggregatesFilter<"Verification"> | number
+  articleId?: Prisma.IntWithAggregatesFilter<"Verification"> | number
 }
 
 export type VerificationCreateInput = {
@@ -296,7 +296,7 @@ export type VerificationCreateInput = {
   justification: string
   verifiedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutVerificationsInput
-  post: Prisma.PostCreateNestedOneWithoutVerificationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutVerificationsInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutVerificationInput
 }
 
@@ -306,7 +306,7 @@ export type VerificationUncheckedCreateInput = {
   justification: string
   verifiedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutVerificationInput
 }
 
@@ -315,7 +315,7 @@ export type VerificationUpdateInput = {
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutVerificationsNestedInput
-  post?: Prisma.PostUpdateOneRequiredWithoutVerificationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutVerificationsNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutVerificationNestedInput
 }
 
@@ -325,7 +325,7 @@ export type VerificationUncheckedUpdateInput = {
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutVerificationNestedInput
 }
 
@@ -335,7 +335,7 @@ export type VerificationCreateManyInput = {
   justification: string
   verifiedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
 }
 
 export type VerificationUpdateManyMutationInput = {
@@ -350,7 +350,7 @@ export type VerificationUncheckedUpdateManyInput = {
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type VerificationListRelationFilter = {
@@ -363,9 +363,9 @@ export type VerificationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type VerificationUserIdPostIdCompoundUniqueInput = {
+export type VerificationUserIdArticleIdCompoundUniqueInput = {
   userId: number
-  postId: number
+  articleId: number
 }
 
 export type VerificationCountOrderByAggregateInput = {
@@ -374,13 +374,13 @@ export type VerificationCountOrderByAggregateInput = {
   justification?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
 }
 
 export type VerificationAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
 }
 
 export type VerificationMaxOrderByAggregateInput = {
@@ -389,7 +389,7 @@ export type VerificationMaxOrderByAggregateInput = {
   justification?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
 }
 
 export type VerificationMinOrderByAggregateInput = {
@@ -398,13 +398,13 @@ export type VerificationMinOrderByAggregateInput = {
   justification?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
 }
 
 export type VerificationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
 }
 
 export type VerificationNullableScalarRelationFilter = {
@@ -454,45 +454,45 @@ export type VerificationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.VerificationScalarWhereInput | Prisma.VerificationScalarWhereInput[]
 }
 
-export type VerificationCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput> | Prisma.VerificationCreateWithoutPostInput[] | Prisma.VerificationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutPostInput | Prisma.VerificationCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.VerificationCreateManyPostInputEnvelope
+export type VerificationCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput> | Prisma.VerificationCreateWithoutArticleInput[] | Prisma.VerificationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutArticleInput | Prisma.VerificationCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.VerificationCreateManyArticleInputEnvelope
   connect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
 }
 
-export type VerificationUncheckedCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput> | Prisma.VerificationCreateWithoutPostInput[] | Prisma.VerificationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutPostInput | Prisma.VerificationCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.VerificationCreateManyPostInputEnvelope
+export type VerificationUncheckedCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput> | Prisma.VerificationCreateWithoutArticleInput[] | Prisma.VerificationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutArticleInput | Prisma.VerificationCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.VerificationCreateManyArticleInputEnvelope
   connect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
 }
 
-export type VerificationUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput> | Prisma.VerificationCreateWithoutPostInput[] | Prisma.VerificationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutPostInput | Prisma.VerificationCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.VerificationUpsertWithWhereUniqueWithoutPostInput | Prisma.VerificationUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.VerificationCreateManyPostInputEnvelope
+export type VerificationUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput> | Prisma.VerificationCreateWithoutArticleInput[] | Prisma.VerificationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutArticleInput | Prisma.VerificationCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.VerificationUpsertWithWhereUniqueWithoutArticleInput | Prisma.VerificationUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.VerificationCreateManyArticleInputEnvelope
   set?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   disconnect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   delete?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   connect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
-  update?: Prisma.VerificationUpdateWithWhereUniqueWithoutPostInput | Prisma.VerificationUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.VerificationUpdateManyWithWhereWithoutPostInput | Prisma.VerificationUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.VerificationUpdateWithWhereUniqueWithoutArticleInput | Prisma.VerificationUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.VerificationUpdateManyWithWhereWithoutArticleInput | Prisma.VerificationUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.VerificationScalarWhereInput | Prisma.VerificationScalarWhereInput[]
 }
 
-export type VerificationUncheckedUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput> | Prisma.VerificationCreateWithoutPostInput[] | Prisma.VerificationUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutPostInput | Prisma.VerificationCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.VerificationUpsertWithWhereUniqueWithoutPostInput | Prisma.VerificationUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.VerificationCreateManyPostInputEnvelope
+export type VerificationUncheckedUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput> | Prisma.VerificationCreateWithoutArticleInput[] | Prisma.VerificationUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.VerificationCreateOrConnectWithoutArticleInput | Prisma.VerificationCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.VerificationUpsertWithWhereUniqueWithoutArticleInput | Prisma.VerificationUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.VerificationCreateManyArticleInputEnvelope
   set?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   disconnect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   delete?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
   connect?: Prisma.VerificationWhereUniqueInput | Prisma.VerificationWhereUniqueInput[]
-  update?: Prisma.VerificationUpdateWithWhereUniqueWithoutPostInput | Prisma.VerificationUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.VerificationUpdateManyWithWhereWithoutPostInput | Prisma.VerificationUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.VerificationUpdateWithWhereUniqueWithoutArticleInput | Prisma.VerificationUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.VerificationUpdateManyWithWhereWithoutArticleInput | Prisma.VerificationUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.VerificationScalarWhereInput | Prisma.VerificationScalarWhereInput[]
 }
 
@@ -520,7 +520,7 @@ export type VerificationCreateWithoutUserInput = {
   verdict: $Enums.Verdict
   justification: string
   verifiedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutVerificationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutVerificationsInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutVerificationInput
 }
 
@@ -529,7 +529,7 @@ export type VerificationUncheckedCreateWithoutUserInput = {
   verdict: $Enums.Verdict
   justification: string
   verifiedAt?: Date | string
-  postId: number
+  articleId: number
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutVerificationInput
 }
 
@@ -568,10 +568,10 @@ export type VerificationScalarWhereInput = {
   justification?: Prisma.StringFilter<"Verification"> | string
   verifiedAt?: Prisma.DateTimeFilter<"Verification"> | Date | string
   userId?: Prisma.IntFilter<"Verification"> | number
-  postId?: Prisma.IntFilter<"Verification"> | number
+  articleId?: Prisma.IntFilter<"Verification"> | number
 }
 
-export type VerificationCreateWithoutPostInput = {
+export type VerificationCreateWithoutArticleInput = {
   verdict: $Enums.Verdict
   justification: string
   verifiedAt?: Date | string
@@ -579,7 +579,7 @@ export type VerificationCreateWithoutPostInput = {
   evidences?: Prisma.EvidenceCreateNestedManyWithoutVerificationInput
 }
 
-export type VerificationUncheckedCreateWithoutPostInput = {
+export type VerificationUncheckedCreateWithoutArticleInput = {
   id?: number
   verdict: $Enums.Verdict
   justification: string
@@ -588,30 +588,30 @@ export type VerificationUncheckedCreateWithoutPostInput = {
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutVerificationInput
 }
 
-export type VerificationCreateOrConnectWithoutPostInput = {
+export type VerificationCreateOrConnectWithoutArticleInput = {
   where: Prisma.VerificationWhereUniqueInput
-  create: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput>
+  create: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput>
 }
 
-export type VerificationCreateManyPostInputEnvelope = {
-  data: Prisma.VerificationCreateManyPostInput | Prisma.VerificationCreateManyPostInput[]
+export type VerificationCreateManyArticleInputEnvelope = {
+  data: Prisma.VerificationCreateManyArticleInput | Prisma.VerificationCreateManyArticleInput[]
   skipDuplicates?: boolean
 }
 
-export type VerificationUpsertWithWhereUniqueWithoutPostInput = {
+export type VerificationUpsertWithWhereUniqueWithoutArticleInput = {
   where: Prisma.VerificationWhereUniqueInput
-  update: Prisma.XOR<Prisma.VerificationUpdateWithoutPostInput, Prisma.VerificationUncheckedUpdateWithoutPostInput>
-  create: Prisma.XOR<Prisma.VerificationCreateWithoutPostInput, Prisma.VerificationUncheckedCreateWithoutPostInput>
+  update: Prisma.XOR<Prisma.VerificationUpdateWithoutArticleInput, Prisma.VerificationUncheckedUpdateWithoutArticleInput>
+  create: Prisma.XOR<Prisma.VerificationCreateWithoutArticleInput, Prisma.VerificationUncheckedCreateWithoutArticleInput>
 }
 
-export type VerificationUpdateWithWhereUniqueWithoutPostInput = {
+export type VerificationUpdateWithWhereUniqueWithoutArticleInput = {
   where: Prisma.VerificationWhereUniqueInput
-  data: Prisma.XOR<Prisma.VerificationUpdateWithoutPostInput, Prisma.VerificationUncheckedUpdateWithoutPostInput>
+  data: Prisma.XOR<Prisma.VerificationUpdateWithoutArticleInput, Prisma.VerificationUncheckedUpdateWithoutArticleInput>
 }
 
-export type VerificationUpdateManyWithWhereWithoutPostInput = {
+export type VerificationUpdateManyWithWhereWithoutArticleInput = {
   where: Prisma.VerificationScalarWhereInput
-  data: Prisma.XOR<Prisma.VerificationUpdateManyMutationInput, Prisma.VerificationUncheckedUpdateManyWithoutPostInput>
+  data: Prisma.XOR<Prisma.VerificationUpdateManyMutationInput, Prisma.VerificationUncheckedUpdateManyWithoutArticleInput>
 }
 
 export type VerificationCreateWithoutEvidencesInput = {
@@ -619,7 +619,7 @@ export type VerificationCreateWithoutEvidencesInput = {
   justification: string
   verifiedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutVerificationsInput
-  post: Prisma.PostCreateNestedOneWithoutVerificationsInput
+  article: Prisma.ArticleCreateNestedOneWithoutVerificationsInput
 }
 
 export type VerificationUncheckedCreateWithoutEvidencesInput = {
@@ -628,7 +628,7 @@ export type VerificationUncheckedCreateWithoutEvidencesInput = {
   justification: string
   verifiedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
 }
 
 export type VerificationCreateOrConnectWithoutEvidencesInput = {
@@ -652,7 +652,7 @@ export type VerificationUpdateWithoutEvidencesInput = {
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutVerificationsNestedInput
-  post?: Prisma.PostUpdateOneRequiredWithoutVerificationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutVerificationsNestedInput
 }
 
 export type VerificationUncheckedUpdateWithoutEvidencesInput = {
@@ -661,7 +661,7 @@ export type VerificationUncheckedUpdateWithoutEvidencesInput = {
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type VerificationCreateManyUserInput = {
@@ -669,14 +669,14 @@ export type VerificationCreateManyUserInput = {
   verdict: $Enums.Verdict
   justification: string
   verifiedAt?: Date | string
-  postId: number
+  articleId: number
 }
 
 export type VerificationUpdateWithoutUserInput = {
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutVerificationsNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutVerificationsNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutVerificationNestedInput
 }
 
@@ -685,7 +685,7 @@ export type VerificationUncheckedUpdateWithoutUserInput = {
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutVerificationNestedInput
 }
 
@@ -694,10 +694,10 @@ export type VerificationUncheckedUpdateManyWithoutUserInput = {
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type VerificationCreateManyPostInput = {
+export type VerificationCreateManyArticleInput = {
   id?: number
   verdict: $Enums.Verdict
   justification: string
@@ -705,7 +705,7 @@ export type VerificationCreateManyPostInput = {
   userId: number
 }
 
-export type VerificationUpdateWithoutPostInput = {
+export type VerificationUpdateWithoutArticleInput = {
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
   verifiedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -713,7 +713,7 @@ export type VerificationUpdateWithoutPostInput = {
   evidences?: Prisma.EvidenceUpdateManyWithoutVerificationNestedInput
 }
 
-export type VerificationUncheckedUpdateWithoutPostInput = {
+export type VerificationUncheckedUpdateWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
@@ -722,7 +722,7 @@ export type VerificationUncheckedUpdateWithoutPostInput = {
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutVerificationNestedInput
 }
 
-export type VerificationUncheckedUpdateManyWithoutPostInput = {
+export type VerificationUncheckedUpdateManyWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   verdict?: Prisma.EnumVerdictFieldUpdateOperationsInput | $Enums.Verdict
   justification?: Prisma.StringFieldUpdateOperationsInput | string
@@ -767,9 +767,9 @@ export type VerificationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   justification?: boolean
   verifiedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   evidences?: boolean | Prisma.Verification$evidencesArgs<ExtArgs>
   _count?: boolean | Prisma.VerificationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["verification"]>
@@ -780,9 +780,9 @@ export type VerificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   justification?: boolean
   verifiedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["verification"]>
 
 export type VerificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -791,9 +791,9 @@ export type VerificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   justification?: boolean
   verifiedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["verification"]>
 
 export type VerificationSelectScalar = {
@@ -802,30 +802,30 @@ export type VerificationSelectScalar = {
   justification?: boolean
   verifiedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
 }
 
-export type VerificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "verdict" | "justification" | "verifiedAt" | "userId" | "postId", ExtArgs["result"]["verification"]>
+export type VerificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "verdict" | "justification" | "verifiedAt" | "userId" | "articleId", ExtArgs["result"]["verification"]>
 export type VerificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   evidences?: boolean | Prisma.Verification$evidencesArgs<ExtArgs>
   _count?: boolean | Prisma.VerificationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VerificationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
 }
 export type VerificationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
 }
 
 export type $VerificationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Verification"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    post: Prisma.$PostPayload<ExtArgs>
+    article: Prisma.$ArticlePayload<ExtArgs>
     evidences: Prisma.$EvidencePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -834,7 +834,7 @@ export type $VerificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     justification: string
     verifiedAt: Date
     userId: number
-    postId: number
+    articleId: number
   }, ExtArgs["result"]["verification"]>
   composites: {}
 }
@@ -1230,7 +1230,7 @@ readonly fields: VerificationFieldRefs;
 export interface Prisma__VerificationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  post<T extends Prisma.PostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PostDefaultArgs<ExtArgs>>): Prisma.Prisma__PostClient<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  article<T extends Prisma.ArticleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ArticleDefaultArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   evidences<T extends Prisma.Verification$evidencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Verification$evidencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1266,7 +1266,7 @@ export interface VerificationFieldRefs {
   readonly justification: Prisma.FieldRef<"Verification", 'String'>
   readonly verifiedAt: Prisma.FieldRef<"Verification", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Verification", 'Int'>
-  readonly postId: Prisma.FieldRef<"Verification", 'Int'>
+  readonly articleId: Prisma.FieldRef<"Verification", 'Int'>
 }
     
 

@@ -33,10 +33,10 @@ export type Topic = Prisma.TopicModel
  */
 export type User = Prisma.UserModel
 /**
- * Model Post
+ * Model Article
  * 
  */
-export type Post = Prisma.PostModel
+export type Article = Prisma.ArticleModel
 /**
  * Model Verification
  * 

@@ -54,7 +54,7 @@ export const ModelName = {
   Media: 'Media',
   Topic: 'Topic',
   User: 'User',
-  Post: 'Post',
+  Article: 'Article',
   Verification: 'Verification',
   Evidence: 'Evidence',
   Comment: 'Comment',
@@ -121,7 +121,7 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const ArticleScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
@@ -133,10 +133,10 @@ export const PostScalarFieldEnum = {
   relationType: 'relationType',
   authorId: 'authorId',
   topicId: 'topicId',
-  parentPostId: 'parentPostId'
+  parentArticleId: 'parentArticleId'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
 export const VerificationScalarFieldEnum = {
@@ -145,7 +145,7 @@ export const VerificationScalarFieldEnum = {
   justification: 'justification',
   verifiedAt: 'verifiedAt',
   userId: 'userId',
-  postId: 'postId'
+  articleId: 'articleId'
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
@@ -159,7 +159,7 @@ export const EvidenceScalarFieldEnum = {
   description: 'description',
   addedAt: 'addedAt',
   userId: 'userId',
-  postId: 'postId',
+  articleId: 'articleId',
   verificationId: 'verificationId'
 } as const
 
@@ -171,7 +171,7 @@ export const CommentScalarFieldEnum = {
   content: 'content',
   commentedAt: 'commentedAt',
   userId: 'userId',
-  postId: 'postId'
+  articleId: 'articleId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -186,7 +186,7 @@ export const ExternalPublicationScalarFieldEnum = {
   excerpt: 'excerpt',
   externalPostedAt: 'externalPostedAt',
   collectedAt: 'collectedAt',
-  postId: 'postId',
+  articleId: 'articleId',
   userId: 'userId'
 } as const
 
@@ -198,7 +198,7 @@ export const ImageScalarFieldEnum = {
   fileUrl: 'fileUrl',
   perceptualHash: 'perceptualHash',
   firstSeenAt: 'firstSeenAt',
-  postId: 'postId',
+  articleId: 'articleId',
   publicationId: 'publicationId'
 } as const
 

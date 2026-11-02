@@ -325,7 +325,7 @@ export type UserWhereInput = {
   emailCodeAttempts?: Prisma.IntFilter<"User"> | number
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
-  posts?: Prisma.PostListRelationFilter
+  articles?: Prisma.ArticleListRelationFilter
   verifications?: Prisma.VerificationListRelationFilter
   evidences?: Prisma.EvidenceListRelationFilter
   comments?: Prisma.CommentListRelationFilter
@@ -351,7 +351,7 @@ export type UserOrderByWithRelationInput = {
   emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   media?: Prisma.MediaOrderByWithRelationInput
-  posts?: Prisma.PostOrderByRelationAggregateInput
+  articles?: Prisma.ArticleOrderByRelationAggregateInput
   verifications?: Prisma.VerificationOrderByRelationAggregateInput
   evidences?: Prisma.EvidenceOrderByRelationAggregateInput
   comments?: Prisma.CommentOrderByRelationAggregateInput
@@ -380,7 +380,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailCodeAttempts?: Prisma.IntFilter<"User"> | number
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
-  posts?: Prisma.PostListRelationFilter
+  articles?: Prisma.ArticleListRelationFilter
   verifications?: Prisma.VerificationListRelationFilter
   evidences?: Prisma.EvidenceListRelationFilter
   comments?: Prisma.CommentListRelationFilter
@@ -452,7 +452,7 @@ export type UserCreateInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
@@ -477,7 +477,7 @@ export type UserUncheckedCreateInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   mediaId?: number | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -501,7 +501,7 @@ export type UserUpdateInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
@@ -526,7 +526,7 @@ export type UserUncheckedUpdateInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -750,18 +750,18 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserCreateNestedOneWithoutPostsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
+export type UserCreateNestedOneWithoutArticlesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutArticlesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
-  upsert?: Prisma.UserUpsertWithoutPostsInput
+export type UserUpdateOneRequiredWithoutArticlesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutArticlesInput
+  upsert?: Prisma.UserUpsertWithoutArticlesInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostsInput, Prisma.UserUpdateWithoutPostsInput>, Prisma.UserUncheckedUpdateWithoutPostsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutArticlesInput, Prisma.UserUpdateWithoutArticlesInput>, Prisma.UserUncheckedUpdateWithoutArticlesInput>
 }
 
 export type UserCreateNestedOneWithoutVerificationsInput = {
@@ -836,7 +836,7 @@ export type UserCreateWithoutMediaInput = {
   emailCodeExpiresAt?: Date | string | null
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
@@ -860,7 +860,7 @@ export type UserUncheckedCreateWithoutMediaInput = {
   emailCodeExpiresAt?: Date | string | null
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -916,7 +916,7 @@ export type UserScalarWhereInput = {
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
 }
 
-export type UserCreateWithoutPostsInput = {
+export type UserCreateWithoutArticlesInput = {
   name: string
   email: string
   passwordHash: string
@@ -939,7 +939,7 @@ export type UserCreateWithoutPostsInput = {
   externalPublications?: Prisma.ExternalPublicationCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutPostsInput = {
+export type UserUncheckedCreateWithoutArticlesInput = {
   id?: number
   name: string
   email: string
@@ -963,23 +963,23 @@ export type UserUncheckedCreateWithoutPostsInput = {
   externalPublications?: Prisma.ExternalPublicationUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutPostsInput = {
+export type UserCreateOrConnectWithoutArticlesInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
 }
 
-export type UserUpsertWithoutPostsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+export type UserUpsertWithoutArticlesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutArticlesInput, Prisma.UserUncheckedUpdateWithoutArticlesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutArticlesInput, Prisma.UserUncheckedCreateWithoutArticlesInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutPostsInput = {
+export type UserUpdateToOneWithWhereWithoutArticlesInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutArticlesInput, Prisma.UserUncheckedUpdateWithoutArticlesInput>
 }
 
-export type UserUpdateWithoutPostsInput = {
+export type UserUpdateWithoutArticlesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1002,7 +1002,7 @@ export type UserUpdateWithoutPostsInput = {
   externalPublications?: Prisma.ExternalPublicationUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutPostsInput = {
+export type UserUncheckedUpdateWithoutArticlesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1043,7 +1043,7 @@ export type UserCreateWithoutVerificationsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationCreateNestedManyWithoutUserInput
@@ -1067,7 +1067,7 @@ export type UserUncheckedCreateWithoutVerificationsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   mediaId?: number | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationUncheckedCreateNestedManyWithoutUserInput
@@ -1106,7 +1106,7 @@ export type UserUpdateWithoutVerificationsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUpdateManyWithoutUserNestedInput
@@ -1130,7 +1130,7 @@ export type UserUncheckedUpdateWithoutVerificationsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUncheckedUpdateManyWithoutUserNestedInput
@@ -1153,7 +1153,7 @@ export type UserCreateWithoutEvidencesInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationCreateNestedManyWithoutUserInput
@@ -1177,7 +1177,7 @@ export type UserUncheckedCreateWithoutEvidencesInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   mediaId?: number | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationUncheckedCreateNestedManyWithoutUserInput
@@ -1216,7 +1216,7 @@ export type UserUpdateWithoutEvidencesInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUpdateManyWithoutUserNestedInput
@@ -1240,7 +1240,7 @@ export type UserUncheckedUpdateWithoutEvidencesInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUncheckedUpdateManyWithoutUserNestedInput
@@ -1263,7 +1263,7 @@ export type UserCreateWithoutCommentsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationCreateNestedManyWithoutUserInput
@@ -1287,7 +1287,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   mediaId?: number | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   externalPublications?: Prisma.ExternalPublicationUncheckedCreateNestedManyWithoutUserInput
@@ -1326,7 +1326,7 @@ export type UserUpdateWithoutCommentsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUpdateManyWithoutUserNestedInput
@@ -1350,7 +1350,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   externalPublications?: Prisma.ExternalPublicationUncheckedUpdateManyWithoutUserNestedInput
@@ -1373,7 +1373,7 @@ export type UserCreateWithoutExternalPublicationsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
@@ -1397,7 +1397,7 @@ export type UserUncheckedCreateWithoutExternalPublicationsInput = {
   emailCodeSentAt?: Date | string | null
   emailCodeAttempts?: number
   mediaId?: number | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -1436,7 +1436,7 @@ export type UserUpdateWithoutExternalPublicationsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
@@ -1460,7 +1460,7 @@ export type UserUncheckedUpdateWithoutExternalPublicationsInput = {
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -1501,7 +1501,7 @@ export type UserUpdateWithoutMediaInput = {
   emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
@@ -1525,7 +1525,7 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
-  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -1557,7 +1557,7 @@ export type UserUncheckedUpdateManyWithoutMediaInput = {
  */
 
 export type UserCountOutputType = {
-  posts: number
+  articles: number
   verifications: number
   evidences: number
   comments: number
@@ -1565,7 +1565,7 @@ export type UserCountOutputType = {
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | UserCountOutputTypeCountPostsArgs
+  articles?: boolean | UserCountOutputTypeCountArticlesArgs
   verifications?: boolean | UserCountOutputTypeCountVerificationsArgs
   evidences?: boolean | UserCountOutputTypeCountEvidencesArgs
   comments?: boolean | UserCountOutputTypeCountCommentsArgs
@@ -1585,8 +1585,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PostWhereInput
+export type UserCountOutputTypeCountArticlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ArticleWhereInput
 }
 
 /**
@@ -1637,7 +1637,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   emailCodeAttempts?: boolean
   mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
-  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
+  articles?: boolean | Prisma.User$articlesArgs<ExtArgs>
   verifications?: boolean | Prisma.User$verificationsArgs<ExtArgs>
   evidences?: boolean | Prisma.User$evidencesArgs<ExtArgs>
   comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
@@ -1710,7 +1710,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "reputation" | "registeredAt" | "verified" | "proofFrontUrl" | "proofBackUrl" | "emailVerifiedAt" | "emailCodeHash" | "emailCodeExpiresAt" | "emailCodeSentAt" | "emailCodeAttempts" | "mediaId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
-  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
+  articles?: boolean | Prisma.User$articlesArgs<ExtArgs>
   verifications?: boolean | Prisma.User$verificationsArgs<ExtArgs>
   evidences?: boolean | Prisma.User$evidencesArgs<ExtArgs>
   comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
@@ -1728,7 +1728,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     media: Prisma.$MediaPayload<ExtArgs> | null
-    posts: Prisma.$PostPayload<ExtArgs>[]
+    articles: Prisma.$ArticlePayload<ExtArgs>[]
     verifications: Prisma.$VerificationPayload<ExtArgs>[]
     evidences: Prisma.$EvidencePayload<ExtArgs>[]
     comments: Prisma.$CommentPayload<ExtArgs>[]
@@ -2147,7 +2147,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   media<T extends Prisma.User$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mediaArgs<ExtArgs>>): Prisma.Prisma__MediaClient<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  articles<T extends Prisma.User$articlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   verifications<T extends Prisma.User$verificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   evidences<T extends Prisma.User$evidencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$evidencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EvidencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comments<T extends Prisma.User$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2618,27 +2618,27 @@ export type User$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 
 /**
- * User.posts
+ * User.articles
  */
-export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$articlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Post
+   * Select specific fields to fetch from the Article
    */
-  select?: Prisma.PostSelect<ExtArgs> | null
+  select?: Prisma.ArticleSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Post
+   * Omit specific fields from the Article
    */
-  omit?: Prisma.PostOmit<ExtArgs> | null
+  omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PostInclude<ExtArgs> | null
-  where?: Prisma.PostWhereInput
-  orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[]
-  cursor?: Prisma.PostWhereUniqueInput
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  where?: Prisma.ArticleWhereInput
+  orderBy?: Prisma.ArticleOrderByWithRelationInput | Prisma.ArticleOrderByWithRelationInput[]
+  cursor?: Prisma.ArticleWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[]
+  distinct?: Prisma.ArticleScalarFieldEnum | Prisma.ArticleScalarFieldEnum[]
 }
 
 /**

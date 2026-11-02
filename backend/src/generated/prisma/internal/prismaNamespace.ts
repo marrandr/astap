@@ -400,7 +400,7 @@ export const ModelName = {
   Media: 'Media',
   Topic: 'Topic',
   User: 'User',
-  Post: 'Post',
+  Article: 'Article',
   Verification: 'Verification',
   Evidence: 'Evidence',
   Comment: 'Comment',
@@ -422,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "media" | "topic" | "user" | "post" | "verification" | "evidence" | "comment" | "externalPublication" | "image" | "aiAnalysis"
+    modelProps: "media" | "topic" | "user" | "article" | "verification" | "evidence" | "comment" | "externalPublication" | "image" | "aiAnalysis"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -648,77 +648,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Post: {
-      payload: Prisma.$PostPayload<ExtArgs>
-      fields: Prisma.PostFieldRefs
+    Article: {
+      payload: Prisma.$ArticlePayload<ExtArgs>
+      fields: Prisma.ArticleFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PostFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+          args: Prisma.ArticleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         findFirst: {
-          args: Prisma.PostFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+          args: Prisma.ArticleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         findMany: {
-          args: Prisma.PostFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.ArticleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>[]
         }
         create: {
-          args: Prisma.PostCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         createMany: {
-          args: Prisma.PostCreateManyArgs<ExtArgs>
+          args: Prisma.ArticleCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.ArticleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>[]
         }
         delete: {
-          args: Prisma.PostDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         update: {
-          args: Prisma.PostUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         deleteMany: {
-          args: Prisma.PostDeleteManyArgs<ExtArgs>
+          args: Prisma.ArticleDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PostUpdateManyArgs<ExtArgs>
+          args: Prisma.ArticleUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+          args: Prisma.ArticleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>[]
         }
         upsert: {
-          args: Prisma.PostUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+          args: Prisma.ArticleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArticlePayload>
         }
         aggregate: {
-          args: Prisma.PostAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePost>
+          args: Prisma.ArticleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateArticle>
         }
         groupBy: {
-          args: Prisma.PostGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PostGroupByOutputType>[]
+          args: Prisma.ArticleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArticleGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PostCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PostCountAggregateOutputType> | number
+          args: Prisma.ArticleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArticleCountAggregateOutputType> | number
         }
       }
     }
@@ -1247,7 +1247,7 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const ArticleScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
@@ -1259,10 +1259,10 @@ export const PostScalarFieldEnum = {
   relationType: 'relationType',
   authorId: 'authorId',
   topicId: 'topicId',
-  parentPostId: 'parentPostId'
+  parentArticleId: 'parentArticleId'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
 export const VerificationScalarFieldEnum = {
@@ -1271,7 +1271,7 @@ export const VerificationScalarFieldEnum = {
   justification: 'justification',
   verifiedAt: 'verifiedAt',
   userId: 'userId',
-  postId: 'postId'
+  articleId: 'articleId'
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
@@ -1285,7 +1285,7 @@ export const EvidenceScalarFieldEnum = {
   description: 'description',
   addedAt: 'addedAt',
   userId: 'userId',
-  postId: 'postId',
+  articleId: 'articleId',
   verificationId: 'verificationId'
 } as const
 
@@ -1297,7 +1297,7 @@ export const CommentScalarFieldEnum = {
   content: 'content',
   commentedAt: 'commentedAt',
   userId: 'userId',
-  postId: 'postId'
+  articleId: 'articleId'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -1312,7 +1312,7 @@ export const ExternalPublicationScalarFieldEnum = {
   excerpt: 'excerpt',
   externalPostedAt: 'externalPostedAt',
   collectedAt: 'collectedAt',
-  postId: 'postId',
+  articleId: 'articleId',
   userId: 'userId'
 } as const
 
@@ -1324,7 +1324,7 @@ export const ImageScalarFieldEnum = {
   fileUrl: 'fileUrl',
   perceptualHash: 'perceptualHash',
   firstSeenAt: 'firstSeenAt',
-  postId: 'postId',
+  articleId: 'articleId',
   publicationId: 'publicationId'
 } as const
 
@@ -1705,7 +1705,7 @@ export type GlobalOmitConfig = {
   media?: Prisma.MediaOmit
   topic?: Prisma.TopicOmit
   user?: Prisma.UserOmit
-  post?: Prisma.PostOmit
+  article?: Prisma.ArticleOmit
   verification?: Prisma.VerificationOmit
   evidence?: Prisma.EvidenceOmit
   comment?: Prisma.CommentOmit

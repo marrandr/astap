@@ -192,13 +192,13 @@ export type TopicWhereInput = {
   NOT?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
   id?: Prisma.IntFilter<"Topic"> | number
   label?: Prisma.StringFilter<"Topic"> | string
-  posts?: Prisma.PostListRelationFilter
+  articles?: Prisma.ArticleListRelationFilter
 }
 
 export type TopicOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
-  posts?: Prisma.PostOrderByRelationAggregateInput
+  articles?: Prisma.ArticleOrderByRelationAggregateInput
 }
 
 export type TopicWhereUniqueInput = Prisma.AtLeast<{
@@ -207,7 +207,7 @@ export type TopicWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
   OR?: Prisma.TopicWhereInput[]
   NOT?: Prisma.TopicWhereInput | Prisma.TopicWhereInput[]
-  posts?: Prisma.PostListRelationFilter
+  articles?: Prisma.ArticleListRelationFilter
 }, "id" | "label">
 
 export type TopicOrderByWithAggregationInput = {
@@ -230,24 +230,24 @@ export type TopicScalarWhereWithAggregatesInput = {
 
 export type TopicCreateInput = {
   label: string
-  posts?: Prisma.PostCreateNestedManyWithoutTopicInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutTopicInput
 }
 
 export type TopicUncheckedCreateInput = {
   id?: number
   label: string
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutTopicInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutTopicInput
 }
 
 export type TopicUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
-  posts?: Prisma.PostUpdateManyWithoutTopicNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutTopicNestedInput
 }
 
 export type TopicUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.StringFieldUpdateOperationsInput | string
-  posts?: Prisma.PostUncheckedUpdateManyWithoutTopicNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutTopicNestedInput
 }
 
 export type TopicCreateManyInput = {
@@ -292,50 +292,50 @@ export type TopicScalarRelationFilter = {
   isNot?: Prisma.TopicWhereInput
 }
 
-export type TopicCreateNestedOneWithoutPostsInput = {
-  create?: Prisma.XOR<Prisma.TopicCreateWithoutPostsInput, Prisma.TopicUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.TopicCreateOrConnectWithoutPostsInput
+export type TopicCreateNestedOneWithoutArticlesInput = {
+  create?: Prisma.XOR<Prisma.TopicCreateWithoutArticlesInput, Prisma.TopicUncheckedCreateWithoutArticlesInput>
+  connectOrCreate?: Prisma.TopicCreateOrConnectWithoutArticlesInput
   connect?: Prisma.TopicWhereUniqueInput
 }
 
-export type TopicUpdateOneRequiredWithoutPostsNestedInput = {
-  create?: Prisma.XOR<Prisma.TopicCreateWithoutPostsInput, Prisma.TopicUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.TopicCreateOrConnectWithoutPostsInput
-  upsert?: Prisma.TopicUpsertWithoutPostsInput
+export type TopicUpdateOneRequiredWithoutArticlesNestedInput = {
+  create?: Prisma.XOR<Prisma.TopicCreateWithoutArticlesInput, Prisma.TopicUncheckedCreateWithoutArticlesInput>
+  connectOrCreate?: Prisma.TopicCreateOrConnectWithoutArticlesInput
+  upsert?: Prisma.TopicUpsertWithoutArticlesInput
   connect?: Prisma.TopicWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TopicUpdateToOneWithWhereWithoutPostsInput, Prisma.TopicUpdateWithoutPostsInput>, Prisma.TopicUncheckedUpdateWithoutPostsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TopicUpdateToOneWithWhereWithoutArticlesInput, Prisma.TopicUpdateWithoutArticlesInput>, Prisma.TopicUncheckedUpdateWithoutArticlesInput>
 }
 
-export type TopicCreateWithoutPostsInput = {
+export type TopicCreateWithoutArticlesInput = {
   label: string
 }
 
-export type TopicUncheckedCreateWithoutPostsInput = {
+export type TopicUncheckedCreateWithoutArticlesInput = {
   id?: number
   label: string
 }
 
-export type TopicCreateOrConnectWithoutPostsInput = {
+export type TopicCreateOrConnectWithoutArticlesInput = {
   where: Prisma.TopicWhereUniqueInput
-  create: Prisma.XOR<Prisma.TopicCreateWithoutPostsInput, Prisma.TopicUncheckedCreateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.TopicCreateWithoutArticlesInput, Prisma.TopicUncheckedCreateWithoutArticlesInput>
 }
 
-export type TopicUpsertWithoutPostsInput = {
-  update: Prisma.XOR<Prisma.TopicUpdateWithoutPostsInput, Prisma.TopicUncheckedUpdateWithoutPostsInput>
-  create: Prisma.XOR<Prisma.TopicCreateWithoutPostsInput, Prisma.TopicUncheckedCreateWithoutPostsInput>
+export type TopicUpsertWithoutArticlesInput = {
+  update: Prisma.XOR<Prisma.TopicUpdateWithoutArticlesInput, Prisma.TopicUncheckedUpdateWithoutArticlesInput>
+  create: Prisma.XOR<Prisma.TopicCreateWithoutArticlesInput, Prisma.TopicUncheckedCreateWithoutArticlesInput>
   where?: Prisma.TopicWhereInput
 }
 
-export type TopicUpdateToOneWithWhereWithoutPostsInput = {
+export type TopicUpdateToOneWithWhereWithoutArticlesInput = {
   where?: Prisma.TopicWhereInput
-  data: Prisma.XOR<Prisma.TopicUpdateWithoutPostsInput, Prisma.TopicUncheckedUpdateWithoutPostsInput>
+  data: Prisma.XOR<Prisma.TopicUpdateWithoutArticlesInput, Prisma.TopicUncheckedUpdateWithoutArticlesInput>
 }
 
-export type TopicUpdateWithoutPostsInput = {
+export type TopicUpdateWithoutArticlesInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type TopicUncheckedUpdateWithoutPostsInput = {
+export type TopicUncheckedUpdateWithoutArticlesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -346,11 +346,11 @@ export type TopicUncheckedUpdateWithoutPostsInput = {
  */
 
 export type TopicCountOutputType = {
-  posts: number
+  articles: number
 }
 
 export type TopicCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | TopicCountOutputTypeCountPostsArgs
+  articles?: boolean | TopicCountOutputTypeCountArticlesArgs
 }
 
 /**
@@ -366,15 +366,15 @@ export type TopicCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * TopicCountOutputType without action
  */
-export type TopicCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PostWhereInput
+export type TopicCountOutputTypeCountArticlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ArticleWhereInput
 }
 
 
 export type TopicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   label?: boolean
-  posts?: boolean | Prisma.Topic$postsArgs<ExtArgs>
+  articles?: boolean | Prisma.Topic$articlesArgs<ExtArgs>
   _count?: boolean | Prisma.TopicCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["topic"]>
 
@@ -395,7 +395,7 @@ export type TopicSelectScalar = {
 
 export type TopicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "label", ExtArgs["result"]["topic"]>
 export type TopicInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | Prisma.Topic$postsArgs<ExtArgs>
+  articles?: boolean | Prisma.Topic$articlesArgs<ExtArgs>
   _count?: boolean | Prisma.TopicCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TopicIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -404,7 +404,7 @@ export type TopicIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $TopicPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Topic"
   objects: {
-    posts: Prisma.$PostPayload<ExtArgs>[]
+    articles: Prisma.$ArticlePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -803,7 +803,7 @@ readonly fields: TopicFieldRefs;
  */
 export interface Prisma__TopicClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  posts<T extends Prisma.Topic$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Topic$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  articles<T extends Prisma.Topic$articlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Topic$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1228,27 +1228,27 @@ export type TopicDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Topic.posts
+ * Topic.articles
  */
-export type Topic$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Topic$articlesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Post
+   * Select specific fields to fetch from the Article
    */
-  select?: Prisma.PostSelect<ExtArgs> | null
+  select?: Prisma.ArticleSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Post
+   * Omit specific fields from the Article
    */
-  omit?: Prisma.PostOmit<ExtArgs> | null
+  omit?: Prisma.ArticleOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PostInclude<ExtArgs> | null
-  where?: Prisma.PostWhereInput
-  orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[]
-  cursor?: Prisma.PostWhereUniqueInput
+  include?: Prisma.ArticleInclude<ExtArgs> | null
+  where?: Prisma.ArticleWhereInput
+  orderBy?: Prisma.ArticleOrderByWithRelationInput | Prisma.ArticleOrderByWithRelationInput[]
+  cursor?: Prisma.ArticleWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[]
+  distinct?: Prisma.ArticleScalarFieldEnum | Prisma.ArticleScalarFieldEnum[]
 }
 
 /**

@@ -6,6 +6,8 @@ import { AdminModule } from './modules/admin/admin.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { UserModule } from './modules/user/user.module.js';
+import { ArticleModule } from './modules/article/article.module.js';
+import { JwtStrategy } from './guards/jwt.strategy.js';
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { UserModule } from './modules/user/user.module.js';
     AdminModule,
     AuthModule,
     UserModule,
+    ArticleModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, JwtStrategy],
   exports: [PrismaService],
 })
 export class AppModule {}

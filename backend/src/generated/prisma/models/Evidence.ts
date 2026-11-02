@@ -29,14 +29,14 @@ export type AggregateEvidence = {
 export type EvidenceAvgAggregateOutputType = {
   id: number | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
   verificationId: number | null
 }
 
 export type EvidenceSumAggregateOutputType = {
   id: number | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
   verificationId: number | null
 }
 
@@ -48,7 +48,7 @@ export type EvidenceMinAggregateOutputType = {
   description: string | null
   addedAt: Date | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
   verificationId: number | null
 }
 
@@ -60,7 +60,7 @@ export type EvidenceMaxAggregateOutputType = {
   description: string | null
   addedAt: Date | null
   userId: number | null
-  postId: number | null
+  articleId: number | null
   verificationId: number | null
 }
 
@@ -72,7 +72,7 @@ export type EvidenceCountAggregateOutputType = {
   description: number
   addedAt: number
   userId: number
-  postId: number
+  articleId: number
   verificationId: number
   _all: number
 }
@@ -81,14 +81,14 @@ export type EvidenceCountAggregateOutputType = {
 export type EvidenceAvgAggregateInputType = {
   id?: true
   userId?: true
-  postId?: true
+  articleId?: true
   verificationId?: true
 }
 
 export type EvidenceSumAggregateInputType = {
   id?: true
   userId?: true
-  postId?: true
+  articleId?: true
   verificationId?: true
 }
 
@@ -100,7 +100,7 @@ export type EvidenceMinAggregateInputType = {
   description?: true
   addedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
   verificationId?: true
 }
 
@@ -112,7 +112,7 @@ export type EvidenceMaxAggregateInputType = {
   description?: true
   addedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
   verificationId?: true
 }
 
@@ -124,7 +124,7 @@ export type EvidenceCountAggregateInputType = {
   description?: true
   addedAt?: true
   userId?: true
-  postId?: true
+  articleId?: true
   verificationId?: true
   _all?: true
 }
@@ -223,7 +223,7 @@ export type EvidenceGroupByOutputType = {
   description: string | null
   addedAt: Date
   userId: number
-  postId: number
+  articleId: number
   verificationId: number | null
   _count: EvidenceCountAggregateOutputType | null
   _avg: EvidenceAvgAggregateOutputType | null
@@ -258,10 +258,10 @@ export type EvidenceWhereInput = {
   description?: Prisma.StringNullableFilter<"Evidence"> | string | null
   addedAt?: Prisma.DateTimeFilter<"Evidence"> | Date | string
   userId?: Prisma.IntFilter<"Evidence"> | number
-  postId?: Prisma.IntFilter<"Evidence"> | number
+  articleId?: Prisma.IntFilter<"Evidence"> | number
   verificationId?: Prisma.IntNullableFilter<"Evidence"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   verification?: Prisma.XOR<Prisma.VerificationNullableScalarRelationFilter, Prisma.VerificationWhereInput> | null
 }
 
@@ -273,10 +273,10 @@ export type EvidenceOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   addedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  post?: Prisma.PostOrderByWithRelationInput
+  article?: Prisma.ArticleOrderByWithRelationInput
   verification?: Prisma.VerificationOrderByWithRelationInput
 }
 
@@ -291,10 +291,10 @@ export type EvidenceWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"Evidence"> | string | null
   addedAt?: Prisma.DateTimeFilter<"Evidence"> | Date | string
   userId?: Prisma.IntFilter<"Evidence"> | number
-  postId?: Prisma.IntFilter<"Evidence"> | number
+  articleId?: Prisma.IntFilter<"Evidence"> | number
   verificationId?: Prisma.IntNullableFilter<"Evidence"> | number | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  post?: Prisma.XOR<Prisma.PostScalarRelationFilter, Prisma.PostWhereInput>
+  article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   verification?: Prisma.XOR<Prisma.VerificationNullableScalarRelationFilter, Prisma.VerificationWhereInput> | null
 }, "id">
 
@@ -306,7 +306,7 @@ export type EvidenceOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   addedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EvidenceCountOrderByAggregateInput
   _avg?: Prisma.EvidenceAvgOrderByAggregateInput
@@ -326,7 +326,7 @@ export type EvidenceScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"Evidence"> | string | null
   addedAt?: Prisma.DateTimeWithAggregatesFilter<"Evidence"> | Date | string
   userId?: Prisma.IntWithAggregatesFilter<"Evidence"> | number
-  postId?: Prisma.IntWithAggregatesFilter<"Evidence"> | number
+  articleId?: Prisma.IntWithAggregatesFilter<"Evidence"> | number
   verificationId?: Prisma.IntNullableWithAggregatesFilter<"Evidence"> | number | null
 }
 
@@ -337,7 +337,7 @@ export type EvidenceCreateInput = {
   description?: string | null
   addedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutEvidencesInput
-  post: Prisma.PostCreateNestedOneWithoutEvidencesInput
+  article: Prisma.ArticleCreateNestedOneWithoutEvidencesInput
   verification?: Prisma.VerificationCreateNestedOneWithoutEvidencesInput
 }
 
@@ -349,7 +349,7 @@ export type EvidenceUncheckedCreateInput = {
   description?: string | null
   addedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
   verificationId?: number | null
 }
 
@@ -360,7 +360,7 @@ export type EvidenceUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutEvidencesNestedInput
-  post?: Prisma.PostUpdateOneRequiredWithoutEvidencesNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutEvidencesNestedInput
   verification?: Prisma.VerificationUpdateOneWithoutEvidencesNestedInput
 }
 
@@ -372,7 +372,7 @@ export type EvidenceUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   verificationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -384,7 +384,7 @@ export type EvidenceCreateManyInput = {
   description?: string | null
   addedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
   verificationId?: number | null
 }
 
@@ -404,7 +404,7 @@ export type EvidenceUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   verificationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -426,14 +426,14 @@ export type EvidenceCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   addedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrder
 }
 
 export type EvidenceAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrder
 }
 
@@ -445,7 +445,7 @@ export type EvidenceMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   addedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrder
 }
 
@@ -457,14 +457,14 @@ export type EvidenceMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   addedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrder
 }
 
 export type EvidenceSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  postId?: Prisma.SortOrder
+  articleId?: Prisma.SortOrder
   verificationId?: Prisma.SortOrder
 }
 
@@ -510,45 +510,45 @@ export type EvidenceUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.EvidenceScalarWhereInput | Prisma.EvidenceScalarWhereInput[]
 }
 
-export type EvidenceCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput> | Prisma.EvidenceCreateWithoutPostInput[] | Prisma.EvidenceUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutPostInput | Prisma.EvidenceCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.EvidenceCreateManyPostInputEnvelope
+export type EvidenceCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput> | Prisma.EvidenceCreateWithoutArticleInput[] | Prisma.EvidenceUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutArticleInput | Prisma.EvidenceCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.EvidenceCreateManyArticleInputEnvelope
   connect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
 }
 
-export type EvidenceUncheckedCreateNestedManyWithoutPostInput = {
-  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput> | Prisma.EvidenceCreateWithoutPostInput[] | Prisma.EvidenceUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutPostInput | Prisma.EvidenceCreateOrConnectWithoutPostInput[]
-  createMany?: Prisma.EvidenceCreateManyPostInputEnvelope
+export type EvidenceUncheckedCreateNestedManyWithoutArticleInput = {
+  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput> | Prisma.EvidenceCreateWithoutArticleInput[] | Prisma.EvidenceUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutArticleInput | Prisma.EvidenceCreateOrConnectWithoutArticleInput[]
+  createMany?: Prisma.EvidenceCreateManyArticleInputEnvelope
   connect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
 }
 
-export type EvidenceUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput> | Prisma.EvidenceCreateWithoutPostInput[] | Prisma.EvidenceUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutPostInput | Prisma.EvidenceCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.EvidenceUpsertWithWhereUniqueWithoutPostInput | Prisma.EvidenceUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.EvidenceCreateManyPostInputEnvelope
+export type EvidenceUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput> | Prisma.EvidenceCreateWithoutArticleInput[] | Prisma.EvidenceUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutArticleInput | Prisma.EvidenceCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.EvidenceUpsertWithWhereUniqueWithoutArticleInput | Prisma.EvidenceUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.EvidenceCreateManyArticleInputEnvelope
   set?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   disconnect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   delete?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   connect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
-  update?: Prisma.EvidenceUpdateWithWhereUniqueWithoutPostInput | Prisma.EvidenceUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.EvidenceUpdateManyWithWhereWithoutPostInput | Prisma.EvidenceUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.EvidenceUpdateWithWhereUniqueWithoutArticleInput | Prisma.EvidenceUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.EvidenceUpdateManyWithWhereWithoutArticleInput | Prisma.EvidenceUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.EvidenceScalarWhereInput | Prisma.EvidenceScalarWhereInput[]
 }
 
-export type EvidenceUncheckedUpdateManyWithoutPostNestedInput = {
-  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput> | Prisma.EvidenceCreateWithoutPostInput[] | Prisma.EvidenceUncheckedCreateWithoutPostInput[]
-  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutPostInput | Prisma.EvidenceCreateOrConnectWithoutPostInput[]
-  upsert?: Prisma.EvidenceUpsertWithWhereUniqueWithoutPostInput | Prisma.EvidenceUpsertWithWhereUniqueWithoutPostInput[]
-  createMany?: Prisma.EvidenceCreateManyPostInputEnvelope
+export type EvidenceUncheckedUpdateManyWithoutArticleNestedInput = {
+  create?: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput> | Prisma.EvidenceCreateWithoutArticleInput[] | Prisma.EvidenceUncheckedCreateWithoutArticleInput[]
+  connectOrCreate?: Prisma.EvidenceCreateOrConnectWithoutArticleInput | Prisma.EvidenceCreateOrConnectWithoutArticleInput[]
+  upsert?: Prisma.EvidenceUpsertWithWhereUniqueWithoutArticleInput | Prisma.EvidenceUpsertWithWhereUniqueWithoutArticleInput[]
+  createMany?: Prisma.EvidenceCreateManyArticleInputEnvelope
   set?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   disconnect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   delete?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
   connect?: Prisma.EvidenceWhereUniqueInput | Prisma.EvidenceWhereUniqueInput[]
-  update?: Prisma.EvidenceUpdateWithWhereUniqueWithoutPostInput | Prisma.EvidenceUpdateWithWhereUniqueWithoutPostInput[]
-  updateMany?: Prisma.EvidenceUpdateManyWithWhereWithoutPostInput | Prisma.EvidenceUpdateManyWithWhereWithoutPostInput[]
+  update?: Prisma.EvidenceUpdateWithWhereUniqueWithoutArticleInput | Prisma.EvidenceUpdateWithWhereUniqueWithoutArticleInput[]
+  updateMany?: Prisma.EvidenceUpdateManyWithWhereWithoutArticleInput | Prisma.EvidenceUpdateManyWithWhereWithoutArticleInput[]
   deleteMany?: Prisma.EvidenceScalarWhereInput | Prisma.EvidenceScalarWhereInput[]
 }
 
@@ -604,7 +604,7 @@ export type EvidenceCreateWithoutUserInput = {
   file?: string | null
   description?: string | null
   addedAt?: Date | string
-  post: Prisma.PostCreateNestedOneWithoutEvidencesInput
+  article: Prisma.ArticleCreateNestedOneWithoutEvidencesInput
   verification?: Prisma.VerificationCreateNestedOneWithoutEvidencesInput
 }
 
@@ -615,7 +615,7 @@ export type EvidenceUncheckedCreateWithoutUserInput = {
   file?: string | null
   description?: string | null
   addedAt?: Date | string
-  postId: number
+  articleId: number
   verificationId?: number | null
 }
 
@@ -656,11 +656,11 @@ export type EvidenceScalarWhereInput = {
   description?: Prisma.StringNullableFilter<"Evidence"> | string | null
   addedAt?: Prisma.DateTimeFilter<"Evidence"> | Date | string
   userId?: Prisma.IntFilter<"Evidence"> | number
-  postId?: Prisma.IntFilter<"Evidence"> | number
+  articleId?: Prisma.IntFilter<"Evidence"> | number
   verificationId?: Prisma.IntNullableFilter<"Evidence"> | number | null
 }
 
-export type EvidenceCreateWithoutPostInput = {
+export type EvidenceCreateWithoutArticleInput = {
   type: $Enums.EvidenceType
   url?: string | null
   file?: string | null
@@ -670,7 +670,7 @@ export type EvidenceCreateWithoutPostInput = {
   verification?: Prisma.VerificationCreateNestedOneWithoutEvidencesInput
 }
 
-export type EvidenceUncheckedCreateWithoutPostInput = {
+export type EvidenceUncheckedCreateWithoutArticleInput = {
   id?: number
   type: $Enums.EvidenceType
   url?: string | null
@@ -681,30 +681,30 @@ export type EvidenceUncheckedCreateWithoutPostInput = {
   verificationId?: number | null
 }
 
-export type EvidenceCreateOrConnectWithoutPostInput = {
+export type EvidenceCreateOrConnectWithoutArticleInput = {
   where: Prisma.EvidenceWhereUniqueInput
-  create: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput>
+  create: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput>
 }
 
-export type EvidenceCreateManyPostInputEnvelope = {
-  data: Prisma.EvidenceCreateManyPostInput | Prisma.EvidenceCreateManyPostInput[]
+export type EvidenceCreateManyArticleInputEnvelope = {
+  data: Prisma.EvidenceCreateManyArticleInput | Prisma.EvidenceCreateManyArticleInput[]
   skipDuplicates?: boolean
 }
 
-export type EvidenceUpsertWithWhereUniqueWithoutPostInput = {
+export type EvidenceUpsertWithWhereUniqueWithoutArticleInput = {
   where: Prisma.EvidenceWhereUniqueInput
-  update: Prisma.XOR<Prisma.EvidenceUpdateWithoutPostInput, Prisma.EvidenceUncheckedUpdateWithoutPostInput>
-  create: Prisma.XOR<Prisma.EvidenceCreateWithoutPostInput, Prisma.EvidenceUncheckedCreateWithoutPostInput>
+  update: Prisma.XOR<Prisma.EvidenceUpdateWithoutArticleInput, Prisma.EvidenceUncheckedUpdateWithoutArticleInput>
+  create: Prisma.XOR<Prisma.EvidenceCreateWithoutArticleInput, Prisma.EvidenceUncheckedCreateWithoutArticleInput>
 }
 
-export type EvidenceUpdateWithWhereUniqueWithoutPostInput = {
+export type EvidenceUpdateWithWhereUniqueWithoutArticleInput = {
   where: Prisma.EvidenceWhereUniqueInput
-  data: Prisma.XOR<Prisma.EvidenceUpdateWithoutPostInput, Prisma.EvidenceUncheckedUpdateWithoutPostInput>
+  data: Prisma.XOR<Prisma.EvidenceUpdateWithoutArticleInput, Prisma.EvidenceUncheckedUpdateWithoutArticleInput>
 }
 
-export type EvidenceUpdateManyWithWhereWithoutPostInput = {
+export type EvidenceUpdateManyWithWhereWithoutArticleInput = {
   where: Prisma.EvidenceScalarWhereInput
-  data: Prisma.XOR<Prisma.EvidenceUpdateManyMutationInput, Prisma.EvidenceUncheckedUpdateManyWithoutPostInput>
+  data: Prisma.XOR<Prisma.EvidenceUpdateManyMutationInput, Prisma.EvidenceUncheckedUpdateManyWithoutArticleInput>
 }
 
 export type EvidenceCreateWithoutVerificationInput = {
@@ -714,7 +714,7 @@ export type EvidenceCreateWithoutVerificationInput = {
   description?: string | null
   addedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutEvidencesInput
-  post: Prisma.PostCreateNestedOneWithoutEvidencesInput
+  article: Prisma.ArticleCreateNestedOneWithoutEvidencesInput
 }
 
 export type EvidenceUncheckedCreateWithoutVerificationInput = {
@@ -725,7 +725,7 @@ export type EvidenceUncheckedCreateWithoutVerificationInput = {
   description?: string | null
   addedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
 }
 
 export type EvidenceCreateOrConnectWithoutVerificationInput = {
@@ -761,7 +761,7 @@ export type EvidenceCreateManyUserInput = {
   file?: string | null
   description?: string | null
   addedAt?: Date | string
-  postId: number
+  articleId: number
   verificationId?: number | null
 }
 
@@ -771,7 +771,7 @@ export type EvidenceUpdateWithoutUserInput = {
   file?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  post?: Prisma.PostUpdateOneRequiredWithoutEvidencesNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutEvidencesNestedInput
   verification?: Prisma.VerificationUpdateOneWithoutEvidencesNestedInput
 }
 
@@ -782,7 +782,7 @@ export type EvidenceUncheckedUpdateWithoutUserInput = {
   file?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   verificationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -793,11 +793,11 @@ export type EvidenceUncheckedUpdateManyWithoutUserInput = {
   file?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
   verificationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type EvidenceCreateManyPostInput = {
+export type EvidenceCreateManyArticleInput = {
   id?: number
   type: $Enums.EvidenceType
   url?: string | null
@@ -808,7 +808,7 @@ export type EvidenceCreateManyPostInput = {
   verificationId?: number | null
 }
 
-export type EvidenceUpdateWithoutPostInput = {
+export type EvidenceUpdateWithoutArticleInput = {
   type?: Prisma.EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   file?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -818,7 +818,7 @@ export type EvidenceUpdateWithoutPostInput = {
   verification?: Prisma.VerificationUpdateOneWithoutEvidencesNestedInput
 }
 
-export type EvidenceUncheckedUpdateWithoutPostInput = {
+export type EvidenceUncheckedUpdateWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,7 +829,7 @@ export type EvidenceUncheckedUpdateWithoutPostInput = {
   verificationId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
-export type EvidenceUncheckedUpdateManyWithoutPostInput = {
+export type EvidenceUncheckedUpdateManyWithoutArticleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
   url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -848,7 +848,7 @@ export type EvidenceCreateManyVerificationInput = {
   description?: string | null
   addedAt?: Date | string
   userId: number
-  postId: number
+  articleId: number
 }
 
 export type EvidenceUpdateWithoutVerificationInput = {
@@ -858,7 +858,7 @@ export type EvidenceUpdateWithoutVerificationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutEvidencesNestedInput
-  post?: Prisma.PostUpdateOneRequiredWithoutEvidencesNestedInput
+  article?: Prisma.ArticleUpdateOneRequiredWithoutEvidencesNestedInput
 }
 
 export type EvidenceUncheckedUpdateWithoutVerificationInput = {
@@ -869,7 +869,7 @@ export type EvidenceUncheckedUpdateWithoutVerificationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type EvidenceUncheckedUpdateManyWithoutVerificationInput = {
@@ -880,7 +880,7 @@ export type EvidenceUncheckedUpdateManyWithoutVerificationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   addedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  postId?: Prisma.IntFieldUpdateOperationsInput | number
+  articleId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -893,10 +893,10 @@ export type EvidenceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   description?: boolean
   addedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   verificationId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }, ExtArgs["result"]["evidence"]>
 
@@ -908,10 +908,10 @@ export type EvidenceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   description?: boolean
   addedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   verificationId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }, ExtArgs["result"]["evidence"]>
 
@@ -923,10 +923,10 @@ export type EvidenceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   description?: boolean
   addedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   verificationId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }, ExtArgs["result"]["evidence"]>
 
@@ -938,24 +938,24 @@ export type EvidenceSelectScalar = {
   description?: boolean
   addedAt?: boolean
   userId?: boolean
-  postId?: boolean
+  articleId?: boolean
   verificationId?: boolean
 }
 
-export type EvidenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "url" | "file" | "description" | "addedAt" | "userId" | "postId" | "verificationId", ExtArgs["result"]["evidence"]>
+export type EvidenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "url" | "file" | "description" | "addedAt" | "userId" | "articleId" | "verificationId", ExtArgs["result"]["evidence"]>
 export type EvidenceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }
 export type EvidenceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }
 export type EvidenceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  post?: boolean | Prisma.PostDefaultArgs<ExtArgs>
+  article?: boolean | Prisma.ArticleDefaultArgs<ExtArgs>
   verification?: boolean | Prisma.Evidence$verificationArgs<ExtArgs>
 }
 
@@ -963,7 +963,7 @@ export type $EvidencePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Evidence"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    post: Prisma.$PostPayload<ExtArgs>
+    article: Prisma.$ArticlePayload<ExtArgs>
     verification: Prisma.$VerificationPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -974,7 +974,7 @@ export type $EvidencePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     description: string | null
     addedAt: Date
     userId: number
-    postId: number
+    articleId: number
     verificationId: number | null
   }, ExtArgs["result"]["evidence"]>
   composites: {}
@@ -1371,7 +1371,7 @@ readonly fields: EvidenceFieldRefs;
 export interface Prisma__EvidenceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  post<T extends Prisma.PostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PostDefaultArgs<ExtArgs>>): Prisma.Prisma__PostClient<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  article<T extends Prisma.ArticleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ArticleDefaultArgs<ExtArgs>>): Prisma.Prisma__ArticleClient<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   verification<T extends Prisma.Evidence$verificationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Evidence$verificationArgs<ExtArgs>>): Prisma.Prisma__VerificationClient<runtime.Types.Result.GetResult<Prisma.$VerificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1409,7 +1409,7 @@ export interface EvidenceFieldRefs {
   readonly description: Prisma.FieldRef<"Evidence", 'String'>
   readonly addedAt: Prisma.FieldRef<"Evidence", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Evidence", 'Int'>
-  readonly postId: Prisma.FieldRef<"Evidence", 'Int'>
+  readonly articleId: Prisma.FieldRef<"Evidence", 'Int'>
   readonly verificationId: Prisma.FieldRef<"Evidence", 'Int'>
 }
     
