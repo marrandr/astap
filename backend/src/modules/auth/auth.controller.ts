@@ -10,6 +10,7 @@ import {
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 export interface UploadedFile {
   fieldname: string;
@@ -42,5 +43,9 @@ export class AuthController {
   )
   register(@Body() dto: RegisterDto, @UploadedFiles() files: UploadedProofs) {
     return this.auth.register(dto, files);
+  }
+  @Post('login')
+  async login(@Body() dto:LoginDto){
+    return this.auth.login(dto)
   }
 }

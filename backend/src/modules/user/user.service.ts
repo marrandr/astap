@@ -85,4 +85,11 @@ export class UsersService {
       proofBackUrl: user.proofBackUrl,
     };
   }
+  async findByEmail(email:string)
+  {
+    const user = await this.prisma.user.findUnique({where:{email}})
+    if (!user)
+      return null;
+    return user
+  }
 }

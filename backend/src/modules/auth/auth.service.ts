@@ -2,12 +2,16 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { UsersService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
 import { UploadedProofs } from './auth.controller';
+import { LoginDto } from './dto/login.dto';
+import { use } from 'passport';
+import { JwtService } from '@nestjs/jwt';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png'];
 
@@ -16,7 +20,8 @@ export class AuthService {
   constructor(
     private readonly users: UsersService,
     private readonly cloudinary: CloudinaryService,
-  ) {}
+    private readonly jtwService: JwtService
+  ) { }
 
   async register(dto: RegisterDto, files: UploadedProofs) {
     const front = files?.front?.[0];
@@ -36,14 +41,14 @@ export class AuthService {
 
     try {
       const passwordHash = await bcrypt.hash(dto.password, 10);
-   const user = await this.users.create({
-  name: dto.name,
-  email: dto.email,
-  passwordHash,
-  mediaId: dto.mediaId,
-  proofFrontUrl: frontRes.public_id,
-  proofBackUrl: backRes.public_id,
-});
+      const user = await this.users.create({
+        name: dto.name,
+        email: dto.email,
+        passwordHash,
+        mediaId: dto.mediaId,
+        proofFrontUrl: frontRes.public_id,
+        proofBackUrl: backRes.public_id,
+      });
 
       return {
         message:
@@ -57,5 +62,19 @@ export class AuthService {
       ]);
       throw error;
     }
+  }
+  async login(dto: LoginDto) {
+
+    const user = await this.users.findByEmail(dto.email)
+    if (!user)
+      throw new NotFoundException("Utilisateur introuvable")
+    const IsMatch = await bcrypt.compare(dto.password, user.passwordHash)
+    if (!IsMatch)
+      throw new BadRequestException("Identifiant invalide")
+    const payload = { sub: user.id, role: user.role }
+    return {
+      access_token: await this.jtwService.signAsync(payload)
+    }
+
   }
 }
