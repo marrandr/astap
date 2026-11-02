@@ -1,80 +1,96 @@
 .Login {
 
+	--login-checkbox-size: 15px;
+	--layout-width: 100vw;
     --login-width: 350px;
     --login-padding : 50px 50px;
     --input-padding: 10px 6px;
     --color-secondary: #088be5;
+	--color-third: #0a2c42;
 	--input-height: 30px;
-	--text-size: 14px;
-	--login-gap: 20px;
+	--text-size: 12px;
+	--title-size: 24px;
+	--login-gap: 5px;
 
-
-    min-width: var(--login-width);
-    height: fit-content;
-    border-radius: 10px;
-    padding: var(--login-padding);
-	user-select: none;
-	/* box-shadow: 0px 0px 4px black; */
-}
-
-.Input {
 
     width: fit-content;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    gap: var(--login-gap);
+    height: 100vh;
+	border-radius: 6px;
+	overflow: hidden;
+    border-radius: 0px;
+    padding: 0;
+	user-select: none;
+	display: grid;
+	grid-template-areas: "left right";
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0px 0px 4px black;
 }
 
-.Input > label {
+.Login > div {
 
-    margin: 0;
-    color: calc(--text);
-    color: black;
-    font-weight: 550;
-	cursor: pointer;
+	margin: 0;
+	width: calc(var(--layout-width) / 2);
+	height: 100%;
 }
 
-.Input > input {
+.LoginLeft {
+	grid-area: left;
+	background-color: var(--color-third);
+}
 
-    width: calc(var(--login-width));
+.LoginRight {
+
+	grid-area: right;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: calc(var(--login-gap) * 4);
+}
+
+
+.LoginRight > p.title {
+
+	font-size: var(--title-size);
+	font-weight: 600;
+	background-image: linear-gradient(to right, var(--color-secondary), var(--color-third));
+	background-clip: text;
+	color: transparent;
+}
+
+.LoginRight > button {
+	
+	width: calc(var(--login-width));
     font-size: var(--text-size);
-    border: 1px solid black;
+    border: none;
     outline: none;
     border-radius: 6px;
     padding: var(--input-padding);
     align-self: center;
-    background-color: transparent;
+    color: white;
+    background-color: var(--color-secondary);
 	box-sizing: border-box;
 	cursor: pointer;
+	
 }
 
-.Input > button {
-
-    width: calc(var(--login-width));
-	padding: var(--input-padding);
-    border: 1px  solid var(--color-secondary);
-    align-self: center;
-    background-color: var(--color-secondary);
-    font-size: var(--text-size);
-    color: white;
-    font-weight: 550;
-    letter-spacing: 3px;
-    border-radius: 6px;
-	box-sizing: border-box;
-	cursor: pointer;
+.LoginRight > button:hover {
+	
+	box-shadow: 0px 2px 5px gray;
+	margin-top: -1px;
+	margin-bottom: 1px;
 }
 
 .LoginSeparator {
 
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
+	flex-direction: row;
 	align-items: center;
 	width: var(--login-width);
-	margin: var(--login-gap) auto;
+	margin: 0;
 	cursor: pointer;
 }
 
@@ -84,6 +100,7 @@
 	padding: 0;
 	display: inline;
 	text-align: center;
+	font-size: var(--text-size);
 }
 
 .LoginSeparator > div {
@@ -112,9 +129,39 @@
     font-size: var(--text-size);
 }
 
+.ContinueGoogle:hover {
+
+	background-color: rgba(10, 10, 10, 0.1);
+	margin-top: 1px;
+	margin-bottom: -1px;
+}
+
 .ContinueGoogle > p {
 
 	margin: 0;
 	padding: 0;
 }
 
+.ShowPassword {
+	
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+	gap: 6px;
+	font-size: var(--text-size);
+	color: var(--color-secondary);
+}
+
+.ShowPassword > label {
+
+	cursor: pointer;
+}
+
+.ShowPassword > input {
+
+	cursor: pointer;
+	width: var(--login-checkbox-size);
+	height: var(--login-checkbox-size);
+}

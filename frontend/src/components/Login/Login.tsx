@@ -1,25 +1,19 @@
 import './Login.css';
-import Google from './Google.svg';
+import Google from '../../assets/new_account.png';
+import Input from '../Input/Input';
 
-interface InputProps {
-	name : string;
-	children : string;
-	type : string;
-	buttonText : string
-	holder: string
-}
 
 interface Text {
 	children : string
 }
 
-interface ContinueGoogleProps {
+interface SignUp {
 	src : string;
 	size : number;
 	children : string;
 }
 
-const ContinueGoogle = ({src, size, children} : ContinueGoogleProps) => {
+const SignUp = ({src, size, children} : SignUp) => {
 	return (
 		<div className='ContinueGoogle'>
 			<img src={src} width={size} height={ size } />
@@ -36,22 +30,19 @@ const LoginSeparator = ({children} : Text) => (
     </div>
 )
 
-const Input = ({name, children, type, buttonText, holder} : InputProps) => {
-  
-  return (
-    <div className='Input'>
-      <label htmlFor={name}>{ children }</label>
-      <input type={type} id={name} name={name} placeholder={ holder } />
-      <button>{buttonText}</button>
-    </div>
-  )
-}
 
 const Login = () => (
   <div className="Login">
-    <Input name='email' type='email' buttonText='continuer' holder='Saisissez votre adresse e-mail'>Se connecter</Input>
-	<LoginSeparator>ou</LoginSeparator>
-	<ContinueGoogle size={20} src={Google}>Continuer avec google</ContinueGoogle>
+	<div className='LoginLeft'>
+	</div>
+	<div className='LoginRight'>
+		<p className='title'>Se connecter</p>
+		<Input name='email' type='email' holder='Saisissez votre adresse e-mail'>E-mail</Input>
+		<Input name='email' type='password' holder='Saisissez votre mot de passe'>Mot de passe</Input>
+		<button>continuer</button>
+		<LoginSeparator>ou</LoginSeparator>
+		<SignUp size={20} src={Google}>S'incrire</SignUp>
+	</div>
   </div>
 );
 
