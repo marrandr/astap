@@ -6,8 +6,225 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Verdict {
+  CONFIRMED
+  DISPUTED
+}
+
+enum PostStatus {
+  NEW
+  IN_PROGRESS
+  CONFIRMED
+  CONTRADICTED
+  PARTIALLY_TRUE
+  MISLEADING
+  MISSING_CONTEXT
+}
+
+enum RelationType {
+  SUPPORTS
+  CONTRADICTS
+}
+
+enum EvidenceType {
+  DIRECT_WITNESS
+  DOCUMENT
+  OFFICIAL_SOURCE
+  LINK
+  PHOTO
+  VIDEO
+}
+
+model Media {
+  id       Int     @id @default(autoincrement()) @map("media_id")
+  name     String
+  mediaType String @map("media_type")
+  city     String?
+  website  String?
+  users    User[]
+
+  @@map("media")
+}
+
+model Topic {
+  id    Int    @id @default(autoincrement()) @map("topic_id")
+  label String @unique
+  posts Post[]
+
+  @@map("topic")
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id             Int      @id @default(autoincrement()) @map("user_id")
+  lastName       String   @map("last_name")
+  firstName      String   @map("first_name")
+  email          String   @unique
+  passwordHash   String   @map("password_hash")
+  isVerified     Boolean  @default(false) @map("is_verified")
+  reputation     Int      @default(0)
+  registeredAt   DateTime @default(now()) @map("registered_at")
+  mediaId        Int?     @map("media_id")
+
+  media Media? @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+
+  posts               Post[]
+  verifications       Verification[]
+  evidences           Evidence[]
+  comments            Comment[]
+  externalPublications ExternalPublication[]
+
+  @@index([mediaId])
+  @@map("user")
+}
+
+model Post {
+  id              Int           @id @default(autoincrement()) @map("post_id")
+  title           String
+  content         String
+  location        String?
+  eventDate       DateTime?     @map("event_date")
+  publishedAt     DateTime      @default(now()) @map("published_at")
+  status          PostStatus    @default(NEW)
+  confidenceScore Float?        @map("confidence_score")
+  relationType    RelationType? @map("relation_type")
+
+  authorId     Int  @map("author_id")
+  topicId      Int  @map("topic_id")
+  parentPostId Int? @map("parent_post_id")
+
+  author User  @relation(fields: [authorId], references: [id])
+  topic  Topic @relation(fields: [topicId], references: [id])
+
+  // Self-relation: supporting sub-posts / contradicting anti-posts
+  parent   Post?  @relation("PostParent", fields: [parentPostId], references: [id], onDelete: Restrict)
+  children Post[] @relation("PostParent")
+
+  verifications        Verification[]
+  evidences            Evidence[]
+  comments             Comment[]
+  externalPublications ExternalPublication[]
+  images               Image[]
+
+  @@index([authorId])
+  @@index([topicId])
+  @@index([parentPostId])
+  @@map("post")
+}
+
+model Verification {
+  id             Int      @id @default(autoincrement()) @map("verification_id")
+  verdict        Verdict
+  justification  String
+  verifiedAt     DateTime @default(now()) @map("verified_at")
+
+  userId Int @map("user_id")
+  postId Int @map("post_id")
+
+  user      User       @relation(fields: [userId], references: [id])
+  post      Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  evidences Evidence[]
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@map("verification")
+}
+
+model Evidence {
+  id          Int          @id @default(autoincrement()) @map("evidence_id")
+  type        EvidenceType
+  url         String?
+  file        String?
+  description String?
+  addedAt     DateTime     @default(now()) @map("added_at")
+
+  userId         Int  @map("user_id")
+  postId         Int  @map("post_id")
+  verificationId Int? @map("verification_id")
+
+  user         User          @relation(fields: [userId], references: [id])
+  post         Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  verification Verification? @relation(fields: [verificationId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([postId])
+  @@index([verificationId])
+  @@map("evidence")
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement()) @map("comment_id")
+  content     String
+  commentedAt DateTime @default(now()) @map("commented_at")
+
+  userId Int @map("user_id")
+  postId Int @map("post_id")
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([postId])
+  @@map("comment")
+}
+
+model ExternalPublication {
+  id              Int       @id @default(autoincrement()) @map("publication_id")
+  platform        String
+  url             String
+  authorName      String?   @map("author_name")
+  authorType      String?   @map("author_type")
+  excerpt         String?
+  externalPostedAt DateTime? @map("external_posted_at")
+  collectedAt     DateTime  @default(now()) @map("collected_at")
+
+  postId Int @map("post_id")
+  userId Int @map("user_id")
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
+
+  images    Image[]
+  analyses  AiAnalysis[]
+
+  @@index([postId])
+  @@index([userId])
+  @@map("external_publication")
+}
+
+model Image {
+  id              Int       @id @default(autoincrement()) @map("image_id")
+  fileUrl         String    @map("file_url")
+  perceptualHash  String?   @map("perceptual_hash")
+  firstSeenAt     DateTime? @map("first_seen_at")
+
+  postId        Int? @map("post_id")
+  publicationId Int? @map("publication_id")
+
+  post        Post?                @relation(fields: [postId], references: [id], onDelete: Cascade)
+  publication ExternalPublication? @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  analyses AiAnalysis[]
+
+  @@index([postId])
+  @@index([publicationId])
+  @@index([perceptualHash])
+  @@map("image")
+}
+
+model AiAnalysis {
+  id          Int      @id @default(autoincrement()) @map("analysis_id")
+  aiScore     Float    @map("ai_score")
+  modelUsed   String   @map("model_used")
+  detail      Json?
+  analyzedAt  DateTime @default(now()) @map("analyzed_at")
+
+  publicationId Int? @map("publication_id")
+  imageId       Int? @map("image_id")
+
+  publication ExternalPublication? @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  image       Image?               @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@index([publicationId])
+  @@index([imageId])
+  @@map("ai_analysis")
 }
