@@ -10,8 +10,9 @@ import {
 
 export class RegisterDto {
 
+  @IsString()
+  @MinLength(2)
   name!: string;
-
   @Transform(({ value }) =>
     typeof value === 'string' ? value.trim().toLowerCase() : value,
   )

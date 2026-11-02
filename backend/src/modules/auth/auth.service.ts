@@ -36,12 +36,14 @@ export class AuthService {
 
     try {
       const passwordHash = await bcrypt.hash(dto.password, 10);
-      const user = await this.users.create({
-        name: dto.name,
-        email: dto.email,
-        passwordHash,
-        mediaId: dto.mediaId,
-      });
+   const user = await this.users.create({
+  name: dto.name,
+  email: dto.email,
+  passwordHash,
+  mediaId: dto.mediaId,
+  proofFrontUrl: frontRes.public_id,
+  proofBackUrl: backRes.public_id,
+});
 
       return {
         message:
