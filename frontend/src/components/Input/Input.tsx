@@ -9,6 +9,7 @@ interface InputProps {
 	children : string;
 	type : string;
 	holder: string
+	icon: string | null;
 }
 
 interface ShowPasswordProps {
@@ -24,7 +25,7 @@ const ShowPassword = ({source, click, size} : ShowPasswordProps) => {
 	)
 }
 
-const Input = ({name, children, type, holder} : InputProps) => {
+const Input = ({name, children, type, holder, icon = null} : InputProps) => {
 
 	const [passwd, setPasswd] = useState<string>(type);
 	const [srcs, setSrcs] = useState<string>(Shown);
@@ -38,18 +39,19 @@ const Input = ({name, children, type, holder} : InputProps) => {
 		} else {
 
 			setSrcs(Shown);
-			setPasswd('password')
+			setPasswd('password');
 		}
 	}
-
-	const showPassword = type == 'password' ? <ShowPassword source={srcs} size={30} click={changePasswd} /> : <></>;
 
 	return (
     	<div className='Input'>
     		<label htmlFor={name}>{ children }</label>
 			<div>
+				{icon != null && <span className='left'>{ <ShowPassword source={icon} size={30} click={null} /> }</span> }
 				<input type={passwd} id={name} name={name} placeholder={ holder } />
-				<span>{ showPassword }</span>
+				{type == 'password' && <span className='right'>{
+					<ShowPassword source={srcs} size={30} click={changePasswd} />
+				}</span>}
 			</div>
 		</div>
 	)

@@ -37,6 +37,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+    gap: 6px;
 }
 
 .Input > div > input {
@@ -53,9 +54,18 @@
 	display: grid;
 	justify-content: center;
 	align-items: center;
-	margin-right: 6px;
 	width: var(--login-checkbox-size);
 	height: var(--login-checkbox-size);
+}
+
+.Input > div > span.right {
+	
+    margin-right: 6px;
+}
+
+.Input > div > span.left {
+	
+    margin-left: 6px;
 }
 
 .Input > div > span > img {

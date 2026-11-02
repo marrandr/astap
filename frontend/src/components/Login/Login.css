@@ -1,18 +1,5 @@
 .Login {
 
-	--login-checkbox-size: 15px;
-	--layout-width: 100vw;
-    --login-width: 350px;
-    --login-padding : 50px 50px;
-    --input-padding: 10px 6px;
-    --color-secondary: #088be5;
-	--color-third: #0a2c42;
-	--input-height: 30px;
-	--text-size: 12px;
-	--title-size: 24px;
-	--login-gap: 5px;
-
-
     width: fit-content;
     height: 100vh;
 	border-radius: 6px;
@@ -83,35 +70,6 @@
 	margin-bottom: 1px;
 }
 
-.LoginSeparator {
-
-	display: flex;
-	justify-content: center;
-	flex-direction: row;
-	align-items: center;
-	width: var(--login-width);
-	margin: 0;
-	cursor: pointer;
-}
-
-.LoginSeparator > p {
-
-	margin: 0 10px;
-	padding: 0;
-	display: inline;
-	text-align: center;
-	font-size: var(--text-size);
-}
-
-.LoginSeparator > div {
-
-	margin: 0;
-	padding: 0;
-	height: 1px;
-	width: 40%;
-	background-color: var(--text)
-}
-
 .ContinueGoogle {
 
 	display: flex;
@@ -140,28 +98,4 @@
 
 	margin: 0;
 	padding: 0;
-}
-
-.ShowPassword {
-	
-	cursor: pointer;
-	display: flex;
-	flex-direction: row;
-	justify-content: start;
-	align-items: center;
-	gap: 6px;
-	font-size: var(--text-size);
-	color: var(--color-secondary);
-}
-
-.ShowPassword > label {
-
-	cursor: pointer;
-}
-
-.ShowPassword > input {
-
-	cursor: pointer;
-	width: var(--login-checkbox-size);
-	height: var(--login-checkbox-size);
 }

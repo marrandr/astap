@@ -1,11 +1,8 @@
 import './Login.css';
-import Google from '../../assets/new_account.png';
+import account from '../../assets/new_account.png';
 import Input from '../Input/Input';
-
-
-interface Text {
-	children : string
-}
+import LoginSeparator from '../LoginSeparator/LoginSeparator';
+import { useNavigate } from 'react-router';
 
 interface SignUp {
 	src : string;
@@ -14,36 +11,30 @@ interface SignUp {
 }
 
 const SignUp = ({src, size, children} : SignUp) => {
+	
+	const navigate = useNavigate();
+	
 	return (
-		<div className='ContinueGoogle'>
+		<div onClick={ () => { navigate("/signup"); }} className='ContinueGoogle'>
 			<img src={src} width={size} height={ size } />
 			<p>{ children }</p>
 		</div>
 	)
 }
 
-const LoginSeparator = ({children} : Text) => (
-    <div className='LoginSeparator'>
-      <div></div>
-      <p>{children}</p>
-      <div></div>
-    </div>
-)
-
-
 const Login = () => (
-  <div className="Login">
+  <form className="Login">
 	<div className='LoginLeft'>
 	</div>
 	<div className='LoginRight'>
 		<p className='title'>Se connecter</p>
-		<Input name='email' type='email' holder='Saisissez votre adresse e-mail'>E-mail</Input>
-		<Input name='email' type='password' holder='Saisissez votre mot de passe'>Mot de passe</Input>
+		<Input icon={ null } name='email' type='email' holder='Saisissez votre adresse e-mail'>E-mail</Input>
+		<Input icon={ null } name='email' type='password' holder='Saisissez votre mot de passe'>Mot de passe</Input>
 		<button>continuer</button>
 		<LoginSeparator>ou</LoginSeparator>
-		<SignUp size={20} src={Google}>S'incrire</SignUp>
+		<SignUp size={20} src={account}>S'incrire</SignUp>
 	</div>
-  </div>
+  </form>
 );
 
 export default Login;

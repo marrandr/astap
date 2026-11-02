@@ -1,4 +1,18 @@
 :root {
+  
+  --login-checkbox-size: 15px;
+  --layout-width: 100vw;
+  --login-width: 350px;
+  --login-padding : 50px 50px;
+  --input-padding: 10px 6px;
+  --color-secondary: #088be5;
+  --color-third: #0a2c42;
+  --input-height: 30px;
+  --text-size: 12px;
+  --title-size: 24px;
+  --login-gap: 5px;
+
+
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
