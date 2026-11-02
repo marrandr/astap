@@ -12,6 +12,8 @@
 
 import { useMemo, useState, type FormEvent } from "react";
 import { Bell, Check, Eye, FileCheck2, Menu, MessageCircle, Search, Share2, ShieldCheck, ArrowUpRight, X } from "lucide-react";
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../lib/auth';
 import "./Home.css";
 
 type Verdict = "FAUX" | "À VÉRIFIER" | "VRAI";
@@ -40,11 +42,28 @@ function StatusBadge({ verdict }: { verdict: Verdict }) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
   return <header className="home-navbar">
     <div className="home-container nav-inner">
       <a href="/" className="home-brand" aria-label="Hamarino.io, accueil"><span className="brand-icon"><ShieldCheck size={23}/></span><span>hamarino<span className="accent">.io</span></span></a>
       <nav className="desktop-nav" aria-label="Navigation principale"><a href="/" aria-current="page">Accueil</a><a href="#verifications">Vérifications</a><a href="#a-propos">À propos</a></nav>
-      <div className="nav-actions"><button type="button" className="icon-button" aria-label="Notifications"><Bell size={19}/></button><span className="nav-avatar" aria-label="Profil de démonstration">RH</span></div>
+      <div className="nav-actions">
+        <button type="button" className="icon-button" aria-label="Notifications"><Bell size={19}/></button>
+        <span className="nav-avatar" aria-label="Profil de démonstration">RH</span>
+        <button
+          type="button"
+          className="primary-button"
+          onClick={() => {
+            logout();
+            navigate('/auth/login');
+          }}
+          style={{ marginLeft: 12 }}
+        >
+          Déconnexion
+        </button>
+      </div>
       <button className="menu-toggle" type="button" aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button>
     </div>
     {open && <nav className="mobile-nav" aria-label="Navigation mobile"><a href="/">Accueil</a><a href="#verifications" onClick={() => setOpen(false)}>Vérifications</a><a href="#a-propos" onClick={() => setOpen(false)}>À propos</a></nav>}

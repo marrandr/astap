@@ -154,13 +154,15 @@ export class AuthService {
         emailCodeExpiresAt: null,
         emailCodeSentAt: null,
         emailCodeAttempts: 0,
-        verified:true
+        verified: true,
       },
     });
 
+    const payload = { sub: user.id, role: user.role };
+
     return {
-      message:
-        "Email vérifié. Votre compte attend la validation d'un administrateur.",
+      access_token: await this.jtwService.signAsync(payload),
+      message: "Email vérifié. Votre compte attend la validation d'un administrateur.",
     };
   }
 }
