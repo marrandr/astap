@@ -109,6 +109,7 @@ export const UserScalarFieldEnum = {
   registeredAt: 'registeredAt',
   mediaId: 'mediaId',
   role: 'role',
+  status: 'status',
   verified: 'verified'
 } as const
 

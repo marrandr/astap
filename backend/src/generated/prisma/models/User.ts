@@ -49,6 +49,7 @@ export type UserMinAggregateOutputType = {
   registeredAt: Date | null
   mediaId: number | null
   role: $Enums.Role | null
+  status: $Enums.Status | null
   verified: boolean | null
 }
 
@@ -63,6 +64,7 @@ export type UserMaxAggregateOutputType = {
   registeredAt: Date | null
   mediaId: number | null
   role: $Enums.Role | null
+  status: $Enums.Status | null
   verified: boolean | null
 }
 
@@ -77,6 +79,7 @@ export type UserCountAggregateOutputType = {
   registeredAt: number
   mediaId: number
   role: number
+  status: number
   verified: number
   _all: number
 }
@@ -105,6 +108,7 @@ export type UserMinAggregateInputType = {
   registeredAt?: true
   mediaId?: true
   role?: true
+  status?: true
   verified?: true
 }
 
@@ -119,6 +123,7 @@ export type UserMaxAggregateInputType = {
   registeredAt?: true
   mediaId?: true
   role?: true
+  status?: true
   verified?: true
 }
 
@@ -133,6 +138,7 @@ export type UserCountAggregateInputType = {
   registeredAt?: true
   mediaId?: true
   role?: true
+  status?: true
   verified?: true
   _all?: true
 }
@@ -234,6 +240,7 @@ export type UserGroupByOutputType = {
   registeredAt: Date
   mediaId: number | null
   role: $Enums.Role
+  status: $Enums.Status
   verified: boolean
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -271,6 +278,7 @@ export type UserWhereInput = {
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   verified?: Prisma.BoolFilter<"User"> | boolean
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
@@ -291,6 +299,7 @@ export type UserOrderByWithRelationInput = {
   registeredAt?: Prisma.SortOrder
   mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   media?: Prisma.MediaOrderByWithRelationInput
   posts?: Prisma.PostOrderByRelationAggregateInput
@@ -314,6 +323,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   verified?: Prisma.BoolFilter<"User"> | boolean
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
@@ -334,6 +344,7 @@ export type UserOrderByWithAggregationInput = {
   registeredAt?: Prisma.SortOrder
   mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   verified?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -356,6 +367,7 @@ export type UserScalarWhereWithAggregatesInput = {
   registeredAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   mediaId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  status?: Prisma.EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
   verified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
 }
 
@@ -367,7 +379,8 @@ export type UserCreateInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -387,7 +400,8 @@ export type UserUncheckedCreateInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -405,6 +419,7 @@ export type UserUpdateInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -425,6 +440,7 @@ export type UserUncheckedUpdateInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -443,7 +459,8 @@ export type UserCreateManyInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
 }
 
@@ -456,6 +473,7 @@ export type UserUpdateManyMutationInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -470,6 +488,7 @@ export type UserUncheckedUpdateManyInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -494,6 +513,7 @@ export type UserCountOrderByAggregateInput = {
   registeredAt?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   verified?: Prisma.SortOrder
 }
 
@@ -514,6 +534,7 @@ export type UserMaxOrderByAggregateInput = {
   registeredAt?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   verified?: Prisma.SortOrder
 }
 
@@ -528,6 +549,7 @@ export type UserMinOrderByAggregateInput = {
   registeredAt?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   verified?: Prisma.SortOrder
 }
 
@@ -594,6 +616,10 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
+}
+
+export type EnumStatusFieldUpdateOperationsInput = {
+  set?: $Enums.Status
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -682,7 +708,8 @@ export type UserCreateWithoutMediaInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -700,7 +727,8 @@ export type UserUncheckedCreateWithoutMediaInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -749,6 +777,7 @@ export type UserScalarWhereInput = {
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   verified?: Prisma.BoolFilter<"User"> | boolean
 }
 
@@ -760,7 +789,8 @@ export type UserCreateWithoutPostsInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -779,7 +809,8 @@ export type UserUncheckedCreateWithoutPostsInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -812,6 +843,7 @@ export type UserUpdateWithoutPostsInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -831,6 +863,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -846,7 +879,8 @@ export type UserCreateWithoutVerificationsInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -865,7 +899,8 @@ export type UserUncheckedCreateWithoutVerificationsInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -898,6 +933,7 @@ export type UserUpdateWithoutVerificationsInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -917,6 +953,7 @@ export type UserUncheckedUpdateWithoutVerificationsInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -932,7 +969,8 @@ export type UserCreateWithoutEvidencesInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -951,7 +989,8 @@ export type UserUncheckedCreateWithoutEvidencesInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -984,6 +1023,7 @@ export type UserUpdateWithoutEvidencesInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1003,6 +1043,7 @@ export type UserUncheckedUpdateWithoutEvidencesInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1018,7 +1059,8 @@ export type UserCreateWithoutCommentsInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1037,7 +1079,8 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -1070,6 +1113,7 @@ export type UserUpdateWithoutCommentsInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1089,6 +1133,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1104,7 +1149,8 @@ export type UserCreateWithoutExternalPublicationsInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
@@ -1123,7 +1169,8 @@ export type UserUncheckedCreateWithoutExternalPublicationsInput = {
   reputation?: number
   registeredAt?: Date | string
   mediaId?: number | null
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -1156,6 +1203,7 @@ export type UserUpdateWithoutExternalPublicationsInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
@@ -1175,6 +1223,7 @@ export type UserUncheckedUpdateWithoutExternalPublicationsInput = {
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1191,7 +1240,8 @@ export type UserCreateManyMediaInput = {
   isVerified?: boolean
   reputation?: number
   registeredAt?: Date | string
-  role: $Enums.Role
+  role?: $Enums.Role
+  status?: $Enums.Status
   verified?: boolean
 }
 
@@ -1204,6 +1254,7 @@ export type UserUpdateWithoutMediaInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1222,6 +1273,7 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1240,6 +1292,7 @@ export type UserUncheckedUpdateManyWithoutMediaInput = {
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -1321,6 +1374,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   registeredAt?: boolean
   mediaId?: boolean
   role?: boolean
+  status?: boolean
   verified?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -1342,6 +1396,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   registeredAt?: boolean
   mediaId?: boolean
   role?: boolean
+  status?: boolean
   verified?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1357,6 +1412,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   registeredAt?: boolean
   mediaId?: boolean
   role?: boolean
+  status?: boolean
   verified?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1372,10 +1428,11 @@ export type UserSelectScalar = {
   registeredAt?: boolean
   mediaId?: boolean
   role?: boolean
+  status?: boolean
   verified?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lastName" | "firstName" | "email" | "passwordHash" | "isVerified" | "reputation" | "registeredAt" | "mediaId" | "role" | "verified", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lastName" | "firstName" | "email" | "passwordHash" | "isVerified" | "reputation" | "registeredAt" | "mediaId" | "role" | "status" | "verified", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -1413,6 +1470,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     registeredAt: Date
     mediaId: number | null
     role: $Enums.Role
+    status: $Enums.Status
     verified: boolean
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1853,6 +1911,7 @@ export interface UserFieldRefs {
   readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly mediaId: Prisma.FieldRef<"User", 'Int'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
+  readonly status: Prisma.FieldRef<"User", 'Status'>
   readonly verified: Prisma.FieldRef<"User", 'Boolean'>
 }
     

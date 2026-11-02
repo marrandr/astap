@@ -7,6 +7,10 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
   @Patch("validate")
   async validateUser(@Body() dto:ValidateUserDto){
+    return this.adminService.validateUser(dto)
+  }
+  @Post("create-admin")
+  async createAdmin(){
 
   }
 }
