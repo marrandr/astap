@@ -9,7 +9,59 @@
 * 🟢 You can import this file directly.
 */
 
+export const Verdict = {
+  CONFIRMED: 'CONFIRMED',
+  DISPUTED: 'DISPUTED'
+} as const
+
+export type Verdict = (typeof Verdict)[keyof typeof Verdict]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const Role = {
+  ADMIN: 'ADMIN',
+  PERSONAL: 'PERSONAL'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const Status = {
+  VALIDATE: 'VALIDATE',
+  PENDING: 'PENDING',
+  REFUSED: 'REFUSED'
+} as const
+
+export type Status = (typeof Status)[keyof typeof Status]
+
+
+export const PostStatus = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  CONFIRMED: 'CONFIRMED',
+  CONTRADICTED: 'CONTRADICTED',
+  PARTIALLY_TRUE: 'PARTIALLY_TRUE',
+  MISLEADING: 'MISLEADING',
+  MISSING_CONTEXT: 'MISSING_CONTEXT'
+} as const
+
+export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus]
+
+
+export const RelationType = {
+  SUPPORTS: 'SUPPORTS',
+  CONTRADICTS: 'CONTRADICTS'
+} as const
+
+export type RelationType = (typeof RelationType)[keyof typeof RelationType]
+
+
+export const EvidenceType = {
+  DIRECT_WITNESS: 'DIRECT_WITNESS',
+  DOCUMENT: 'DOCUMENT',
+  OFFICIAL_SOURCE: 'OFFICIAL_SOURCE',
+  LINK: 'LINK',
+  PHOTO: 'PHOTO',
+  VIDEO: 'VIDEO'
+} as const
+
+export type EvidenceType = (typeof EvidenceType)[keyof typeof EvidenceType]

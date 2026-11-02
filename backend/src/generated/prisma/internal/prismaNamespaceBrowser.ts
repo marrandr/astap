@@ -51,7 +51,16 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  Media: 'Media',
+  Topic: 'Topic',
+  User: 'User',
+  Post: 'Post',
+  Verification: 'Verification',
+  Evidence: 'Evidence',
+  Comment: 'Comment',
+  ExternalPublication: 'ExternalPublication',
+  Image: 'Image',
+  AiAnalysis: 'AiAnalysis'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -68,4 +77,178 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const MediaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  mediaType: 'mediaType',
+  city: 'city',
+  website: 'website'
+} as const
+
+export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum]
+
+
+export const TopicScalarFieldEnum = {
+  id: 'id',
+  label: 'label'
+} as const
+
+export type TopicScalarFieldEnum = (typeof TopicScalarFieldEnum)[keyof typeof TopicScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  lastName: 'lastName',
+  firstName: 'firstName',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  isVerified: 'isVerified',
+  reputation: 'reputation',
+  registeredAt: 'registeredAt',
+  mediaId: 'mediaId',
+  role: 'role',
+  verified: 'verified'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  location: 'location',
+  eventDate: 'eventDate',
+  publishedAt: 'publishedAt',
+  status: 'status',
+  confidenceScore: 'confidenceScore',
+  relationType: 'relationType',
+  authorId: 'authorId',
+  topicId: 'topicId',
+  parentPostId: 'parentPostId'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const VerificationScalarFieldEnum = {
+  id: 'id',
+  verdict: 'verdict',
+  justification: 'justification',
+  verifiedAt: 'verifiedAt',
+  userId: 'userId',
+  postId: 'postId'
+} as const
+
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const EvidenceScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  url: 'url',
+  file: 'file',
+  description: 'description',
+  addedAt: 'addedAt',
+  userId: 'userId',
+  postId: 'postId',
+  verificationId: 'verificationId'
+} as const
+
+export type EvidenceScalarFieldEnum = (typeof EvidenceScalarFieldEnum)[keyof typeof EvidenceScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  commentedAt: 'commentedAt',
+  userId: 'userId',
+  postId: 'postId'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+export const ExternalPublicationScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  url: 'url',
+  authorName: 'authorName',
+  authorType: 'authorType',
+  excerpt: 'excerpt',
+  externalPostedAt: 'externalPostedAt',
+  collectedAt: 'collectedAt',
+  postId: 'postId',
+  userId: 'userId'
+} as const
+
+export type ExternalPublicationScalarFieldEnum = (typeof ExternalPublicationScalarFieldEnum)[keyof typeof ExternalPublicationScalarFieldEnum]
+
+
+export const ImageScalarFieldEnum = {
+  id: 'id',
+  fileUrl: 'fileUrl',
+  perceptualHash: 'perceptualHash',
+  firstSeenAt: 'firstSeenAt',
+  postId: 'postId',
+  publicationId: 'publicationId'
+} as const
+
+export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+export const AiAnalysisScalarFieldEnum = {
+  id: 'id',
+  aiScore: 'aiScore',
+  modelUsed: 'modelUsed',
+  detail: 'detail',
+  analyzedAt: 'analyzedAt',
+  publicationId: 'publicationId',
+  imageId: 'imageId'
+} as const
+
+export type AiAnalysisScalarFieldEnum = (typeof AiAnalysisScalarFieldEnum)[keyof typeof AiAnalysisScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

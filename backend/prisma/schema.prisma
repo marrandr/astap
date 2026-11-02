@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output  = "../src/generated/prisma"
 }
 
 datasource db {
@@ -75,7 +76,8 @@ model User {
   reputation     Int      @default(0)
   registeredAt   DateTime @default(now()) @map("registered_at")
   mediaId        Int?     @map("media_id")
-  role          Role
+   role         Role          @default(PERSONAL)
+  status        Status @default(PENDING)
   media Media? @relation(fields: [mediaId], references: [id], onDelete: SetNull)
 
   posts               Post[]
