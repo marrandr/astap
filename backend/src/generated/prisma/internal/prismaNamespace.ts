@@ -1233,8 +1233,14 @@ export const UserScalarFieldEnum = {
   status: 'status',
   reputation: 'reputation',
   registeredAt: 'registeredAt',
+  verified: 'verified',
   proofFrontUrl: 'proofFrontUrl',
   proofBackUrl: 'proofBackUrl',
+  emailVerifiedAt: 'emailVerifiedAt',
+  emailCodeHash: 'emailCodeHash',
+  emailCodeExpiresAt: 'emailCodeExpiresAt',
+  emailCodeSentAt: 'emailCodeSentAt',
+  emailCodeAttempts: 'emailCodeAttempts',
   mediaId: 'mediaId'
 } as const
 
@@ -1452,6 +1458,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

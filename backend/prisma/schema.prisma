@@ -77,10 +77,14 @@ model User {
   status       Status @default(PENDING)
   reputation   Int           @default(0)
   registeredAt DateTime      @default(now()) @map("registered_at")
-
-  // Pièce justificative de journalisme (ex. carte de presse), recto / verso
+  verified    Boolean @default(false)
   proofFrontUrl String? @map("proof_front_url")
   proofBackUrl  String? @map("proof_back_url")
+  emailVerifiedAt    DateTime? @map("email_verified_at")
+  emailCodeHash      String?   @map("email_code_hash")
+  emailCodeExpiresAt DateTime? @map("email_code_expires_at")
+  emailCodeSentAt    DateTime? @map("email_code_sent_at")
+  emailCodeAttempts  Int       @default(0) @map("email_code_attempts")
 
   mediaId Int? @map("media_id")
   media   Media? @relation(fields: [mediaId], references: [id], onDelete: SetNull)

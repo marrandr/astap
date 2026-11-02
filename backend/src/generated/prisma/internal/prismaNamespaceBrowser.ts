@@ -107,8 +107,14 @@ export const UserScalarFieldEnum = {
   status: 'status',
   reputation: 'reputation',
   registeredAt: 'registeredAt',
+  verified: 'verified',
   proofFrontUrl: 'proofFrontUrl',
   proofBackUrl: 'proofBackUrl',
+  emailVerifiedAt: 'emailVerifiedAt',
+  emailCodeHash: 'emailCodeHash',
+  emailCodeExpiresAt: 'emailCodeExpiresAt',
+  emailCodeSentAt: 'emailCodeSentAt',
+  emailCodeAttempts: 'emailCodeAttempts',
   mediaId: 'mediaId'
 } as const
 

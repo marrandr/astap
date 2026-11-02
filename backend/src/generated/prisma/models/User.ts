@@ -29,12 +29,14 @@ export type AggregateUser = {
 export type UserAvgAggregateOutputType = {
   id: number | null
   reputation: number | null
+  emailCodeAttempts: number | null
   mediaId: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
   reputation: number | null
+  emailCodeAttempts: number | null
   mediaId: number | null
 }
 
@@ -47,8 +49,14 @@ export type UserMinAggregateOutputType = {
   status: $Enums.Status | null
   reputation: number | null
   registeredAt: Date | null
+  verified: boolean | null
   proofFrontUrl: string | null
   proofBackUrl: string | null
+  emailVerifiedAt: Date | null
+  emailCodeHash: string | null
+  emailCodeExpiresAt: Date | null
+  emailCodeSentAt: Date | null
+  emailCodeAttempts: number | null
   mediaId: number | null
 }
 
@@ -61,8 +69,14 @@ export type UserMaxAggregateOutputType = {
   status: $Enums.Status | null
   reputation: number | null
   registeredAt: Date | null
+  verified: boolean | null
   proofFrontUrl: string | null
   proofBackUrl: string | null
+  emailVerifiedAt: Date | null
+  emailCodeHash: string | null
+  emailCodeExpiresAt: Date | null
+  emailCodeSentAt: Date | null
+  emailCodeAttempts: number | null
   mediaId: number | null
 }
 
@@ -75,8 +89,14 @@ export type UserCountAggregateOutputType = {
   status: number
   reputation: number
   registeredAt: number
+  verified: number
   proofFrontUrl: number
   proofBackUrl: number
+  emailVerifiedAt: number
+  emailCodeHash: number
+  emailCodeExpiresAt: number
+  emailCodeSentAt: number
+  emailCodeAttempts: number
   mediaId: number
   _all: number
 }
@@ -85,12 +105,14 @@ export type UserCountAggregateOutputType = {
 export type UserAvgAggregateInputType = {
   id?: true
   reputation?: true
+  emailCodeAttempts?: true
   mediaId?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
   reputation?: true
+  emailCodeAttempts?: true
   mediaId?: true
 }
 
@@ -103,8 +125,14 @@ export type UserMinAggregateInputType = {
   status?: true
   reputation?: true
   registeredAt?: true
+  verified?: true
   proofFrontUrl?: true
   proofBackUrl?: true
+  emailVerifiedAt?: true
+  emailCodeHash?: true
+  emailCodeExpiresAt?: true
+  emailCodeSentAt?: true
+  emailCodeAttempts?: true
   mediaId?: true
 }
 
@@ -117,8 +145,14 @@ export type UserMaxAggregateInputType = {
   status?: true
   reputation?: true
   registeredAt?: true
+  verified?: true
   proofFrontUrl?: true
   proofBackUrl?: true
+  emailVerifiedAt?: true
+  emailCodeHash?: true
+  emailCodeExpiresAt?: true
+  emailCodeSentAt?: true
+  emailCodeAttempts?: true
   mediaId?: true
 }
 
@@ -131,8 +165,14 @@ export type UserCountAggregateInputType = {
   status?: true
   reputation?: true
   registeredAt?: true
+  verified?: true
   proofFrontUrl?: true
   proofBackUrl?: true
+  emailVerifiedAt?: true
+  emailCodeHash?: true
+  emailCodeExpiresAt?: true
+  emailCodeSentAt?: true
+  emailCodeAttempts?: true
   mediaId?: true
   _all?: true
 }
@@ -232,8 +272,14 @@ export type UserGroupByOutputType = {
   status: $Enums.Status
   reputation: number
   registeredAt: Date
+  verified: boolean
   proofFrontUrl: string | null
   proofBackUrl: string | null
+  emailVerifiedAt: Date | null
+  emailCodeHash: string | null
+  emailCodeExpiresAt: Date | null
+  emailCodeSentAt: Date | null
+  emailCodeAttempts: number
   mediaId: number | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -269,8 +315,14 @@ export type UserWhereInput = {
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   reputation?: Prisma.IntFilter<"User"> | number
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  verified?: Prisma.BoolFilter<"User"> | boolean
   proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
   proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeHash?: Prisma.StringNullableFilter<"User"> | string | null
+  emailCodeExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeAttempts?: Prisma.IntFilter<"User"> | number
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
@@ -289,8 +341,14 @@ export type UserOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   proofFrontUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   proofBackUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   media?: Prisma.MediaOrderByWithRelationInput
   posts?: Prisma.PostOrderByRelationAggregateInput
@@ -312,8 +370,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   reputation?: Prisma.IntFilter<"User"> | number
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  verified?: Prisma.BoolFilter<"User"> | boolean
   proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
   proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeHash?: Prisma.StringNullableFilter<"User"> | string | null
+  emailCodeExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeAttempts?: Prisma.IntFilter<"User"> | number
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
@@ -332,8 +396,14 @@ export type UserOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   proofFrontUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   proofBackUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -354,8 +424,14 @@ export type UserScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
   reputation?: Prisma.IntWithAggregatesFilter<"User"> | number
   registeredAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  verified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   proofFrontUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   proofBackUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailCodeHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailCodeExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailCodeSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailCodeAttempts?: Prisma.IntWithAggregatesFilter<"User"> | number
   mediaId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
 
@@ -367,8 +443,14 @@ export type UserCreateInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -386,8 +468,14 @@ export type UserUncheckedCreateInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -404,8 +492,14 @@ export type UserUpdateInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -423,8 +517,14 @@ export type UserUncheckedUpdateInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -442,8 +542,14 @@ export type UserCreateManyInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
 }
 
@@ -455,8 +561,14 @@ export type UserUpdateManyMutationInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -468,8 +580,14 @@ export type UserUncheckedUpdateManyInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
@@ -492,14 +610,21 @@ export type UserCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   proofFrontUrl?: Prisma.SortOrder
   proofBackUrl?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailCodeHash?: Prisma.SortOrder
+  emailCodeExpiresAt?: Prisma.SortOrder
+  emailCodeSentAt?: Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
 }
 
@@ -512,8 +637,14 @@ export type UserMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   proofFrontUrl?: Prisma.SortOrder
   proofBackUrl?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailCodeHash?: Prisma.SortOrder
+  emailCodeExpiresAt?: Prisma.SortOrder
+  emailCodeSentAt?: Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
 }
 
@@ -526,14 +657,21 @@ export type UserMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
   registeredAt?: Prisma.SortOrder
+  verified?: Prisma.SortOrder
   proofFrontUrl?: Prisma.SortOrder
   proofBackUrl?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  emailCodeHash?: Prisma.SortOrder
+  emailCodeExpiresAt?: Prisma.SortOrder
+  emailCodeSentAt?: Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   reputation?: Prisma.SortOrder
+  emailCodeAttempts?: Prisma.SortOrder
   mediaId?: Prisma.SortOrder
 }
 
@@ -594,6 +732,14 @@ export type EnumStatusFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -682,8 +828,14 @@ export type UserCreateWithoutMediaInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -700,8 +852,14 @@ export type UserUncheckedCreateWithoutMediaInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -747,8 +905,14 @@ export type UserScalarWhereInput = {
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
   reputation?: Prisma.IntFilter<"User"> | number
   registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  verified?: Prisma.BoolFilter<"User"> | boolean
   proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
   proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeHash?: Prisma.StringNullableFilter<"User"> | string | null
+  emailCodeExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeSentAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailCodeAttempts?: Prisma.IntFilter<"User"> | number
   mediaId?: Prisma.IntNullableFilter<"User"> | number | null
 }
 
@@ -760,8 +924,14 @@ export type UserCreateWithoutPostsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -778,8 +948,14 @@ export type UserUncheckedCreateWithoutPostsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -811,8 +987,14 @@ export type UserUpdateWithoutPostsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -829,8 +1011,14 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -846,8 +1034,14 @@ export type UserCreateWithoutVerificationsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -864,8 +1058,14 @@ export type UserUncheckedCreateWithoutVerificationsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -897,8 +1097,14 @@ export type UserUpdateWithoutVerificationsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -915,8 +1121,14 @@ export type UserUncheckedUpdateWithoutVerificationsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -932,8 +1144,14 @@ export type UserCreateWithoutEvidencesInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -950,8 +1168,14 @@ export type UserUncheckedCreateWithoutEvidencesInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -983,8 +1207,14 @@ export type UserUpdateWithoutEvidencesInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1001,8 +1231,14 @@ export type UserUncheckedUpdateWithoutEvidencesInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1018,8 +1254,14 @@ export type UserCreateWithoutCommentsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -1036,8 +1278,14 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -1069,8 +1317,14 @@ export type UserUpdateWithoutCommentsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1087,8 +1341,14 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1104,8 +1364,14 @@ export type UserCreateWithoutExternalPublicationsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -1122,8 +1388,14 @@ export type UserUncheckedCreateWithoutExternalPublicationsInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
   mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
@@ -1155,8 +1427,14 @@ export type UserUpdateWithoutExternalPublicationsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1173,8 +1451,14 @@ export type UserUncheckedUpdateWithoutExternalPublicationsInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1191,8 +1475,14 @@ export type UserCreateManyMediaInput = {
   status?: $Enums.Status
   reputation?: number
   registeredAt?: Date | string
+  verified?: boolean
   proofFrontUrl?: string | null
   proofBackUrl?: string | null
+  emailVerifiedAt?: Date | string | null
+  emailCodeHash?: string | null
+  emailCodeExpiresAt?: Date | string | null
+  emailCodeSentAt?: Date | string | null
+  emailCodeAttempts?: number
 }
 
 export type UserUpdateWithoutMediaInput = {
@@ -1203,8 +1493,14 @@ export type UserUpdateWithoutMediaInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -1221,8 +1517,14 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -1239,8 +1541,14 @@ export type UserUncheckedUpdateManyWithoutMediaInput = {
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   reputation?: Prisma.IntFieldUpdateOperationsInput | number
   registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailCodeExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailCodeAttempts?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -1319,8 +1627,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   reputation?: boolean
   registeredAt?: boolean
+  verified?: boolean
   proofFrontUrl?: boolean
   proofBackUrl?: boolean
+  emailVerifiedAt?: boolean
+  emailCodeHash?: boolean
+  emailCodeExpiresAt?: boolean
+  emailCodeSentAt?: boolean
+  emailCodeAttempts?: boolean
   mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -1340,8 +1654,14 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   reputation?: boolean
   registeredAt?: boolean
+  verified?: boolean
   proofFrontUrl?: boolean
   proofBackUrl?: boolean
+  emailVerifiedAt?: boolean
+  emailCodeHash?: boolean
+  emailCodeExpiresAt?: boolean
+  emailCodeSentAt?: boolean
+  emailCodeAttempts?: boolean
   mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1355,8 +1675,14 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   reputation?: boolean
   registeredAt?: boolean
+  verified?: boolean
   proofFrontUrl?: boolean
   proofBackUrl?: boolean
+  emailVerifiedAt?: boolean
+  emailCodeHash?: boolean
+  emailCodeExpiresAt?: boolean
+  emailCodeSentAt?: boolean
+  emailCodeAttempts?: boolean
   mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1370,12 +1696,18 @@ export type UserSelectScalar = {
   status?: boolean
   reputation?: boolean
   registeredAt?: boolean
+  verified?: boolean
   proofFrontUrl?: boolean
   proofBackUrl?: boolean
+  emailVerifiedAt?: boolean
+  emailCodeHash?: boolean
+  emailCodeExpiresAt?: boolean
+  emailCodeSentAt?: boolean
+  emailCodeAttempts?: boolean
   mediaId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "reputation" | "registeredAt" | "proofFrontUrl" | "proofBackUrl" | "mediaId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "reputation" | "registeredAt" | "verified" | "proofFrontUrl" | "proofBackUrl" | "emailVerifiedAt" | "emailCodeHash" | "emailCodeExpiresAt" | "emailCodeSentAt" | "emailCodeAttempts" | "mediaId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -1411,8 +1743,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     status: $Enums.Status
     reputation: number
     registeredAt: Date
+    verified: boolean
     proofFrontUrl: string | null
     proofBackUrl: string | null
+    emailVerifiedAt: Date | null
+    emailCodeHash: string | null
+    emailCodeExpiresAt: Date | null
+    emailCodeSentAt: Date | null
+    emailCodeAttempts: number
     mediaId: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1851,8 +2189,14 @@ export interface UserFieldRefs {
   readonly status: Prisma.FieldRef<"User", 'Status'>
   readonly reputation: Prisma.FieldRef<"User", 'Int'>
   readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly verified: Prisma.FieldRef<"User", 'Boolean'>
   readonly proofFrontUrl: Prisma.FieldRef<"User", 'String'>
   readonly proofBackUrl: Prisma.FieldRef<"User", 'String'>
+  readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailCodeHash: Prisma.FieldRef<"User", 'String'>
+  readonly emailCodeExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailCodeSentAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailCodeAttempts: Prisma.FieldRef<"User", 'Int'>
   readonly mediaId: Prisma.FieldRef<"User", 'Int'>
 }
     
