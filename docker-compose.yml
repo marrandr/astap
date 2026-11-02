@@ -6,8 +6,17 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/astap?schema=public
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: astap
     ports:
       - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   frontend:
     build:
@@ -15,3 +24,24 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4173:4173"
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: astap
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d astap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:
