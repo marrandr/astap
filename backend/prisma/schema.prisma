@@ -16,6 +16,12 @@ enum  Role {
   PERSONAL
 }
 
+enum  Status{
+  VALIDATE
+  PENDING
+  REFUSED
+}
+
 enum PostStatus {
   NEW
   IN_PROGRESS

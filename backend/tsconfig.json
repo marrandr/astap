@@ -16,7 +16,6 @@
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
-    "allowImportingTsExtensions":true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
