@@ -1,33 +1,20 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, BadgeCheck, CheckCircle2, ChevronDown, ImagePlus, Link2, Plus, X } from 'lucide-react';
-import { saveLocalPost } from './postStorage';
+import { ArrowRight, BadgeCheck, CheckCircle2, Plus, X } from 'lucide-react';
+import { saveLocalPosts } from './postStorage';
+import { createPostDraft, validatePostDraft } from './postDraft';
+import ArticleFields from './ArticleFields';
+import SavedPosts from './SavedPosts';
 import './CreatePost.css';
 
-const categories = [
-  ['politique', 'Politique'], ['economie', 'Économie'], ['societe', 'Société'],
-  ['sante', 'Santé'], ['education', 'Éducation'], ['technologie', 'Technologie'], ['autre', 'Autre'],
-];
-const acceptedTypes = ['image/png', 'image/jpeg', 'image/webp'];
-type Source = { id: string; url: string };
-const emptySource = (): Source => ({ id: crypto.randomUUID(), url: '' });
-
 export default function CreatePost() {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
-  const [sources, setSources] = useState<Source[]>(() => [emptySource()]);
-  const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState('');
-  const [imageError, setImageError] = useState('');
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [dragging, setDragging] = useState(false);
+  const [articles, setArticles] = useState(() => [createPostDraft()]);
+  const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
+  const [savedVersion, setSavedVersion] = useState(0);
+  const [savedCount, setSavedCount] = useState(0);
   const [saving, setSaving] = useState(false);
-  const [savedTitle, setSavedTitle] = useState('');
   const [saveError, setSaveError] = useState('');
-  const fileInput = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const dragDepth = useRef(0);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -35,68 +22,38 @@ export default function CreatePost() {
     return () => { document.title = previousTitle; };
   }, []);
 
-  useEffect(() => {
-    return () => { if (preview) URL.revokeObjectURL(preview); };
-  }, [preview]);
-
-  function selectImage(files: FileList | null) {
-    if (!files?.length) return;
-    if (files.length > 1) {
-      setImageError('Veuillez sélectionner une seule image.');
-      return;
-    }
-    const file = files[0];
-    if (!acceptedTypes.includes(file.type)) {
-      setImageError('Choisissez une image au format PNG, JPG ou WEBP.');
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      setImageError('L’image ne doit pas dépasser 5 Mo.');
-      return;
-    }
-    setImageError('');
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
-    setSavedTitle('');
+  function addArticle() {
+    const article = createPostDraft();
+    setArticles(current => [...current, article]);
+    setSavedCount(0);
+    requestAnimationFrame(() => document.getElementById(`post-title-${article.id}`)?.focus());
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (saving) return;
-    const nextErrors: Record<string, string> = {};
-    if (title.trim().length < 10) nextErrors.title = 'Le titre doit contenir au moins 10 caractères.';
-    if (!category) nextErrors.category = 'Sélectionnez une catégorie.';
-    if (!content.trim()) nextErrors.content = 'Rédigez le contenu de votre publication.';
-    for (const source of sources) {
-      if (!source.url.trim()) continue;
-      try {
-        const url = new URL(source.url.trim());
-        if (!['https:', 'http:'].includes(url.protocol)) throw new Error('Invalid protocol');
-      } catch {
-        nextErrors[`source-${source.id}`] = 'Saisissez une adresse valide commençant par https:// ou http://.';
-      }
-    }
+    const nextErrors = Object.fromEntries(articles.map(article => [article.id, validatePostDraft(article)]));
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) {
-      const field = formRef.current?.elements.namedItem(Object.keys(nextErrors)[0]);
-      if (field instanceof HTMLElement) field.focus();
+    if (Object.values(nextErrors).some(fields => Object.keys(fields).length)) {
+      requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus());
       return;
     }
     setSaving(true);
     setSaveError('');
-    setSavedTitle('');
+    setSavedCount(0);
     try {
-      await saveLocalPost({
-        id: crypto.randomUUID(), title: title.trim(), category, content: content.trim(),
-        sources: sources.map(source => source.url.trim()).filter(Boolean), image,
-        createdAt: new Date().toISOString(),
-      });
-      setSavedTitle(title.trim());
-      setTitle(''); setCategory(''); setContent(''); setSources([emptySource()]);
-      setImage(null); setImageError(''); setPreview('');
-      if (fileInput.current) fileInput.current.value = '';
+      const createdAt = new Date().toISOString();
+      await saveLocalPosts(articles.map(article => ({
+        id: article.id, title: article.title.trim(), category: article.category, content: article.content.trim(),
+        sources: article.sources.map(source => source.url.trim()).filter(Boolean),
+        media: article.media.map(item => item.file), createdAt,
+      })));
+      setSavedCount(articles.length);
+      setArticles([createPostDraft()]);
+      setErrors({});
+      setSavedVersion(current => current + 1);
     } catch {
-      setSaveError('L’enregistrement a échoué. Vos champs sont conservés : veuillez réessayer ou vérifier que le stockage du navigateur est disponible.');
+      setSaveError('L’enregistrement a échoué. Vos articles sont conservés : veuillez réessayer ou vérifier que le stockage du navigateur est disponible.');
     } finally {
       setSaving(false);
     }
@@ -108,86 +65,40 @@ export default function CreatePost() {
         <section className="create-post-card" aria-labelledby="create-post-title">
           <header className="create-post-header">
             <div className="create-post-heading">
-              <h1 id="create-post-title">Créer une publication</h1>
+              <h1 id="create-post-title">Créer des articles</h1>
               <span className="certified-badge"><BadgeCheck size={14} aria-hidden="true" />Journaliste certifié</span>
             </div>
-            <p>Publiez une information vérifiable et documentée pour la communauté Hamarino.io.</p>
+            <p>Préparez un ou plusieurs articles vérifiables et documentés pour la communauté Hamarino.io.</p>
           </header>
-
-          {savedTitle && <div className="post-success" role="status"><CheckCircle2 size={20} aria-hidden="true" /><div><strong>Article enregistré sur cet appareil</strong><p>« {savedTitle} » a été sauvegardé dans votre navigateur. Il n’est pas encore publié en ligne.</p></div></div>}
-
-          <form ref={formRef} className="create-post-form" noValidate onSubmit={submit} onChange={() => setSavedTitle('')}>
+          {savedCount > 0 && <div className="post-success" role="status"><CheckCircle2 size={20} aria-hidden="true" /><div>
+            <strong>{savedCount === 1 ? 'Article enregistré sur cet appareil' : `${savedCount} articles enregistrés sur cet appareil`}</strong>
+            <p>{savedCount === 1 ? 'Votre article est sauvegardé dans votre navigateur. Il n’est pas encore publié en ligne.' : 'Vos articles sont sauvegardés dans votre navigateur. Ils ne sont pas encore publiés en ligne.'}</p>
+          </div></div>}
+          <form ref={formRef} className="create-post-form" noValidate onSubmit={submit} onChange={() => setSavedCount(0)}>
             <fieldset disabled={saving}>
-              <div className="post-field">
-                <label htmlFor="post-title">Titre de la publication <span className="required-mark">*</span></label>
-                <input id="post-title" name="title" value={title} onChange={event => setTitle(event.target.value)} placeholder="Donnez un titre à votre publication…" required minLength={10} aria-invalid={!!errors.title} aria-describedby={errors.title ? 'title-error' : undefined} />
-                {errors.title && <p className="post-error" id="title-error">{errors.title}</p>}
-              </div>
-
-              <div className="post-field">
-                <label htmlFor="post-category">Catégorie <span className="required-mark">*</span></label>
-                <div className="post-select-wrapper">
-                  <select id="post-category" name="category" value={category} onChange={event => setCategory(event.target.value)} required aria-invalid={!!errors.category} aria-describedby={errors.category ? 'category-error' : undefined}>
-                    <option value="" disabled>Sélectionnez une catégorie</option>
-                    {categories.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
-                  </select>
-                  <ChevronDown size={17} aria-hidden="true" />
+              {articles.map((article, index) => <section className="post-article" key={article.id} aria-labelledby={`article-heading-${article.id}`}>
+                <div className="post-article-heading">
+                  <h2 id={`article-heading-${article.id}`}>Article {index + 1}</h2>
+                  {articles.length > 1 && <button type="button" className="post-remove-article" aria-label={`Supprimer l’article ${index + 1}`} onClick={() => {
+                    setArticles(current => current.filter(item => item.id !== article.id));
+                    setSavedCount(0);
+                  }}><X size={16} aria-hidden="true" />Retirer</button>}
                 </div>
-                {errors.category && <p className="post-error" id="category-error">{errors.category}</p>}
-              </div>
-
-              <div className="post-field">
-                <label htmlFor="post-content">Contenu <span className="required-mark">*</span></label>
-                <textarea id="post-content" name="content" value={content} onChange={event => setContent(event.target.value)} rows={6} required placeholder="Que souhaitez-vous partager ?" aria-invalid={!!errors.content} aria-describedby={errors.content ? 'content-error' : undefined} />
-                {errors.content && <p className="post-error" id="content-error">{errors.content}</p>}
-              </div>
-
-              <div className="post-field">
-                <div className="post-label-row"><label htmlFor="post-image">Image</label><span>Optionnel</span></div>
-                <div className={`post-dropzone${dragging ? ' is-dragging' : ''}${image ? ' has-image' : ''}`}
-                  onDragEnter={event => { event.preventDefault(); dragDepth.current += 1; setDragging(true); }}
-                  onDragOver={event => { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; }}
-                  onDragLeave={event => { event.preventDefault(); dragDepth.current -= 1; if (dragDepth.current <= 0) setDragging(false); }}
-                  onDrop={event => { event.preventDefault(); dragDepth.current = 0; setDragging(false); if (!saving) selectImage(event.dataTransfer.files); }}>
-                  <input ref={fileInput} id="post-image" type="file" accept="image/png,image/jpeg,image/webp" className="post-file-input" aria-describedby={`image-help${imageError ? ' image-error' : ''}`} aria-invalid={!!imageError} onChange={event => { selectImage(event.target.files); event.target.value = ''; }} />
-                  {image ? <>
-                    <label htmlFor="post-image" className="post-image-preview">
-                      {preview && <img src={preview} alt="Aperçu de l’image sélectionnée" />}
-                      <span className="post-image-name">{image.name}</span><span className="post-image-change">Cliquez pour remplacer l’image</span>
-                    </label>
-                    <button type="button" className="post-remove-image" aria-label="Supprimer l’image" onClick={() => { setImage(null); setPreview(''); setImageError(''); }}><X size={16} aria-hidden="true" /></button>
-                  </> : <label htmlFor="post-image" className="post-upload-label">
-                    <span className="post-upload-icon"><ImagePlus size={22} aria-hidden="true" /></span>
-                    <span><strong>Cliquez pour importer</strong> ou glissez-déposez</span>
-                    <span id="image-help" className="post-image-help">PNG, JPG ou WEBP (max. 5 Mo)</span>
-                  </label>}
-                  {image && <span id="image-help" className="post-image-help">PNG, JPG ou WEBP (max. 5 Mo)</span>}
-                </div>
-                {imageError && <p className="post-error" id="image-error" role="alert">{imageError}</p>}
-              </div>
-
-              <div className="post-field">
-                <div className="post-label-row"><label htmlFor={`source-${sources[0].id}`}>Sources</label><span>Documentation factuelle</span></div>
-                <div className="post-source-list">
-                  {sources.map((source, index) => <div key={source.id}>
-                    <div className="post-source-row">
-                      <div className="post-source-input"><Link2 size={17} aria-hidden="true" /><input type="url" id={`source-${source.id}`} name={`source-${source.id}`} aria-label={`Source ${index + 1}`} placeholder="https://exemple.com/source" value={source.url} onChange={event => setSources(current => current.map(item => item.id === source.id ? { ...item, url: event.target.value } : item))} aria-invalid={!!errors[`source-${source.id}`]} aria-describedby={errors[`source-${source.id}`] ? `error-${source.id}` : undefined} /></div>
-                      {sources.length > 1 && <button type="button" className="post-remove-source" aria-label={`Supprimer la source ${index + 1}`} onClick={() => setSources(current => current.filter(item => item.id !== source.id))}><X size={17} aria-hidden="true" /></button>}
-                    </div>
-                    {errors[`source-${source.id}`] && <p id={`error-${source.id}`} className="post-error">{errors[`source-${source.id}`]}</p>}
-                  </div>)}
-                </div>
-                <button type="button" className="post-add-source" onClick={() => { const source = emptySource(); setSources(current => [...current, source]); requestAnimationFrame(() => document.getElementById(`source-${source.id}`)?.focus()); }}><Plus size={15} aria-hidden="true" />Ajouter une source</button>
-              </div>
-
+                <ArticleFields draft={article} saving={saving} errors={errors[article.id] ?? {}} onChange={update => {
+                  setArticles(current => current.map(item => item.id === article.id ? update(item) : item));
+                  setSavedCount(0);
+                }} />
+              </section>)}
+              <button type="button" className="post-add-article" onClick={addArticle}><Plus size={18} aria-hidden="true" />Ajouter un article</button>
               {saveError && <p className="post-error" role="alert">{saveError}</p>}
               <div className="post-actions">
                 <Link to="/" className={`post-cancel${saving ? ' is-disabled' : ''}`} aria-disabled={saving} onClick={event => { if (saving) event.preventDefault(); }}>Annuler</Link>
-                <button className="post-submit" type="submit">{saving ? 'Enregistrement…' : 'Publier'}<ArrowRight size={17} aria-hidden="true" /></button>
+                <button className="post-submit" type="submit">{saving ? 'Enregistrement…' : articles.length === 1 ? 'Enregistrer l’article' : `Enregistrer les ${articles.length} articles`}<ArrowRight size={17} aria-hidden="true" /></button>
               </div>
             </fieldset>
           </form>
         </section>
+        <SavedPosts refreshKey={savedVersion} />
         <p className="post-footer">Seuls les journalistes accrédités peuvent publier sur <strong>Hamarino.io</strong>.</p>
       </div>
     </main>
