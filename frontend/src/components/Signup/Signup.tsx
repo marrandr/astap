@@ -7,7 +7,7 @@ import arrow from '../../assets/right-arrow.png';
 import Input from '../Input/Input';
 import verso from '../../assets/verso.svg';
 import recto from '../../assets/recto.svg';
-import { Children } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
 
 interface SignUp {
 	src : string;
@@ -34,17 +34,43 @@ interface AddCardItemProps {
 }
 
 const AddCardItem =({classList, icon, size, children, name} : AddCardItemProps) => {
-	
+
+	const [preview, setPreview] = useState<string>(icon);
+	const [loaded, setLoaded] = useState<boolean>(false);
+	const div = useRef<HTMLDivElement>(null);
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    	const file = e.target.files?.[0];
+    	if (file) {
+      		const imageUrl = URL.createObjectURL(file);
+      		setPreview(imageUrl);
+			setLoaded(true);
+    	}
+  	};
+
+	// useEffect(() => {
+	// 	setImgSize(div.current.getBoundingClientRect().width);
+	// }, [preview])
+
 	return (
 		<div className={'AddCardItem ' + classList}>
-			<div>
-				<img src={icon} width={size} height={size} />
-			</div>
-			<p>{children}</p>
-			<label>
-				<input id={name} name={name} style={{display : 'none'}} type='file' />
-				importer
-			</label>
+			{!loaded ? (
+				<>
+					<div className='icon'>
+						<img src={preview} width={size} height={size} />
+					</div>
+					<p>{children}</p>
+					<label>
+						<input accept="image/*" id={name} name={name} onChange={handleFileChange} style={{display : 'none'}} type='file' />
+						importer
+					</label>
+				</>) : (
+				<>
+					<div className='image' ref={div}>
+						<img src={preview} />
+						<label onClick={() => {setLoaded(false); setPreview(icon)}}>enlever</label>
+					</div>
+				</>)}
 		</div>
 	)
 }
