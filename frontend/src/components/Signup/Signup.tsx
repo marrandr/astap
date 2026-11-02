@@ -65,12 +65,12 @@ const AddCardItem =({classList, icon, size, children, name} : AddCardItemProps) 
 						importer
 					</label>
 				</>) : (
-				<div>
+				<>
 					<div className='image' ref={div}>
 						<img src={preview} />
 						<label onClick={() => {setLoaded(false); setPreview(icon)}}>enlever</label>
 					</div>
-				</div>)}
+				</>)}
 		</div>
 	)
 }

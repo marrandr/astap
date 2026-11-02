@@ -14,7 +14,7 @@ interface InputProps {
 
 interface ShowPasswordProps {
 	source : string;
-	click : MouseEventHandler;
+	click : MouseEventHandler | undefined;
 	size: number;
 }
 
@@ -47,7 +47,7 @@ const Input = ({name, children, type, holder, icon = null} : InputProps) => {
     	<div className='Input'>
     		<label htmlFor={name}>{ children }</label>
 			<div>
-				{icon != null && <span className='left'>{ <ShowPassword source={icon} size={30} click={null} /> }</span> }
+				{icon != null && <span className='left'>{ <ShowPassword source={icon} size={30} click={undefined} /> }</span> }
 				<input type={passwd} id={name} name={name} placeholder={ holder } />
 				{type == 'password' && <span className='right'>{
 					<ShowPassword source={srcs} size={30} click={changePasswd} />
