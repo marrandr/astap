@@ -150,7 +150,7 @@
 	grid-area: r;
 }
 
-.AddCardItem > div {
+.AddCardItem > div.icon {
 
 	display: inline-flex;
 	padding: 5px;
@@ -170,4 +170,25 @@
 	font-size: var(--text-size);
 	font-weight: 700;
 	color: var(--color-secondary);
+}
+
+.AddCardItem > div.image > img {
+
+	width: 100%;
+} 
+
+
+.AddCardItem > div.image {
+
+	width: 100%;
+	height: 100%;
+	background-color: aqua;
+	display: grid;	
+	grid-template-areas: "c";
+	position: relative;
+}
+
+.AddCardItem > div.image > label {
+
+	position: absolute;
 }
