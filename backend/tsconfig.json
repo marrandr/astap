@@ -20,7 +20,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "types": ["vitest/globals", "node"]
-  },
-  "ignoreDeprecations": "6.0"
+    "types": ["node", "vitest/globals"]
+  }
 }
