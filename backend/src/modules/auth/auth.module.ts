@@ -7,6 +7,7 @@ import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MailService } from '../mail/mail.service';
 
 @Module({
   imports:[PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -19,6 +20,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
             inject: [ConfigService],
         })],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, PrismaService, CloudinaryService],
+  providers: [AuthService, UsersService, PrismaService, CloudinaryService, MailService],
 })
 export class AuthModule {}
