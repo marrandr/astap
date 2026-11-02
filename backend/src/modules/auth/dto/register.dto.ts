@@ -9,15 +9,8 @@ import {
 } from 'class-validator';
 
 export class RegisterDto {
-  @IsString()
-  @MinLength(2)
-  @MaxLength(60)
-  lastName!: string;
 
-  @IsString()
-  @MinLength(2)
-  @MaxLength(60)
-  firstName!: string;
+  name!: string;
 
   @Transform(({ value }) =>
     typeof value === 'string' ? value.trim().toLowerCase() : value,

@@ -40,47 +40,44 @@ export type UserSumAggregateOutputType = {
 
 export type UserMinAggregateOutputType = {
   id: number | null
-  lastName: string | null
-  firstName: string | null
+  name: string | null
   email: string | null
   passwordHash: string | null
-  isVerified: boolean | null
-  reputation: number | null
-  registeredAt: Date | null
-  mediaId: number | null
   role: $Enums.Role | null
   status: $Enums.Status | null
-  verified: boolean | null
+  reputation: number | null
+  registeredAt: Date | null
+  proofFrontUrl: string | null
+  proofBackUrl: string | null
+  mediaId: number | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: number | null
-  lastName: string | null
-  firstName: string | null
+  name: string | null
   email: string | null
   passwordHash: string | null
-  isVerified: boolean | null
-  reputation: number | null
-  registeredAt: Date | null
-  mediaId: number | null
   role: $Enums.Role | null
   status: $Enums.Status | null
-  verified: boolean | null
+  reputation: number | null
+  registeredAt: Date | null
+  proofFrontUrl: string | null
+  proofBackUrl: string | null
+  mediaId: number | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  lastName: number
-  firstName: number
+  name: number
   email: number
   passwordHash: number
-  isVerified: number
-  reputation: number
-  registeredAt: number
-  mediaId: number
   role: number
   status: number
-  verified: number
+  reputation: number
+  registeredAt: number
+  proofFrontUrl: number
+  proofBackUrl: number
+  mediaId: number
   _all: number
 }
 
@@ -99,47 +96,44 @@ export type UserSumAggregateInputType = {
 
 export type UserMinAggregateInputType = {
   id?: true
-  lastName?: true
-  firstName?: true
+  name?: true
   email?: true
   passwordHash?: true
-  isVerified?: true
-  reputation?: true
-  registeredAt?: true
-  mediaId?: true
   role?: true
   status?: true
-  verified?: true
+  reputation?: true
+  registeredAt?: true
+  proofFrontUrl?: true
+  proofBackUrl?: true
+  mediaId?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  lastName?: true
-  firstName?: true
+  name?: true
   email?: true
   passwordHash?: true
-  isVerified?: true
-  reputation?: true
-  registeredAt?: true
-  mediaId?: true
   role?: true
   status?: true
-  verified?: true
+  reputation?: true
+  registeredAt?: true
+  proofFrontUrl?: true
+  proofBackUrl?: true
+  mediaId?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  lastName?: true
-  firstName?: true
+  name?: true
   email?: true
   passwordHash?: true
-  isVerified?: true
-  reputation?: true
-  registeredAt?: true
-  mediaId?: true
   role?: true
   status?: true
-  verified?: true
+  reputation?: true
+  registeredAt?: true
+  proofFrontUrl?: true
+  proofBackUrl?: true
+  mediaId?: true
   _all?: true
 }
 
@@ -231,17 +225,16 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified: boolean
-  reputation: number
-  registeredAt: Date
-  mediaId: number | null
   role: $Enums.Role
   status: $Enums.Status
-  verified: boolean
+  reputation: number
+  registeredAt: Date
+  proofFrontUrl: string | null
+  proofBackUrl: string | null
+  mediaId: number | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -269,17 +262,16 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.IntFilter<"User"> | number
-  lastName?: Prisma.StringFilter<"User"> | string
-  firstName?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
-  reputation?: Prisma.IntFilter<"User"> | number
-  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
-  verified?: Prisma.BoolFilter<"User"> | boolean
+  reputation?: Prisma.IntFilter<"User"> | number
+  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
   verifications?: Prisma.VerificationListRelationFilter
@@ -290,17 +282,16 @@ export type UserWhereInput = {
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
-  reputation?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
-  mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  reputation?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  proofFrontUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  proofBackUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   media?: Prisma.MediaOrderByWithRelationInput
   posts?: Prisma.PostOrderByRelationAggregateInput
   verifications?: Prisma.VerificationOrderByRelationAggregateInput
@@ -315,16 +306,15 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  lastName?: Prisma.StringFilter<"User"> | string
-  firstName?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
-  reputation?: Prisma.IntFilter<"User"> | number
-  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
-  verified?: Prisma.BoolFilter<"User"> | boolean
+  reputation?: Prisma.IntFilter<"User"> | number
+  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   media?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
   posts?: Prisma.PostListRelationFilter
   verifications?: Prisma.VerificationListRelationFilter
@@ -335,17 +325,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
-  reputation?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
-  mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  reputation?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  proofFrontUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  proofBackUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  mediaId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -358,30 +347,28 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"User"> | number
-  lastName?: Prisma.StringWithAggregatesFilter<"User"> | string
-  firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
-  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  reputation?: Prisma.IntWithAggregatesFilter<"User"> | number
-  registeredAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  mediaId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   status?: Prisma.EnumStatusWithAggregatesFilter<"User"> | $Enums.Status
-  verified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  reputation?: Prisma.IntWithAggregatesFilter<"User"> | number
+  registeredAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  proofFrontUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  proofBackUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  mediaId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
 
 export type UserCreateInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -392,17 +379,16 @@ export type UserCreateInput = {
 
 export type UserUncheckedCreateInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -411,16 +397,15 @@ export type UserUncheckedCreateInput = {
 }
 
 export type UserUpdateInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -431,17 +416,16 @@ export type UserUpdateInput = {
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -451,45 +435,42 @@ export type UserUncheckedUpdateInput = {
 
 export type UserCreateManyInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
 }
 
 export type UserUpdateManyMutationInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserListRelationFilter = {
@@ -504,17 +485,16 @@ export type UserOrderByRelationAggregateInput = {
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
-  reputation?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
-  mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  reputation?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  proofFrontUrl?: Prisma.SortOrder
+  proofBackUrl?: Prisma.SortOrder
+  mediaId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -525,32 +505,30 @@ export type UserAvgOrderByAggregateInput = {
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
-  reputation?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
-  mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  reputation?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  proofFrontUrl?: Prisma.SortOrder
+  proofBackUrl?: Prisma.SortOrder
+  mediaId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lastName?: Prisma.SortOrder
-  firstName?: Prisma.SortOrder
+  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
-  reputation?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
-  mediaId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  verified?: Prisma.SortOrder
+  reputation?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  proofFrontUrl?: Prisma.SortOrder
+  proofBackUrl?: Prisma.SortOrder
+  mediaId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -606,20 +584,16 @@ export type UserUncheckedUpdateManyWithoutMediaNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
 }
 
 export type EnumStatusFieldUpdateOperationsInput = {
   set?: $Enums.Status
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -701,16 +675,15 @@ export type UserUpdateOneRequiredWithoutExternalPublicationsNestedInput = {
 }
 
 export type UserCreateWithoutMediaInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -720,16 +693,15 @@ export type UserCreateWithoutMediaInput = {
 
 export type UserUncheckedCreateWithoutMediaInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -768,30 +740,28 @@ export type UserScalarWhereInput = {
   OR?: Prisma.UserScalarWhereInput[]
   NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
   id?: Prisma.IntFilter<"User"> | number
-  lastName?: Prisma.StringFilter<"User"> | string
-  firstName?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
-  reputation?: Prisma.IntFilter<"User"> | number
-  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   status?: Prisma.EnumStatusFilter<"User"> | $Enums.Status
-  verified?: Prisma.BoolFilter<"User"> | boolean
+  reputation?: Prisma.IntFilter<"User"> | number
+  registeredAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  proofFrontUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  proofBackUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  mediaId?: Prisma.IntNullableFilter<"User"> | number | null
 }
 
 export type UserCreateWithoutPostsInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -801,17 +771,16 @@ export type UserCreateWithoutPostsInput = {
 
 export type UserUncheckedCreateWithoutPostsInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -835,16 +804,15 @@ export type UserUpdateToOneWithWhereWithoutPostsInput = {
 }
 
 export type UserUpdateWithoutPostsInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -854,17 +822,16 @@ export type UserUpdateWithoutPostsInput = {
 
 export type UserUncheckedUpdateWithoutPostsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -872,16 +839,15 @@ export type UserUncheckedUpdateWithoutPostsInput = {
 }
 
 export type UserCreateWithoutVerificationsInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceCreateNestedManyWithoutUserInput
@@ -891,17 +857,16 @@ export type UserCreateWithoutVerificationsInput = {
 
 export type UserUncheckedCreateWithoutVerificationsInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -925,16 +890,15 @@ export type UserUpdateToOneWithWhereWithoutVerificationsInput = {
 }
 
 export type UserUpdateWithoutVerificationsInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -944,17 +908,16 @@ export type UserUpdateWithoutVerificationsInput = {
 
 export type UserUncheckedUpdateWithoutVerificationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -962,16 +925,15 @@ export type UserUncheckedUpdateWithoutVerificationsInput = {
 }
 
 export type UserCreateWithoutEvidencesInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -981,17 +943,16 @@ export type UserCreateWithoutEvidencesInput = {
 
 export type UserUncheckedCreateWithoutEvidencesInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
@@ -1015,16 +976,15 @@ export type UserUpdateToOneWithWhereWithoutEvidencesInput = {
 }
 
 export type UserUpdateWithoutEvidencesInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1034,17 +994,16 @@ export type UserUpdateWithoutEvidencesInput = {
 
 export type UserUncheckedUpdateWithoutEvidencesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
@@ -1052,16 +1011,15 @@ export type UserUncheckedUpdateWithoutEvidencesInput = {
 }
 
 export type UserCreateWithoutCommentsInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -1071,17 +1029,16 @@ export type UserCreateWithoutCommentsInput = {
 
 export type UserUncheckedCreateWithoutCommentsInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -1105,16 +1062,15 @@ export type UserUpdateToOneWithWhereWithoutCommentsInput = {
 }
 
 export type UserUpdateWithoutCommentsInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1124,17 +1080,16 @@ export type UserUpdateWithoutCommentsInput = {
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -1142,16 +1097,15 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
 }
 
 export type UserCreateWithoutExternalPublicationsInput = {
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
   media?: Prisma.MediaCreateNestedOneWithoutUsersInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationCreateNestedManyWithoutUserInput
@@ -1161,17 +1115,16 @@ export type UserCreateWithoutExternalPublicationsInput = {
 
 export type UserUncheckedCreateWithoutExternalPublicationsInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
-  mediaId?: number | null
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
+  mediaId?: number | null
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   verifications?: Prisma.VerificationUncheckedCreateNestedManyWithoutUserInput
   evidences?: Prisma.EvidenceUncheckedCreateNestedManyWithoutUserInput
@@ -1195,16 +1148,15 @@ export type UserUpdateToOneWithWhereWithoutExternalPublicationsInput = {
 }
 
 export type UserUpdateWithoutExternalPublicationsInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   media?: Prisma.MediaUpdateOneWithoutUsersNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
@@ -1214,17 +1166,16 @@ export type UserUpdateWithoutExternalPublicationsInput = {
 
 export type UserUncheckedUpdateWithoutExternalPublicationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mediaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -1233,29 +1184,27 @@ export type UserUncheckedUpdateWithoutExternalPublicationsInput = {
 
 export type UserCreateManyMediaInput = {
   id?: number
-  lastName: string
-  firstName: string
+  name: string
   email: string
   passwordHash: string
-  isVerified?: boolean
-  reputation?: number
-  registeredAt?: Date | string
   role?: $Enums.Role
   status?: $Enums.Status
-  verified?: boolean
+  reputation?: number
+  registeredAt?: Date | string
+  proofFrontUrl?: string | null
+  proofBackUrl?: string | null
 }
 
 export type UserUpdateWithoutMediaInput = {
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUpdateManyWithoutUserNestedInput
@@ -1265,16 +1214,15 @@ export type UserUpdateWithoutMediaInput = {
 
 export type UserUncheckedUpdateWithoutMediaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   verifications?: Prisma.VerificationUncheckedUpdateManyWithoutUserNestedInput
   evidences?: Prisma.EvidenceUncheckedUpdateManyWithoutUserNestedInput
@@ -1284,16 +1232,15 @@ export type UserUncheckedUpdateWithoutMediaInput = {
 
 export type UserUncheckedUpdateManyWithoutMediaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lastName?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  reputation?: Prisma.IntFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
-  verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reputation?: Prisma.IntFieldUpdateOperationsInput | number
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  proofFrontUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  proofBackUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1365,17 +1312,16 @@ export type UserCountOutputTypeCountExternalPublicationsArgs<ExtArgs extends run
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  lastName?: boolean
-  firstName?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
-  isVerified?: boolean
-  reputation?: boolean
-  registeredAt?: boolean
-  mediaId?: boolean
   role?: boolean
   status?: boolean
-  verified?: boolean
+  reputation?: boolean
+  registeredAt?: boolean
+  proofFrontUrl?: boolean
+  proofBackUrl?: boolean
+  mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   verifications?: boolean | Prisma.User$verificationsArgs<ExtArgs>
@@ -1387,52 +1333,49 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  lastName?: boolean
-  firstName?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
-  isVerified?: boolean
-  reputation?: boolean
-  registeredAt?: boolean
-  mediaId?: boolean
   role?: boolean
   status?: boolean
-  verified?: boolean
+  reputation?: boolean
+  registeredAt?: boolean
+  proofFrontUrl?: boolean
+  proofBackUrl?: boolean
+  mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  lastName?: boolean
-  firstName?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
-  isVerified?: boolean
-  reputation?: boolean
-  registeredAt?: boolean
-  mediaId?: boolean
   role?: boolean
   status?: boolean
-  verified?: boolean
+  reputation?: boolean
+  registeredAt?: boolean
+  proofFrontUrl?: boolean
+  proofBackUrl?: boolean
+  mediaId?: boolean
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  lastName?: boolean
-  firstName?: boolean
+  name?: boolean
   email?: boolean
   passwordHash?: boolean
-  isVerified?: boolean
-  reputation?: boolean
-  registeredAt?: boolean
-  mediaId?: boolean
   role?: boolean
   status?: boolean
-  verified?: boolean
+  reputation?: boolean
+  registeredAt?: boolean
+  proofFrontUrl?: boolean
+  proofBackUrl?: boolean
+  mediaId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lastName" | "firstName" | "email" | "passwordHash" | "isVerified" | "reputation" | "registeredAt" | "mediaId" | "role" | "status" | "verified", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "status" | "reputation" | "registeredAt" | "proofFrontUrl" | "proofBackUrl" | "mediaId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -1461,17 +1404,16 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    lastName: string
-    firstName: string
+    name: string
     email: string
     passwordHash: string
-    isVerified: boolean
-    reputation: number
-    registeredAt: Date
-    mediaId: number | null
     role: $Enums.Role
     status: $Enums.Status
-    verified: boolean
+    reputation: number
+    registeredAt: Date
+    proofFrontUrl: string | null
+    proofBackUrl: string | null
+    mediaId: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1902,17 +1844,16 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'Int'>
-  readonly lastName: Prisma.FieldRef<"User", 'String'>
-  readonly firstName: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
-  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly reputation: Prisma.FieldRef<"User", 'Int'>
-  readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly mediaId: Prisma.FieldRef<"User", 'Int'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly status: Prisma.FieldRef<"User", 'Status'>
-  readonly verified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly reputation: Prisma.FieldRef<"User", 'Int'>
+  readonly registeredAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly proofFrontUrl: Prisma.FieldRef<"User", 'String'>
+  readonly proofBackUrl: Prisma.FieldRef<"User", 'String'>
+  readonly mediaId: Prisma.FieldRef<"User", 'Int'>
 }
     
 

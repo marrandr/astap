@@ -100,17 +100,16 @@ export type TopicScalarFieldEnum = (typeof TopicScalarFieldEnum)[keyof typeof To
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  lastName: 'lastName',
-  firstName: 'firstName',
+  name: 'name',
   email: 'email',
   passwordHash: 'passwordHash',
-  isVerified: 'isVerified',
-  reputation: 'reputation',
-  registeredAt: 'registeredAt',
-  mediaId: 'mediaId',
   role: 'role',
   status: 'status',
-  verified: 'verified'
+  reputation: 'reputation',
+  registeredAt: 'registeredAt',
+  proofFrontUrl: 'proofFrontUrl',
+  proofBackUrl: 'proofBackUrl',
+  mediaId: 'mediaId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

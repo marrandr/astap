@@ -11,8 +11,7 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: {
-    lastName: string;
-    firstName: string;
+    name: string;
     email: string;
     passwordHash: string;
     mediaId?: number;
@@ -22,8 +21,7 @@ export class UsersService {
         data,
         select: {
           id: true,
-          lastName: true,
-          firstName: true,
+          name: true,
           email: true,
           role: true,
           status: true,

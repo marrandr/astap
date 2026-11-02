@@ -1,6 +1,29 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
+
+export interface UploadedFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  buffer: Buffer;
+}
+
+export interface UploadedProofs {
+  front?: UploadedFile[];
+  back?: UploadedFile[];
+}
 
 @Controller('auth')
 export class AuthController {
@@ -8,7 +31,16 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  register(@Body() dto: RegisterDto) {
-    return this.auth.register(dto);
+  @UseInterceptors(
+    FileFieldsInterceptor(
+      [
+        { name: 'front', maxCount: 1 },
+        { name: 'back', maxCount: 1 },
+      ],
+      { limits: { fileSize: 5 * 1024 * 1024 } }, // 5 Mo
+    ),
+  )
+  register(@Body() dto: RegisterDto, @UploadedFiles() files: UploadedProofs) {
+    return this.auth.register(dto, files);
   }
 }
