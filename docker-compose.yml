@@ -1,37 +1,12 @@
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      NODE_ENV: production
-      PORT: 3000
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/astap?schema=public
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: astap
-    ports:
-      - "3000:3000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "4173:4173"
-
   postgres:
     image: postgres:16-alpine
-    restart: unless-stopped
+    container_name: postgres_astap
+    restart: always
     environment:
-      POSTGRES_DB: astap
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: astap
     ports:
       - "5432:5432"
     volumes:
@@ -41,7 +16,39 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend
+      target: build
+    container_name: backend_astap
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: sh -c "npx prisma migrate deploy && npm run start:dev"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_astap
+    restart: always
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
 
 volumes:
   postgres_data:
