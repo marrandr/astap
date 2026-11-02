@@ -12,23 +12,23 @@ export class RegisterDto {
   @IsString()
   @MinLength(2)
   @MaxLength(60)
-  lastName: string;
+  lastName!: string;
 
   @IsString()
   @MinLength(2)
   @MaxLength(60)
-  firstName: string;
+  firstName!: string;
 
   @Transform(({ value }) =>
     typeof value === 'string' ? value.trim().toLowerCase() : value,
   )
   @IsEmail()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(8)
   @MaxLength(72) // 72 = limite de bcrypt
-  password: string;
+  password!: string;
 
   @IsOptional()
   @Type(() => Number)
