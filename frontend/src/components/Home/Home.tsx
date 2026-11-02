@@ -1,7 +1,7 @@
 import './Home.css';
 import { Outlet } from 'react-router'
 
-interface HomeProps {}
+// interface HomeProps {}
 
 const Home = () => (
   <div className="Home">
