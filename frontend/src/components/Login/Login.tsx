@@ -1,58 +1,40 @@
 import './Login.css';
-import Google from './Google.svg';
+import account from '../../assets/new_account.png';
+import Input from '../Input/Input';
+import LoginSeparator from '../LoginSeparator/LoginSeparator';
+import { useNavigate } from 'react-router';
 
-interface InputProps {
-	name : string;
-	children : string;
-	type : string;
-	buttonText : string
-	holder: string
-}
-
-interface Text {
-	children : string
-}
-
-interface ContinueGoogleProps {
+interface SignUp {
 	src : string;
 	size : number;
 	children : string;
 }
 
-const ContinueGoogle = ({src, size, children} : ContinueGoogleProps) => {
+const SignUp = ({src, size, children} : SignUp) => {
+	
+	const navigate = useNavigate();
+	
 	return (
-		<div className='ContinueGoogle'>
+		<div onClick={ () => { navigate("/signup"); }} className='ContinueGoogle'>
 			<img src={src} width={size} height={ size } />
 			<p>{ children }</p>
 		</div>
 	)
 }
 
-const LoginSeparator = ({children} : Text) => (
-    <div className='LoginSeparator'>
-      <div></div>
-      <p>{children}</p>
-      <div></div>
-    </div>
-)
-
-const Input = ({name, children, type, buttonText, holder} : InputProps) => {
-  
-  return (
-    <div className='Input'>
-      <label htmlFor={name}>{ children }</label>
-      <input type={type} id={name} name={name} placeholder={ holder } />
-      <button>{buttonText}</button>
-    </div>
-  )
-}
-
 const Login = () => (
-  <div className="Login">
-    <Input name='email' type='email' buttonText='continuer' holder='Saisissez votre adresse e-mail'>Se connecter</Input>
-	<LoginSeparator>ou</LoginSeparator>
-	<ContinueGoogle size={20} src={Google}>Continuer avec google</ContinueGoogle>
-  </div>
+  <form className="Login">
+	<div className='LoginLeft'>
+	</div>
+	<div className='LoginRight'>
+		<p className='title'>Se connecter</p>
+		<Input icon={ null } name='email' type='email' holder='Saisissez votre adresse e-mail'>E-mail</Input>
+		<Input icon={ null } name='email' type='password' holder='Saisissez votre mot de passe'>Mot de passe</Input>
+		<button>continuer</button>
+		<LoginSeparator>ou</LoginSeparator>
+		<SignUp size={20} src={account}>S'incrire</SignUp>
+	</div>
+  </form>
 );
 
 export default Login;

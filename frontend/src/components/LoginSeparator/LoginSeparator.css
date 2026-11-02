@@ -1,0 +1,28 @@
+.LoginSeparator {
+
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	align-items: center;
+	width: var(--login-width);
+	margin: 0;
+	cursor: pointer;
+}
+
+.LoginSeparator > p {
+
+	margin: 0 10px;
+	padding: 0;
+	display: inline;
+	text-align: center;
+	font-size: var(--text-size);
+}
+
+.LoginSeparator > div {
+
+	margin: 0;
+	padding: 0;
+	height: 1px;
+	width: 40%;
+	background-color: var(--text)
+}

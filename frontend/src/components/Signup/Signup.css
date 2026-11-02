@@ -1,0 +1,173 @@
+.Signup {
+
+    width: fit-content;
+    height: 100vh;
+	border-radius: 6px;
+	overflow: hidden;
+    border-radius: 0px;
+    padding: 0;
+	user-select: none;
+	display: grid;
+	grid-template-areas: "left right";
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0px 0px 4px black;
+}
+
+.Signup > div {
+
+	margin: 0;
+	width: calc(var(--layout-width) / 2);
+	height: 100%;
+}
+
+.SignupLeft {
+	grid-area: left;
+	background-color: var(--color-third);
+}
+
+.SignupRight {
+
+	grid-area: right;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: calc(var(--login-gap) * 4);
+}
+
+
+.SignupRight > p.title {
+
+	font-size: var(--title-size);
+	font-weight: 600;
+	background-image: linear-gradient(to right, var(--color-secondary), var(--color-third));
+	background-clip: text;
+	color: transparent;
+    width: var(--login-width);
+}
+
+.SignupRight > button {
+	
+	width: calc(var(--login-width));
+    font-size: var(--text-size);
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    padding: var(--input-padding);
+    align-self: center;
+    color: white;
+    background-color: var(--color-secondary);
+	box-sizing: border-box;
+	cursor: pointer;
+	
+}
+
+.SignupRight > button:hover {
+	
+	box-shadow: 0px 2px 5px gray;
+	margin-top: -1px;
+	margin-bottom: 1px;
+}
+
+.Finish {
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: var(--login-width);
+	column-gap: 10px;
+	color: black;
+	border-radius: 6px;
+	padding: 6px 0px;
+	cursor: pointer;
+	margin: 0px;
+    font-size: var(--text-size);
+}
+
+.Finish:hover {
+
+	background-color: rgba(10, 10, 10, 0.1);
+	margin-top: -1px;
+	margin-bottom: 1px;
+}
+
+.Finish > p {
+
+	margin: 0;
+	padding: 0;
+}
+
+.BackgroundNone {
+
+	background-color: transparent;
+}
+
+.BackgroundGrey {
+
+	background-color: rgba(91, 94, 80, 0.2);
+}
+
+.Reverse {
+
+	flex-direction: row-reverse;
+}
+
+.AddCard {
+
+	width: var(--login-width);
+	min-height: 100px;
+	display: grid;
+	grid-template-areas: " h h" "l r";
+	justify-content: space-between;
+	align-items: center;
+	gap: calc(var(--login-gap) * 2);
+}
+
+.AddCardItem {
+
+	width: calc(var(--login-width) / 2 - var(--login-gap) * 4);
+	height: calc(var(--login-width) / 2 - var(--login-gap) * 4);
+	background-color: rgba(91, 94, 80, 0.2);
+	border: 1px dashed rgba(10, 10, 10, 1);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0px;
+}
+
+.AddCard > div.left {
+
+	grid-area: l;
+}
+
+.AddCard > div.right {
+
+	grid-area: r;
+}
+
+.AddCardItem > div {
+
+	display: inline-flex;
+	padding: 5px;
+	border-radius: 50px;
+	background-color: white;
+}
+
+.AddCardItem > p {
+
+	font-size: var(--text-size);
+	font-weight: 700;
+	color: black;
+}
+
+.AddCardItem > label {
+
+	font-size: var(--text-size);
+	font-weight: 700;
+	color: var(--color-secondary);
+}
