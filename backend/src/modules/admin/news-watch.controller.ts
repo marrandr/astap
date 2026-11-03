@@ -9,6 +9,6 @@ export class NewsWatchController {
   @Get('articles')
   @ApiOperation({ summary: 'Consulter les dernières actualités de la veille Madagascar' })
   listLatest() {
-    return this.newsWatch.listLatest();
+    return this.newsWatch.listPublicLatest();
   }
 }

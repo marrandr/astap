@@ -8,6 +8,7 @@ import { PrismaService } from '../../prisma.service.js';
 
 const NEWSDATA_ENDPOINT = 'https://newsdata.io/api/1/latest';
 const DEFAULT_CATEGORIES = ['politics', 'sports', 'education', 'crime'];
+const PUBLIC_SYNC_INTERVAL_MS = 15 * 60 * 1000;
 
 interface NewsDataArticle {
   article_id?: string;
@@ -33,14 +34,50 @@ interface NewsDataResponse {
   message?: string;
 }
 
+export interface NewsWatchSyncResult {
+  totalResults: number;
+  received: number;
+  saved: number;
+  items: Awaited<ReturnType<NewsWatchService['listLatest']>>;
+}
+
 @Injectable()
 export class NewsWatchService {
+  private lastSyncAt = 0;
+  private syncInFlight: Promise<NewsWatchSyncResult> | null = null;
+
   constructor(
     private readonly config: ConfigService,
     private readonly prisma: PrismaService,
   ) {}
 
-  async syncLatest() {
+  async syncLatest(): Promise<NewsWatchSyncResult> {
+    if (this.syncInFlight) return this.syncInFlight;
+
+    const sync = this.performSyncLatest();
+    this.syncInFlight = sync;
+    try {
+      return await sync;
+    } finally {
+      this.lastSyncAt = Date.now();
+      this.syncInFlight = null;
+    }
+  }
+
+  async listPublicLatest() {
+    if (Date.now() - this.lastSyncAt >= PUBLIC_SYNC_INTERVAL_MS) {
+      try {
+        await this.syncLatest();
+      } catch (error) {
+        const cachedItems = await this.listLatest();
+        if (cachedItems.length === 0) throw error;
+        return cachedItems;
+      }
+    }
+    return this.listLatest();
+  }
+
+  private async performSyncLatest(): Promise<NewsWatchSyncResult> {
     const apiKey = this.config.get<string>('NEWSDATA_API_KEY');
     if (!apiKey) {
       throw new InternalServerErrorException('La variable NEWSDATA_API_KEY est absente de la configuration');
