@@ -35,7 +35,7 @@
   outline-offset: 3px;
 }
 
-.Home .home-container {
+.home-container {
   width: min(100% - 48px, 1200px);
   margin: auto;
 }
@@ -56,16 +56,18 @@
    Navbar / Header
    ========================================================== */
 
-.Home .home-navbar {
+.home-navbar {
+
   position: sticky;
   top: 0;
   z-index: 20;
   background: #ffffffed;
+  width: 100%;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
 }
 
-.Home .nav-inner {
+.nav-inner {
   height: 76px;
   display: flex;
   align-items: center;
@@ -73,7 +75,7 @@
   gap: 24px;
 }
 
-.Home .home-brand {
+.home-brand {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -87,13 +89,13 @@
   flex-shrink: 0;
 }
 
-.Home .home-brand img {
+.home-brand img {
   display: block;
   width: 180px;
   height: auto;
 }
 
-.Home .brand-icon {
+.home-brand .brand-icon {
   display: grid;
   place-items: center;
   background: #e5f5ed;
@@ -103,42 +105,52 @@
   border-radius: 11px;
 }
 
-.Home .accent {
+.accent {
   color: var(--emerald);
 }
 
-.Home .desktop-nav {
+.desktop-nav {
   display: flex;
   align-items: center;
   gap: 32px;
   align-self: stretch;
 }
 
-.Home .desktop-nav a {
+.desktop-nav a {
+  
   display: flex;
   align-items: center;
   font-weight: 600;
   color: var(--muted);
+  text-decoration: none;
   border-bottom: 2px solid transparent;
 }
 
-.Home .desktop-nav a[aria-current] {
+.desktop-nav a[aria-current] {
+  
   color: var(--emerald);
   border-color: var(--emerald);
 }
 
-.Home .desktop-nav a:hover {
+.desktop-nav a::after {
+  
+  color: var(--emerald);
+  border-color: var(--emerald);
+}
+
+.desktop-nav a:hover {
+  
   color: var(--emerald);
 }
 
-.Home .nav-actions {
+.nav-actions {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.Home .icon-button,
-.Home .menu-toggle {
+.icon-button,
+.menu-toggle {
   border: 0;
   background: transparent;
   color: var(--muted);
@@ -146,7 +158,7 @@
   border-radius: 8px;
 }
 
-.Home .nav-avatar {
+.nav-avatar {
   display: grid;
   place-items: center;
   width: 36px;
@@ -158,8 +170,8 @@
   font-weight: 800;
 }
 
-.Home .menu-toggle,
-.Home .mobile-nav {
+.menu-toggle,
+.mobile-nav {
   display: none;
 }
 
@@ -388,7 +400,12 @@
 
 .Home .article-card {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.9fr) minmax(220px, 0.8fr);
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  /* grid-template-areas: "summary image sources"; */
+  /* align-items: stretch;
+  align-items: center;
+  justify-content: center; */
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
@@ -396,6 +413,36 @@
   box-shadow: 0 1px 3px #0000000d;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.Home .article-card .article-sources {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 26px;
+  border-left: 1px solid var(--border);
+}
+
+.Home .article-card .article-image {
+  
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #edf7f2, #dfe9f4);
+  border-right: 1px solid var(--border);
+}
+
+
+
+.Home .article-card .article-image img {
+  
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+} 
 
 .Home .article-card:hover {
   transform: translateY(-2px);
@@ -407,6 +454,7 @@
   flex-direction: column;
   min-width: 0;
   padding: 26px;
+  border-right: 1px solid #edf2f7;
 }
 
 .Home .article-meta {
@@ -598,6 +646,17 @@
   font-weight: 700;
 }
 
+.Home .ai-stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 10px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
 /* ==========================================================
    Footer
    ========================================================== */
@@ -657,37 +716,37 @@
 }
 
 @media (max-width: 700px) {
-  .Home .home-container {
+  .home-container {
     width: min(100% - 32px, 1200px);
   }
 
-  .Home .desktop-nav,
-  .Home .nav-actions {
+  .desktop-nav,
+  .nav-actions {
     display: none;
   }
 
-  .Home .menu-toggle {
+  .menu-toggle {
     display: block;
   }
 
-  .Home .mobile-nav {
+  .mobile-nav {
     display: flex;
     flex-direction: column;
     border-top: 1px solid var(--border);
     padding: 12px 20px;
   }
 
-  .Home .mobile-nav a {
+  .mobile-nav a {
     padding: 10px;
     color: var(--navy);
     font-weight: 600;
   }
 
-  .Home .home-hero {
+  .home-hero {
     padding: 52px 16px;
   }
 
-  .Home .home-search {
+  .home-search {
     border-radius: 16px;
     padding-left: 13px;
     gap: 7px;
@@ -703,38 +762,43 @@
     font-size: 12px;
   }
 
-  .Home .article-card {
+  .article-card {
     grid-template-columns: 1fr;
   }
 
-  .Home .article-summary {
+  .article-summary {
     grid-column: auto;
   }
 
-  .Home .article-image {
+  .article-image {
     position: relative;
-    min-height: 220px;
-    background: linear-gradient(135deg, #e2e8f0, #f8fafc);
+    max-height: 100%;
+    background: linear-gradient(135deg, #edf7f2, #dfe9f4);
+    border-right: 1px solid var(--border);
   }
 
-  .Home .article-image img {
+  .article-image img {
+    display: block;
     width: 100%;
     height: 100%;
     min-height: 220px;
     object-fit: cover;
-    display: block;
   }
 
   .Home .article-image span {
     position: absolute;
     left: 14px;
     bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 999px;
     background: rgba(15, 23, 42, 0.74);
     color: white;
-    border-radius: 999px;
-    padding: 6px 10px;
     font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
   .Home .article-image-placeholder {
@@ -756,15 +820,14 @@
     justify-content: space-between;
     gap: 18px;
     background: linear-gradient(180deg, #f9fbff, #f3f8ff);
-    border-left: 1px solid var(--border);
-    padding: 20px 18px;
+    padding: 22px 20px;
   }
 
   .Home .insight-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 10px;
   }
 
   .Home .insight-header h4 {
@@ -795,16 +858,7 @@
     gap: 10px;
   }
 
-  .Home .ai-stat {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    border-bottom: 1px solid #edf2f7;
-    padding-bottom: 10px;
-    color: var(--muted);
-    font-size: 12px;
-  }
+  
 
   .Home .ai-stat strong {
     color: var(--navy);

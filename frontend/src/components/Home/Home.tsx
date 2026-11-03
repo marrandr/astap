@@ -91,7 +91,7 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           </div>
         )}
         <Link className="secondary-button comments-link" to={`/articles/${article.id}`}>
-          Voir les commentaires
+          Analyser / Voir les commentaires
         </Link>
       </div>
 
@@ -107,7 +107,7 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
       <aside className="article-sources">
         <div className="insight-header">
           <h4><FileCheck2 size={19} /> État du dossier</h4>
-          <span className="insight-pill">{verdictLabel(article.status)}</span>
+          {/* <span className="insight-pill">{verdictLabel(article.status)}</span> */}
         </div>
 
         <div className="ai-stats">
@@ -121,7 +121,7 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           </div>
           <div className="ai-stat">
             <span>Source</span>
-            <strong>{article.location ?? "–"}</strong>
+            <strong>{article.location ?? "0"}</strong>
           </div>
         </div>
 
@@ -129,9 +129,9 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           <li><Check size={16} aria-hidden="true" /> Analyse de vérification disponible</li>
         </ul>
 
-        <Link className="primary-button dossier-link" to={`/articles/${article.id}`}>
+        {/* <Link className="primary-button dossier-link" to={`/articles/${article.id}`}>
           Voir le dossier complet <ArrowUpRight size={17} />
-        </Link>
+        </Link> */}
       </aside>
     </article>
   );
