@@ -1,38 +1,100 @@
-import './Home.css';
-import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { Link } from 'react-router';
-import { FileCheck2, MessageCircle, Search, ShieldCheck, ArrowUpRight } from "lucide-react";
-import { api } from '../../lib/api';
-import type { ArticleSummary, ArticleVerdict } from '../../types/api';
-import SiteNavbar from '../SiteNavbar';
+import { useMemo, useState, type FormEvent } from "react";
+import { Check, Eye, FileCheck2, MessageCircle, Search, Share2, ShieldCheck, ArrowUpRight} from "lucide-react";
+import "./Home.css";
+import NavBar from "../NavBar/NavBar";
 
-type VerdictLabel = "VRAI" | "À VÉRIFIER" | "FAUX";
-type Filter = "Toutes les vérifications" | "Confirmées" | "À vérifier" | "Contestées";
-type SortKey = "recent" | "verifications" | "comments";
-
-const verdictLabel = (status: ArticleVerdict): VerdictLabel => {
-  switch (status) {
-    case 'CONFIRMED':
-      return 'VRAI';
-    case 'CONTRADICTED':
-    case 'MISLEADING':
-      return 'FAUX';
-    default:
-      return 'À VÉRIFIER';
-  }
+type Verdict = "FAUX" | "À VÉRIFIER" | "VRAI";
+type Filter = "Toutes les vérifications" | "Récentes" | "Plus partagées";
+type Article = {
+  id: number; title: string; excerpt: string; verdict: Verdict; author: string;
+  date: string; category: string; image: string; imageLabel: string;
+  sources: string[]; views: number; shares: number; comments: number;
+  ai: { textCoverage: number; mediaCoverage: number; sourceChecks: number; };
+  media: { label: string; preview: string; type: 'image' | 'video' }[];
 };
 
-const imageLabelOf = (status: ArticleVerdict): string => {
-  switch (status) {
-    case 'CONFIRMED':
-      return 'INFORMATION CONFIRMÉE';
-    case 'CONTRADICTED':
-    case 'MISLEADING':
-      return 'INFORMATION CONTESTÉE';
-    default:
-      return 'EN COURS D’EXAMEN';
-  }
-};
+const articles: Article[] = [
+  {
+    id: 1,
+    title: "Une nouvelle hausse des tarifs de l’électricité annoncée pour novembre ?",
+    excerpt: "Une publication largement relayée affirme qu'une augmentation immédiate des tarifs est prévue. Voici les éléments à examiner et les sources à consulter.",
+    verdict: "À VÉRIFIER",
+    author: "Rédaction Hamarino",
+    date: "2 novembre 2026",
+    category: "Économie",
+    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900&q=85",
+    imageLabel: "ENQUÊTE EN COURS",
+    sources: ["Communiqués de l'opérateur", "Textes réglementaires", "Déclarations publiques"],
+    views: 1240,
+    shares: 86,
+    comments: 14,
+    ai: { textCoverage: 94, mediaCoverage: 82, sourceChecks: 3 },
+    media: [
+      { label: "Photo de contexte", preview: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=500&q=80", type: 'image' },
+      { label: "Graphique de suivi", preview: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500&q=80", type: 'image' },
+    ],
+  },
+  {
+    id: 2,
+    title: "Cette photographie montre-t-elle réellement les dégâts du dernier cyclone ?",
+    excerpt: "Une image spectaculaire circule sur les réseaux sociaux. L'analyse de son origine permet d'évaluer le contexte dans lequel elle a été prise.",
+    verdict: "FAUX",
+    author: "Rédaction Hamarino",
+    date: "1 novembre 2026",
+    category: "Environnement",
+    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900&q=85",
+    imageLabel: "IMAGE HORS CONTEXTE",
+    sources: ["Recherche d'image inversée", "Archives photographiques", "Données météorologiques"],
+    views: 3200,
+    shares: 231,
+    comments: 38,
+    ai: { textCoverage: 91, mediaCoverage: 88, sourceChecks: 4 },
+    media: [
+      { label: "Image originale", preview: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=500&q=80", type: 'image' },
+      { label: "Image comparée", preview: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=500&q=80", type: 'image' },
+    ],
+  },
+  {
+    id: 3,
+    title: "Le calendrier officiel des examens a-t-il été modifié ?",
+    excerpt: "Des messages contradictoires annoncent un changement de dates. Nous comparons les publications disponibles aux documents de référence.",
+    verdict: "VRAI",
+    author: "Rédaction Hamarino",
+    date: "30 octobre 2026",
+    category: "Éducation",
+    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=900&q=85",
+    imageLabel: "DOCUMENT CONSULTÉ",
+    sources: ["Calendrier administratif", "Note d'information", "Publication institutionnelle"],
+    views: 980,
+    shares: 64,
+    comments: 9,
+    ai: { textCoverage: 97, mediaCoverage: 74, sourceChecks: 3 },
+    media: [
+      { label: "Document officiel", preview: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=500&q=80", type: 'image' },
+      { label: "Tableau de dates", preview: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80", type: 'image' },
+    ],
+  },
+  {
+    id: 4,
+    title: "Que sait-on des chiffres qui circulent sur le prix du riz ?",
+    excerpt: "Plusieurs publications comparent des prix relevés à différentes périodes sans préciser les marchés ni les unités utilisées.",
+    verdict: "À VÉRIFIER",
+    author: "Rédaction Hamarino",
+    date: "29 octobre 2026",
+    category: "Société",
+    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=900&q=85",
+    imageLabel: "DONNÉES À RECROISER",
+    sources: ["Relevés de prix", "Statistiques publiques", "Observations de marché"],
+    views: 740,
+    shares: 42,
+    comments: 6,
+    ai: { textCoverage: 89, mediaCoverage: 71, sourceChecks: 5 },
+    media: [
+      { label: "Archive de prix", preview: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80", type: 'image' },
+      { label: "Tableau comparatif", preview: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=500&q=80", type: 'image' },
+    ],
+  },
+];
 
 const fmtDate = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
@@ -49,9 +111,7 @@ function StatusBadge({ status }: { status: ArticleVerdict }) {
   </span>;
 }
 
-function ArticleCard({ article }: { article: ArticleSummary }) {
-  const { _count } = article;
-
+function ArticleCard({ article }: { article: Article }) {
   return <article className="article-card">
     <div className="article-summary">
       <div className="article-meta"><StatusBadge status={article.status}/><span>{fmtDate(article.publishedAt)}</span></div>
@@ -66,15 +126,45 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
         </div>
       </div>
     </div>
-    {article.coverImageUrl && <div className="article-image"><img src={article.coverImageUrl} alt={`Illustration : ${article.title}`} loading="lazy"/><span>{imageLabelOf(article.status)}</span></div>}
+    <div className="article-image"><img src={article.image} alt={`Illustration de démonstration : ${article.category}`} loading="lazy"/><span>{article.imageLabel}</span></div>
     <aside className="article-sources">
-      <h4><FileCheck2 size={19}/> Dossier de vérification</h4>
-      <ul>
-        <li><ShieldCheck size={16} aria-hidden="true"/>{_count.verifications} vérification{_count.verifications === 1 ? '' : 's'} enregistrée{_count.verifications === 1 ? '' : 's'}</li>
-        <li><FileCheck2 size={16} aria-hidden="true"/>{_count.evidences} preuve{_count.evidences === 1 ? '' : 's'} ajoutée{_count.evidences === 1 ? '' : 's'}</li>
-        <li><MessageCircle size={16} aria-hidden="true"/>{_count.comments} commentaire{_count.comments === 1 ? '' : 's'}</li>
+      <div className="insight-header">
+        <h4><FileCheck2 size={19}/> IA & médias</h4>
+        <span className="insight-pill">Analyse</span>
+      </div>
+
+      <div className="ai-stats">
+        <div className="ai-stat">
+          <span>Texte</span>
+          <strong>{article.ai.textCoverage}% IA</strong>
+        </div>
+        <div className="ai-stat">
+          <span>Médias</span>
+          <strong>{article.ai.mediaCoverage}% IA</strong>
+        </div>
+        <div className="ai-stat">
+          <span>Sources</span>
+          <strong>{article.ai.sourceChecks}</strong>
+        </div>
+      </div>
+
+      <div className="media-summary">
+        <p>Médias vérifiés</p>
+        <div className="media-tiles">
+          {article.media.map(item => (
+            <div key={item.label} className="media-tile">
+              <img src={item.preview} alt={item.label} loading="lazy" />
+              <span>{item.type === 'video' ? 'Vidéo' : 'Image'}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <ul className="source-list">
+        {article.sources.map(source => <li key={source}><Check size={16} aria-hidden="true"/>{source}</li>)}
       </ul>
-      <Link className="primary-button dossier-link" to={`/articles/${article.id}`}>Voir le dossier complet <ArrowUpRight size={17}/></Link>
+
+      <a className="primary-button dossier-link" href={`/articles/${article.id}`}>Voir le dossier complet <ArrowUpRight size={17}/></a>
     </aside>
   </article>;
 }
@@ -133,8 +223,9 @@ export default function Home() {
     document.getElementById("verifications")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  return <div className="Home">
-    <SiteNavbar/>
+
+   return <div className="Home">
+    <NavBar/>
     <main>
       <section className="home-hero">
         <div className="hero-content">
