@@ -8,6 +8,7 @@ import EmailVerification from './components/EmailVerification/EmailVerification.
 import CreatePost from './components/CreatePost/CreatePost.tsx';
 import CreateSubPost from './components/CreateSubPost/CreateSubPost.tsx';
 import AdminDashboard from './components/Admin/AdminDashboard.tsx';
+import NewsWatch from './components/Admin/NewsWatch.tsx';
 import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
@@ -55,6 +56,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/validation" element={<AdminDashboard />} />
+            <Route path="/admin/watch" element={<NewsWatch />} />
           </Route>
         </Routes>
       </BrowserRouter>

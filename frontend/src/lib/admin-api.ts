@@ -1,6 +1,24 @@
 import { getStoredToken } from './auth';
 import type { AdminPendingUser, AdminUserDetail } from '../types/admin';
 
+export interface NewsWatchItem {
+  id: number;
+  providerId: string;
+  title: string;
+  description: string | null;
+  link: string;
+  sourceId: string | null;
+  sourceName: string | null;
+  sourceUrl: string | null;
+  language: string | null;
+  country: string[];
+  categories: string[];
+  imageUrl: string | null;
+  sentiment: string | null;
+  publishedAt: string | null;
+  fetchedAt: string;
+}
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -34,4 +52,11 @@ export const adminApi = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     }),
+  listWatchArticles: () => request<NewsWatchItem[]>('/admin/watch/articles'),
+  syncWatchArticles: () => request<{
+    totalResults: number;
+    received: number;
+    saved: number;
+    items: NewsWatchItem[];
+  }>('/admin/watch/sync', { method: 'POST' }),
 };

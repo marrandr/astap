@@ -83,6 +83,7 @@ export default function AdminDashboard() {
             <Link to="/" style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 600 }}>Accueil</Link>
             <Link to="/admin" style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 600 }}>Dashboard</Link>
             <Link to="/admin" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 700 }}>Validation</Link>
+            <Link to="/admin/watch" style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 600 }}>Veille Madagascar</Link>
           </nav>
         </div>
 

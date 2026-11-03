@@ -3,6 +3,7 @@ import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { PrismaService } from '../../prisma.service';
 import { prismaMock } from '../../../test/mocks';
+import { NewsWatchService } from './news-watch.service.js';
 
 describe('AdminController', () => {
   let controller: AdminController;
@@ -13,6 +14,7 @@ describe('AdminController', () => {
       providers: [
         AdminService,
         { provide: PrismaService, useValue: prismaMock },
+        { provide: NewsWatchService, useValue: {} },
       ],
     }).compile();
 
