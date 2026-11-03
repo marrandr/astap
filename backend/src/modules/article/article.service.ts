@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { AiornotService } from './aiornot.service.js';
 import { assertAllowedImage, type UploadedFile } from '../../common/uploads.js';
 import type { Verdict, RelationType, EvidenceType } from '../../generated/prisma/enums.js';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -23,6 +24,7 @@ export class ArticleService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly cloudinary: CloudinaryService,
+    private readonly aiornot: AiornotService,
   ) {}
 
   async createArticle(userId: number, dto: CreateArticleDto, files?: UploadedArticleFiles) {
@@ -54,6 +56,9 @@ export class ArticleService {
     }
     uploadedImages.forEach(assertAllowedImage);
 
+    const filesToAnalyze = [...(uploadedCover ? [uploadedCover] : []), ...uploadedImages];
+    const imageAnalyses = await Promise.all(filesToAnalyze.map((file) => this.aiornot.analyze(file)));
+
     let coverImageUrl = dto.coverImageUrl ?? null;
     if (uploadedCover) {
       const result = await this.cloudinary.uploadPublic(uploadedCover, 'article-covers');
@@ -71,6 +76,20 @@ export class ArticleService {
       coverImageUrl = galleryUrls[0];
     }
 
+    const galleryUrlCountFromDto = dto.images?.length ?? 0;
+    const imageCreates = [
+      ...(uploadedCover && coverImageUrl
+        ? [{ fileUrl: coverImageUrl, analysis: imageAnalyses[0] }]
+        : []),
+      ...galleryUrls.map((url, index) => {
+        const uploadedImageIndex = index - galleryUrlCountFromDto;
+        const analysis = uploadedImageIndex >= 0
+          ? imageAnalyses[uploadedImageIndex + (uploadedCover ? 1 : 0)]
+          : undefined;
+        return { fileUrl: url, analysis };
+      }),
+    ];
+
     const article = await this.prisma.article.create({
       data: {
         title: dto.title,
@@ -82,10 +101,19 @@ export class ArticleService {
         topicId: dto.topicId,
         parentArticleId: dto.parentArticleId ?? null,
         relationType: dto.relationType ? (dto.relationType as RelationType) : null,
-        images: galleryUrls.length > 0
+        images: imageCreates.length > 0
           ? {
-              create: galleryUrls.map((url) => ({
-                fileUrl: url,
+              create: imageCreates.map(({ fileUrl, analysis }) => ({
+                fileUrl,
+                analyses: analysis
+                  ? {
+                      create: {
+                        aiScore: analysis.aiScore,
+                        modelUsed: 'aiornot-v2',
+                        detail: analysis.detail as object,
+                      },
+                    }
+                  : undefined,
               })),
             }
           : undefined,
@@ -93,7 +121,7 @@ export class ArticleService {
       include: {
         author: authorSelect,
         topic: true,
-        images: true,
+        images: { include: { analyses: true } },
       },
     });
 
@@ -165,7 +193,7 @@ export class ArticleService {
           },
         },
         evidences: true,
-        images: true,
+        images: { include: { analyses: true } },
         comments: {
           include: {
             user: { select: { id: true, name: true } },
@@ -218,9 +246,7 @@ export class ArticleService {
             select: { id: true, name: true },
           },
           topic: true,
-          images: {
-            select: { id: true, fileUrl: true },
-          },
+          images: { include: { analyses: true } },
           _count: {
             select: {
               verifications: true,

@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ArticleService } from './article.service';
 import { PrismaService } from '../../prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { AiornotService } from './aiornot.service';
 import { prismaMock, cloudinaryMock } from '../../../test/mocks';
 
 describe('ArticleService', () => {
@@ -13,6 +14,7 @@ describe('ArticleService', () => {
         ArticleService,
         { provide: PrismaService, useValue: prismaMock },
         { provide: CloudinaryService, useValue: cloudinaryMock },
+        { provide: AiornotService, useValue: { analyze: vi.fn() } },
       ],
     }).compile();
 

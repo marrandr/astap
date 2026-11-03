@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -8,10 +9,11 @@ import {
   Query,
   Req,
   UploadedFiles,
+  UploadedFile as UploadedFileParam,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../guards/jwt.guard.js';
 import { AccountValidatedGuard } from '../../guards/account-validated.guard.js';
@@ -23,6 +25,8 @@ import { CreateEvidenceDto } from './dto/create-evidence.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import type { AppRequestUser } from '../../common/request-user.js';
 import type { UploadedFile } from '../../common/uploads.js';
+import { assertAllowedImage } from '../../common/uploads.js';
+import { AiornotService } from './aiornot.service.js';
 
 interface UploadedArticleFiles {
   coverImage?: UploadedFile[];
@@ -33,7 +37,27 @@ interface UploadedArticleFiles {
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(
+    private readonly articleService: ArticleService,
+    private readonly aiornotService: AiornotService,
+  ) {}
+
+  @Post('aiornot/test')
+  @ApiOperation({ summary: 'Tester AI or Not avec une image (aucun rapport enregistré)' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['image'],
+      properties: { image: { type: 'string', format: 'binary' } },
+    },
+  })
+  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 5 * 1024 * 1024 } }))
+  async testAiornot(@UploadedFileParam() file?: UploadedFile) {
+    if (!file) throw new BadRequestException('Le fichier image est requis');
+    assertAllowedImage(file);
+    return this.aiornotService.analyze(file);
+  }
 
   @UseGuards(AccountValidatedGuard)
   @Post()

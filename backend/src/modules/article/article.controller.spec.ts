@@ -3,6 +3,7 @@ import { ArticleController } from './article.controller';
 import { ArticleService } from './article.service';
 import { PrismaService } from '../../prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { AiornotService } from './aiornot.service';
 import { prismaMock, cloudinaryMock } from '../../../test/mocks';
 
 describe('ArticleController', () => {
@@ -15,6 +16,7 @@ describe('ArticleController', () => {
         ArticleService,
         { provide: PrismaService, useValue: prismaMock },
         { provide: CloudinaryService, useValue: cloudinaryMock },
+        { provide: AiornotService, useValue: { analyze: vi.fn() } },
       ],
     }).compile();
 
