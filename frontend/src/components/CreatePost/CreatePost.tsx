@@ -94,7 +94,7 @@ export default function CreatePost() {
       setErrors({});
       setSavedVersion(current => current + 1);
       setSavedCount(articles.length);
-      navigate('/');
+      navigate('/verification');
     } catch (err) {
       setSaveError(err instanceof Error ? err.message : 'L’envoi a échoué. Merci de réessayer.');
     } finally {
@@ -142,7 +142,7 @@ export default function CreatePost() {
               <button type="button" className="post-add-article" onClick={addArticle}><Plus size={18} aria-hidden="true" />Ajouter un article</button>
               {saveError && <p className="post-error" role="alert">{saveError}</p>}
               <div className="post-actions">
-                <Link to="/" className={`post-cancel${saving ? ' is-disabled' : ''}`} aria-disabled={saving} onClick={event => { if (saving) event.preventDefault(); }}>Annuler</Link>
+                <Link to="/verification" className={`post-cancel${saving ? ' is-disabled' : ''}`} aria-disabled={saving} onClick={event => { if (saving) event.preventDefault(); }}>Annuler</Link>
                 <button className="post-submit" type="submit">{saving ? 'Publication…' : articles.length === 1 ? 'Publier l’article' : `Publier les ${articles.length} articles`}<ArrowRight size={17} aria-hidden="true" /></button>
               </div>
             </fieldset>

@@ -42,7 +42,7 @@ const Login = () => {
       const response = await api.login({ email: email.trim(), password });
       const nextRole = getTokenRole(response.access_token) ?? 'PERSONAL';
       login(response.access_token, remember);
-      navigate(nextRole === 'ADMIN' ? '/' : '/');
+      navigate(nextRole === 'ADMIN' ? '/admin' : '/verification');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion');
     } finally {

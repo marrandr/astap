@@ -1,23 +1,6 @@
 import { getStoredToken } from './auth';
 import type { AdminPendingUser, AdminUserDetail } from '../types/admin';
-
-export interface NewsWatchItem {
-  id: number;
-  providerId: string;
-  title: string;
-  description: string | null;
-  link: string;
-  sourceId: string | null;
-  sourceName: string | null;
-  sourceUrl: string | null;
-  language: string | null;
-  country: string[];
-  categories: string[];
-  imageUrl: string | null;
-  sentiment: string | null;
-  publishedAt: string | null;
-  fetchedAt: string;
-}
+import type { NewsWatchItem } from '../types/api';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
 

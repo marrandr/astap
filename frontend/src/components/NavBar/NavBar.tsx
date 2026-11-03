@@ -2,7 +2,7 @@ import './NavBar.css';
 import '../Home/Home.css';
 import { useRef, useState, useEffect } from 'react';
 import { Bell, Menu, X, UserRound, LogOut } from 'lucide-react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.svg';
 import { useAuth } from '../../lib/auth';
 
@@ -10,7 +10,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, isAdmin } = useAuth();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -36,9 +37,10 @@ export default function Navbar() {
           <img src={hamarinoLogo} alt="Hamarino.io" width={2048} height={518} />
         </a>
         <nav className="desktop-nav" aria-label="Navigation principale">
-          <a href="/" aria-current="page">Accueil</a>
-          <a href="#verifications">Vérifications</a>
+          <Link to="/" aria-current={pathname === '/' ? 'page' : undefined}>Accueil</Link>
+          <Link to="/verification">Vérifications</Link>
           <a href="/articles/new">Publier</a>
+          {isAdmin && <Link to="/admin">Administration</Link>}
         </nav>
         <div className="nav-actions" ref={menuRef}>
           <button type="button" className="icon-button" aria-label="Notifications">
@@ -79,10 +81,11 @@ export default function Navbar() {
 
       {open && (
         <nav className="mobile-nav" aria-label="Navigation mobile">
-          <a href="/">Accueil</a>
-          <a href="#verifications" onClick={() => setOpen(false)}>Vérifications</a>
+          <Link to="/" onClick={() => setOpen(false)}>Accueil</Link>
+          <Link to="/verification" onClick={() => setOpen(false)}>Vérifications</Link>
           <a href="#a-propos" onClick={() => setOpen(false)}>À propos</a>
           <Link to="/profile/demo" onClick={() => setOpen(false)}>Mon profil</Link>
+          {isAdmin && <Link to="/admin" onClick={() => setOpen(false)}>Administration</Link>}
           <button type="button" className="mobile-logout" onClick={handleLogout}>Se déconnecter</button>
         </nav>
       )}

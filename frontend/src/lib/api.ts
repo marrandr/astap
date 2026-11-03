@@ -3,6 +3,7 @@ import type {
   ArticleComment,
   ArticleDetail,
   LoginResponse,
+  NewsWatchItem,
   PaginatedArticles,
   RegisterResponse,
   TopicOption,
@@ -142,6 +143,7 @@ export const api = {
   },
 
   getArticle: (id: number) => request<ArticleDetail>(`/article/${id}`),
+  getPublicWatchArticles: () => request<NewsWatchItem[]>('/watch/articles'),
 
   createComment: (articleId: number, payload: {
     stance: 'FOR' | 'AGAINST';

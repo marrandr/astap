@@ -95,7 +95,7 @@ export default function ArticleDetail() {
       <div className="Home ArticleDetail"><SiteNavbar/>
         <main className="detail-container">
           <p className="empty-results">{error || 'Article introuvable.'}</p>
-          <Link to="/" className="primary-button" style={{ marginTop: 16 }}><ArrowLeft size={16}/> Retour au fil</Link>
+          <Link to="/verification" className="primary-button" style={{ marginTop: 16 }}><ArrowLeft size={16}/> Retour au fil</Link>
         </main>
       </div>
     );
@@ -112,7 +112,7 @@ export default function ArticleDetail() {
     <div className="Home ArticleDetail">
       <SiteNavbar/>
       <main className="detail-container">
-        <Link to="/" className="back-link"><ArrowLeft size={16}/> Retour au fil</Link>
+        <Link to="/verification" className="back-link"><ArrowLeft size={16}/> Retour au fil</Link>
 
         <header className="detail-header">
           <div className="article-meta">

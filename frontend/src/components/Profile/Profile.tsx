@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router';
-import { Award, BookOpenText, Camera, CheckCircle2, MapPin, MessageCircle, ShieldCheck, Star } from 'lucide-react';
+import { Award, BookOpenText, Camera, CheckCircle2, MapPin, ShieldCheck } from 'lucide-react';
 import './Profile.css';
 import NavBar from '../NavBar/NavBar';
 

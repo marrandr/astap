@@ -5,7 +5,7 @@ export default function PublicOnlyRoute() {
   const { isAuthenticated, isAdmin } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to={isAdmin ? '/admin' : '/'} replace />;
+    return <Navigate to={isAdmin ? '/admin' : '/verification'} replace />;
   }
 
   return <Outlet />;

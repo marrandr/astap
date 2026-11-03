@@ -41,6 +41,24 @@ export interface ArticleImage {
   analyses?: ImageAiAnalysis[];
 }
 
+export interface NewsWatchItem {
+  id: number;
+  providerId: string;
+  title: string;
+  description: string | null;
+  link: string;
+  sourceId: string | null;
+  sourceName: string | null;
+  sourceUrl: string | null;
+  language: string | null;
+  country: string[];
+  categories: string[];
+  imageUrl: string | null;
+  sentiment: string | null;
+  publishedAt: string | null;
+  fetchedAt: string;
+}
+
 export interface ArticleSummary {
   id: number;
   title: string;

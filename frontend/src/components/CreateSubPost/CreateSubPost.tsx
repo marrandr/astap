@@ -115,7 +115,7 @@ export default function CreateSubPost() {
   }
 
   if (notFound || !parent) {
-    return <main className="create-subpost-page"><div className="create-subpost-container"><section className="create-subpost-card"><h1>404 — Article introuvable</h1><p>Le parent demandé n’existe pas ou a été supprimé.</p><Link to="/" className="post-cancel">Retour à l’accueil</Link></section></div></main>;
+    return <main className="create-subpost-page"><div className="create-subpost-container"><section className="create-subpost-card"><h1>404 — Article introuvable</h1><p>Le parent demandé n’existe pas ou a été supprimé.</p><Link to="/verification" className="post-cancel">Retour aux vérifications</Link></section></div></main>;
   }
 
   return (

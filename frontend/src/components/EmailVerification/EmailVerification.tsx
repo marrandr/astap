@@ -32,7 +32,7 @@ export default function EmailVerification() {
 
     const storedToken = getStoredToken();
     if (storedToken) {
-      navigate('/', { replace: true });
+      navigate('/verification', { replace: true });
       return;
     }
 
@@ -61,7 +61,7 @@ export default function EmailVerification() {
         login(response.access_token);
       }
       clearPendingEmail();
-      navigate('/', { replace: true });
+      navigate('/verification', { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Code invalide');
     } finally {

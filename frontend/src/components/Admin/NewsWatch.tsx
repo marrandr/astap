@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink, Newspaper, RefreshCw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
-import { adminApi, type NewsWatchItem } from '../../lib/admin-api';
+import { adminApi } from '../../lib/admin-api';
+import type { NewsWatchItem } from '../../types/api';
 import { useAuth } from '../../lib/auth';
 import './NewsWatch.css';
 
@@ -88,7 +89,7 @@ export default function NewsWatch() {
         ) : (
           <div className="news-watch-list">
             {items.map((item) => (
-              <article className="news-watch-card" key={item.providerId}>
+              <article className={`news-watch-card${item.imageUrl ? '' : ' news-watch-card-no-image'}`} key={item.providerId}>
                 {item.imageUrl && <img src={item.imageUrl} alt="" loading="lazy" />}
                 <div className="news-watch-card-body">
                   <div className="news-watch-meta">
@@ -96,7 +97,7 @@ export default function NewsWatch() {
                     <time dateTime={item.publishedAt ?? item.fetchedAt}>{formatDate(item.publishedAt)}</time>
                   </div>
                   <h2>{item.title}</h2>
-                  {item.description && <p>{item.description}</p>}
+                  <p>{item.description || 'Résumé non disponible. Consultez l’article à la source pour lire son contenu.'}</p>
                   <div className="news-watch-tags">
                     {item.categories.map((category) => <span key={category}>{category}</span>)}
                     {item.sentiment && <small>Sentiment API : {item.sentiment}</small>}

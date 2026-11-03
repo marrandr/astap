@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { useMemo, useState } from 'react';
 import Home from './components/Home/Home.tsx';
 import Login from './components/Login/Login.tsx';
@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
 import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
 import ProfilePage from './components/Profile/Profile.tsx';
+import PublicNewsWatch from './components/PublicNewsWatch.tsx';
 
 function App() {
   const [token, setToken] = useState<string | null>(() => getStoredToken());
@@ -41,8 +42,10 @@ function App() {
     <AuthContext.Provider value={authValue}>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<PublicNewsWatch />} />
+          <Route path="/veille" element={<Navigate to="/" replace />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/verification" element={<Home />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/articles/:id" element={<ArticleDetail />} />
             <Route path="/articles/new" element={<CreatePost />} />
