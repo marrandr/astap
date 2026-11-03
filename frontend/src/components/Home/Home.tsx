@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Check, FileCheck2, MessageCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import "./Home.css";
-import NavBar from "../NavBar/NavBar";
 import { api } from "../../lib/api";
 import type { ArticleSummary, ArticleVerdict } from "../../types/api";
 
@@ -198,7 +197,6 @@ export default function Home() {
 
   return (
     <div className="Home">
-      <NavBar />
       <main>
         <section className="home-hero">
           <div className="hero-content">

@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 .create-post-page {
-  --post-primary: #3b6ea8;
-  --post-text: #183153;
-  --post-muted: #64748b;
-  --post-border: #e2e8f0;
   box-sizing: border-box;
   width: 100vw;
   min-height: 100dvh;

@@ -1,8 +1,7 @@
 import './NavBar.css';
-import '../Home/Home.css';
 import { useRef, useState, useEffect } from 'react';
 import { Bell, Menu, X, UserRound, LogOut } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.svg';
 import { useAuth } from '../../lib/auth';
 
@@ -11,7 +10,6 @@ export default function Navbar() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const { logout, isAdmin } = useAuth();
-  const { pathname } = useLocation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -37,10 +35,10 @@ export default function Navbar() {
           <img src={hamarinoLogo} alt="Hamarino.io" width={2048} height={518} />
         </a>
         <nav className="desktop-nav" aria-label="Navigation principale">
-          <Link to="/" aria-current={pathname === '/' ? 'page' : undefined}>Accueil</Link>
-          <Link to="/verification">Vérifications</Link>
-          <a href="/articles/new">Publier</a>
-          {isAdmin && <Link to="/admin">Administration</Link>}
+          <a style={{fontSize: '14px'}} href="/">Accueil</a>
+          <a style={{fontSize: '14px'}} href="/verification">Vérifications</a>
+          <a style={{fontSize: '14px'}} href="/articles/new">Publier</a>
+          {isAdmin && <a href="/admin" style={{fontSize: '14px'}}>Administration</a>}
         </nav>
         <div className="nav-actions" ref={menuRef}>
           <button type="button" className="icon-button" aria-label="Notifications">
