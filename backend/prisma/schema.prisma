@@ -132,7 +132,6 @@ model Article {
   comments             Comment[]
   externalPublications ExternalPublication[]
   images               Image[]
-  aiAnalyses            AiAnalysis[]
 
   @@index([authorId])
   @@index([topicId])
@@ -245,22 +244,18 @@ model Image {
 model AiAnalysis {
   id          Int      @id @default(autoincrement()) @map("analysis_id")
   aiScore     Float    @map("ai_score")
-  isAiGenerated Boolean? @map("is_ai_generated")
   modelUsed   String   @map("model_used")
   detail      Json?
   analyzedAt  DateTime @default(now()) @map("analyzed_at")
 
   publicationId Int? @map("publication_id")
   imageId       Int? @map("image_id")
-  articleId     Int? @map("article_id")
 
-  article     Article?              @relation(fields: [articleId], references: [id], onDelete: Cascade)
   publication ExternalPublication? @relation(fields: [publicationId], references: [id], onDelete: Cascade)
   image       Image?               @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
   @@index([publicationId])
   @@index([imageId])
-  @@index([articleId])
   @@map("ai_analysis")
 }
 

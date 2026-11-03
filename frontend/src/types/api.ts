@@ -35,14 +35,6 @@ export interface ImageAiAnalysis {
   analyzedAt: string;
 }
 
-export interface TextAiAnalysis {
-  id: number;
-  aiScore: number;
-  isAiGenerated: boolean | null;
-  modelUsed: string;
-  analyzedAt: string;
-}
-
 export interface ArticleImage {
   id: number;
   fileUrl: string;
@@ -80,7 +72,6 @@ export interface ArticleSummary {
   author: { id: number; name: string };
   topic: { id: number; label: string };
   images?: ArticleImage[];
-  aiAnalyses?: TextAiAnalysis[];
   comments?: ArticleComment[];
   commentsCount?: number;
   commentCounts?: {

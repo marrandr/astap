@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 .create-post-page {
+  --post-primary: #3b6ea8;
+  --post-text: #183153;
+  --post-muted: #64748b;
+  --post-border: #e2e8f0;
   box-sizing: border-box;
   width: 100vw;
   min-height: 100dvh;
@@ -62,7 +66,7 @@
 .post-remove-source { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 44px; border: 0; border-radius: 8px; background: #f8fafc; color: var(--post-muted); cursor: pointer; }
 .post-add-source { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 4px 0; border: 0; background: transparent; color: var(--post-primary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
 .post-add-source:hover { color: #2d5584; }
-.post-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding-top: 24px; border-top: 1px solid #f1f5f9; }
+.post-actions { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 16px 0 max(16px, env(safe-area-inset-bottom)); margin-bottom: -40px; border-top: 1px solid #e2e8f0; background: rgb(255 255 255 / 96%); box-shadow: 0 -12px 24px rgb(15 23 42 / 6%); backdrop-filter: blur(8px); }
 .post-cancel, .post-submit { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; min-height: 44px; border-radius: 8px; font: inherit; font-weight: 600; font-size: 14px; text-decoration: none; cursor: pointer; transition: background 150ms; }
 .post-cancel { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
 .post-cancel:hover { background: #f8fafc; }
@@ -79,13 +83,14 @@
 @media (max-width: 600px) {
   .create-post-page { padding: 24px 16px; }
   .create-post-card { padding: 28px 24px; }
+  .post-actions { margin-bottom: -28px; }
   .create-post-heading { flex-direction: column; align-items: flex-start; gap: 10px; }
   .create-post-heading h1 { font-size: 26px; }
 }
 @media (max-width: 360px) {
   .create-post-card { padding: 24px 18px; }
   .post-label-row > span { font-size: 11px; }
-  .post-actions { gap: 8px; }
+  .post-actions { gap: 8px; margin-bottom: -24px; }
 }
 @media (prefers-reduced-motion: reduce) { .create-post-page * { transition: none !important; } }
 
@@ -101,7 +106,7 @@
 .saved-post-list time { font-size: 12px; color: var(--post-muted); }
 .saved-post-detail { margin-top: 20px; border-top: 1px solid var(--post-border); overflow-wrap: anywhere; }
 .saved-post-content { white-space: pre-wrap; }
-@media (max-width: 420px) { .post-media-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 420px) { .post-media-grid { grid-template-columns: minmax(0, 1fr); } .post-actions { position: sticky; left: 0; right: 0; } }
 
 .post-article + .post-article { padding-top: 24px; border-top: 1px solid var(--post-border); }
 .post-article-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
@@ -109,4 +114,4 @@
 .post-article-fields { display: flex; flex-direction: column; gap: 24px; }
 .post-remove-article { display: inline-flex; align-items: center; gap: 6px; padding: 8px; min-height: 44px; border: 0; border-radius: 8px; background: #fff; color: #b91c1c; font: inherit; cursor: pointer; }
 .post-add-article { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px; border: 1px dashed var(--post-primary); border-radius: 8px; background: #eff6ff; color: var(--post-primary); font: inherit; font-weight: 600; cursor: pointer; }
-@media (max-width: 420px) { .post-actions { flex-wrap: wrap; } .post-submit { flex: 1; } }
+@media (max-width: 420px) { .post-actions { flex-wrap: wrap; } .post-submit { flex: 1; min-width: 100%; } }

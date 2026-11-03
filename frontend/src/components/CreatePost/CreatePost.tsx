@@ -86,7 +86,10 @@ export default function CreatePost() {
       setSavedCount(articles.length);
       navigate('/verification');
     } catch (err) {
-      setSaveError(err instanceof Error ? err.message : 'L’envoi a échoué. Merci de réessayer.');
+      const responseMessage = err && typeof err === 'object' && 'data' in err
+        ? (err.data as { message?: unknown })?.message
+        : null;
+      setSaveError(err instanceof Error ? err.message : typeof responseMessage === 'string' ? responseMessage : 'L’envoi a échoué. Merci de réessayer.');
     } finally {
       setSaving(false);
     }

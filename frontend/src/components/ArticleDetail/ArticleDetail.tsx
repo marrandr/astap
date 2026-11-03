@@ -79,7 +79,6 @@ export default function ArticleDetail() {
   const detailCover = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
   const detailCoverImage = article.images?.find((image) => image.fileUrl === detailCover);
   const detailCoverAiScore = detailCoverImage ? imageAiScore(detailCoverImage) : undefined;
-  const textAiScore = article.aiAnalyses?.[0]?.aiScore;
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
 
@@ -211,24 +210,6 @@ export default function ArticleDetail() {
             </div>
           </section>
         )}
-
-        <section className="detail-section">
-          <h2><ShieldCheck size={18}/> Analyse IA du texte</h2>
-          {textAiScore === undefined ? (
-            <p className="detail-empty">Aucun score disponible. L’analyse nécessite au moins 250 caractères et peut être indisponible si le service AI or Not échoue.</p>
-          ) : (
-            <div className="article-ai-score article-text-ai-score">
-              <div className="article-ai-score-heading">
-                <span>Confiance du détecteur texte · {article.aiAnalyses?.[0]?.isAiGenerated ? 'IA détectée' : 'IA non détectée'}</span>
-                <strong>{Math.round(textAiScore * 100)}%</strong>
-              </div>
-              <div className="article-ai-score-track" aria-label={`Probabilité d’écriture IA détectée : ${Math.round(textAiScore * 100)}%`}>
-                <span style={{ width: `${Math.max(0, Math.min(100, textAiScore * 100))}%` }} />
-              </div>
-              <small>Ce résultat ne permet pas de conclure si les informations de l’article sont vraies ou fausses.</small>
-            </div>
-          )}
-        </section>
 
         <section className="detail-section">
           <h2><ShieldCheck size={18}/> Vérifications ({article.verifications?.length ?? 0})</h2>

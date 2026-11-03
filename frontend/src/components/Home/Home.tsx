@@ -49,7 +49,6 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
   const aiScores = getImageAiScores(article.images);
-  const textAiScore = article.aiAnalyses?.[0]?.aiScore;
   const averageAiScore = aiScores.length
     ? aiScores.reduce((total, score) => total + score, 0) / aiScores.length
     : null;
@@ -88,18 +87,6 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
               <span style={{ width: `${Math.max(0, Math.min(100, averageAiScore * 100))}%` }} />
             </div>
             <small>{aiScores.length} image{aiScores.length > 1 ? 's' : ''} analysée{aiScores.length > 1 ? 's' : ''}</small>
-          </div>
-        )}
-        {textAiScore !== undefined && (
-          <div className="article-ai-score article-text-ai-score">
-            <div className="article-ai-score-heading">
-              <span><Sparkles size={15} /> Confiance du détecteur texte</span>
-              <strong>{Math.round(textAiScore * 100)}%</strong>
-            </div>
-            <div className="article-ai-score-track" aria-label={`Indice IA du texte : ${Math.round(textAiScore * 100)}%`}>
-              <span style={{ width: `${Math.max(0, Math.min(100, textAiScore * 100))}%` }} />
-            </div>
-            <small>{article.aiAnalyses?.[0]?.isAiGenerated ? 'Écriture IA détectée' : 'Écriture IA non détectée'} · ne vérifie pas la véracité des faits.</small>
           </div>
         )}
         <Link className="secondary-button comments-link" to={`/articles/${article.id}`}>
