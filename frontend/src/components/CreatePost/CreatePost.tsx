@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { ArrowRight, BadgeCheck, CheckCircle2, Plus, X } from 'lucide-react';
+import { ArrowRight,  CheckCircle2, Plus, X } from 'lucide-react';
 import { createPostDraft, validatePostDraft } from './postDraft';
 import ArticleFields from './ArticleFields';
 import SavedPosts from './SavedPosts';

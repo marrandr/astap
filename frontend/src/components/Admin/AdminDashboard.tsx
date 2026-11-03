@@ -10,20 +10,23 @@ export default function AdminDashboard() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [error, setError] = useState('');
   const [userSearch, setUserSearch] = useState('');
-  const { data: users = [], isLoading: loadingList, refetch: loadUsers } = useListPendingUsersQuery();
+  const { data: users = [], isLoading: loadingList, isFetching: fetchingList, refetch: loadUsers } = useListPendingUsersQuery();
   const { data: user, isLoading: loadingUser } = useGetAdminUserQuery(selectedId ?? 0, { skip: !selectedId });
   const [validateUser, { isLoading: saving }] = useValidateUserMutation();
   const filteredUsers = users.filter((item) => `${item.name} ${item.email}`.toLocaleLowerCase('fr').includes(userSearch.trim().toLocaleLowerCase('fr')));
 
   useEffect(() => {
+    if (fetchingList) return;
     if (users.length && (!selectedId || !users.some(item => item.id === selectedId))) setSelectedId(users[0].id);
-  }, [selectedId, users]);
+    else if (!users.length && selectedId) setSelectedId(null);
+  }, [fetchingList, selectedId, users]);
 
   const applyDecision = async (status: 'VALIDATE' | 'REFUSED') => {
     if (!selectedId) return;
     setError('');
     try {
       await validateUser({ id_user: selectedId, status }).unwrap();
+      setSelectedId(null);
       await loadUsers();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Impossible de mettre à jour le statut');
