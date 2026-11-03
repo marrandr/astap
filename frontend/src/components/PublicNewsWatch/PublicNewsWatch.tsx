@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink, Newspaper, RefreshCw } from 'lucide-react';
-import { api } from '../lib/api';
-import type { NewsWatchItem } from '../types/api';
-import './Admin/NewsWatch.css';
-import NavBar from './NavBar/NavBar';
+import { api } from '../../lib/api';
+import type { NewsWatchItem } from '../../types/api';
+import '../Home/Home.css';
+import './PublicNewsWatch.css';
+import NavBar from '../NavBar/NavBar';
 
 const formatDate = (value: string | null) => value
   ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))

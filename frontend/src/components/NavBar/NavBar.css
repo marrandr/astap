@@ -1,5 +1,106 @@
+.home-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: 100%;
+  background: #ffffffed;
+  border-bottom: 1px solid #e2e8f0;
+  backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.home-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #102a45;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.9px;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.home-brand img {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+.home-brand .brand-icon {
+  display: grid;
+  place-items: center;
+  background: #e5f5ed;
+  color: #168a62;
+  height: 40px;
+  width: 40px;
+  border-radius: 11px;
+}
+
+.accent {
+  color: #168a62;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+}
+
+.desktop-nav > a {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #64748b;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.desktop-nav a[aria-current] {
+  color: #168a62;
+  border-color: #168a62;
+}
+
+.desktop-nav a:hover {
+  color: #168a62;
+}
+
 .nav-actions {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-button,
+.menu-toggle {
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.nav-avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #102a45;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .nav-profile-menu {
@@ -40,6 +141,7 @@
   font-weight: 600;
   text-align: left;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-dropdown-item:hover {
@@ -56,6 +158,11 @@
   color: #991b1b;
 }
 
+.menu-toggle,
+.mobile-nav {
+  display: none;
+}
+
 .mobile-logout {
   width: 100%;
   padding: 10px 12px;
@@ -66,4 +173,29 @@
   font-weight: 700;
   text-align: left;
   cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .desktop-nav,
+  .nav-actions {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #e2e8f0;
+    padding: 12px 20px;
+  }
+
+  .mobile-nav a {
+    padding: 10px;
+    color: #102a45;
+    font-weight: 600;
+    text-decoration: none;
+  }
 }

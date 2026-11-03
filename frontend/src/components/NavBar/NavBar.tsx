@@ -1,5 +1,4 @@
 import './NavBar.css';
-import '../Home/Home.css';
 import { useRef, useState, useEffect } from 'react';
 import { Bell, Menu, X, UserRound, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router';
@@ -37,10 +36,11 @@ export default function Navbar() {
           <img src={hamarinoLogo} alt="Hamarino.io" width={2048} height={518} />
         </a>
         <nav className="desktop-nav" aria-label="Navigation principale">
-          <Link to="/" aria-current={pathname === '/' ? 'page' : undefined}>Accueil</Link>
-          <Link to="/verification">Vérifications</Link>
-          <a href="/articles/new">Publier</a>
-          {isAdmin && <Link to="/admin">Administration</Link>}
+          {/* <a href="/" aria-current={pathname === '/' ? 'page' : undefined}>Accueil</a> */}
+          <a style={{fontSize: '14px'}} href="/">Accueil</a>
+          <a style={{fontSize: '14px'}} href="/verification">Vérifications</a>
+          <a style={{fontSize: '14px'}} href="/articles/new">Publier</a>
+          {isAdmin && <a href="/admin">Administration</a>}
         </nav>
         <div className="nav-actions" ref={menuRef}>
           <button type="button" className="icon-button" aria-label="Notifications">

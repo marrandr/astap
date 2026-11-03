@@ -14,7 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
 import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
 import ProfilePage from './components/Profile/Profile.tsx';
-import PublicNewsWatch from './components/PublicNewsWatch.tsx';
+import PublicNewsWatch from './components/PublicNewsWatch/PublicNewsWatch.tsx';
 
 function App() {
   const [token, setToken] = useState<string | null>(() => getStoredToken());

@@ -5,7 +5,6 @@ import { createPostDraft, validatePostDraft } from './postDraft';
 import ArticleFields from './ArticleFields';
 import SavedPosts from './SavedPosts';
 import './CreatePost.css';
-import '../Home/Home.css';
 import { api } from '../../lib/api';
 import type { TopicOption } from '../../types/api';
 import Navbar from '../NavBar/NavBar';
