@@ -3,8 +3,9 @@
   --navy: #102a45;
   --border: #e2e8f0;
   --muted: #64748b;
-  background: #f8fafc;
+  background: #f80afc;
   color: #0f172a;
+  width: 100vw;
   min-height: 100vh;
   font-family: Inter, 'Plus Jakarta Sans', Arial, sans-serif;
 }
