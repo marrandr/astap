@@ -3,7 +3,6 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ArrowRight, AtSign, Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
-import googleLogo from './Google.svg';
 import { api } from '../../lib/api';
 import { getTokenRole, useAuth } from '../../lib/auth';
 
@@ -100,13 +99,6 @@ const Login = () => {
             <button className='login-submit' type='submit' disabled={loading}>
               <span>{loading ? 'Connexion…' : 'Se connecter'}</span>
               {!loading && <ArrowRight size={18} aria-hidden='true' />}
-            </button>
-
-            <div className='login-divider'><span>OU CONTINUER AVEC</span></div>
-
-            <button className='login-google' type='button' onClick={() => setNotice('La connexion avec Google n’est pas encore disponible. Utilisez votre adresse email et votre mot de passe.')}>
-              <img src={googleLogo} width={18} height={18} alt='' />
-              <span>Continuer avec Google</span>
             </button>
 
             {notice && <p className='login-notice' role='status'>{notice}</p>}
