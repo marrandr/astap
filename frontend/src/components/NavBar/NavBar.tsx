@@ -40,7 +40,7 @@ export default function Navbar() {
         <nav className="desktop-nav" aria-label="Navigation principale">
           <NavLink to="/" end style={{fontSize: '14px'}}>Accueil</NavLink>
           <NavLink to="/verification" style={{fontSize: '14px'}}>Vérifications</NavLink>
-          <NavLink to="/verification-resource" style={{fontSize: '14px'}}>Vérifier une image</NavLink>
+          <NavLink to="/verification-resource" style={{fontSize: '14px'}}>Vérifier une ressource</NavLink>
           <NavLink to="/articles/new" style={{fontSize: '14px'}}>Publier</NavLink>
           {isAdmin && <NavLink to="/admin" style={{fontSize: '14px'}}>Administration</NavLink>}
         </nav>
