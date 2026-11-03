@@ -21,6 +21,7 @@ export const api = createApi({
   tagTypes: ['Articles', 'Article', 'Topics', 'Watch', 'PendingUsers', 'AdminUser'],
   endpoints: (build) => ({
     login: build.mutation<LoginResponse, { email: string; password: string }>({ query: (body) => ({ url: '/auth/login', method: 'POST', body }) }),
+    getCurrentUser: build.query<{ id: number; name: string; email: string; role: string; status: string; media: { name: string; city: string | null } | null }, void>({ query: () => '/user/me' }),
     register: build.mutation<RegisterResponse, { payload: Record<string, unknown>; files?: File[] | { front?: File; back?: File } }>({
       query: ({ payload, files }) => { const body = new FormData(); Object.entries(payload).forEach(([k,v]) => { if (v !== undefined && v !== null && v !== '') body.append(k, String(v)); });
         if (files) { const pair = Array.isArray(files) ? { front: files[0], back: files[1] } : files; if (pair.front) body.append('front', pair.front); if (pair.back) body.append('back', pair.back); }
@@ -44,4 +45,4 @@ export const api = createApi({
     syncWatchArticles: build.mutation<{ totalResults: number; received: number; saved: number; items: NewsWatchItem[] }, void>({ query: () => ({ url: '/admin/watch/sync', method: 'POST' }), invalidatesTags: ['Watch'] }),
   }),
 });
-export const { useLoginMutation, useRegisterMutation, useVerifyEmailMutation, useResendVerificationMutation, useListTopicsQuery, useCreateArticleMutation, useListArticlesQuery, useGetArticleQuery, useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation, useCreateCommentMutation, useListPendingUsersQuery, useGetAdminUserQuery, useValidateUserMutation, useListAdminWatchArticlesQuery, useSyncWatchArticlesMutation } = api;
+export const { useLoginMutation, useGetCurrentUserQuery, useRegisterMutation, useVerifyEmailMutation, useResendVerificationMutation, useListTopicsQuery, useCreateArticleMutation, useListArticlesQuery, useGetArticleQuery, useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation, useCreateCommentMutation, useListPendingUsersQuery, useGetAdminUserQuery, useValidateUserMutation, useListAdminWatchArticlesQuery, useSyncWatchArticlesMutation } = api;

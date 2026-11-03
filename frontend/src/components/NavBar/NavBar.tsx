@@ -1,15 +1,18 @@
 import './NavBar.css';
 import { useRef, useState, useEffect } from 'react';
 import { Bell, Menu, X, UserRound, LogOut } from 'lucide-react';
-import { Link, useNavigate } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.svg';
 import { useAuth } from '../../lib/auth';
+import { useGetCurrentUserQuery } from '../../store/api';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const { logout, isAdmin } = useAuth();
+  const { logout, isAdmin, isAuthenticated } = useAuth();
+  const { data: currentUser } = useGetCurrentUserQuery(undefined, { skip: !isAuthenticated });
+  const initials = currentUser?.name?.trim().split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('') || '?';
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -35,10 +38,10 @@ export default function Navbar() {
           <img src={hamarinoLogo} alt="Hamarino.io" width={2048} height={518} />
         </a>
         <nav className="desktop-nav" aria-label="Navigation principale">
-          <a style={{fontSize: '14px'}} href="/">Accueil</a>
-          <a style={{fontSize: '14px'}} href="/verification">Vérifications</a>
-          <a style={{fontSize: '14px'}} href="/articles/new">Publier</a>
-          {isAdmin && <a href="/admin" style={{fontSize: '14px'}}>Administration</a>}
+          <NavLink to="/" end style={{fontSize: '14px'}}>Accueil</NavLink>
+          <NavLink to="/verification" style={{fontSize: '14px'}}>Vérifications</NavLink>
+          <NavLink to="/articles/new" style={{fontSize: '14px'}}>Publier</NavLink>
+          {isAdmin && <NavLink to="/admin" style={{fontSize: '14px'}}>Administration</NavLink>}
         </nav>
         <div className="nav-actions" ref={menuRef}>
           <button type="button" className="icon-button" aria-label="Notifications">
@@ -54,12 +57,12 @@ export default function Navbar() {
               aria-haspopup="menu"
               onClick={() => setOpen((previous) => !previous)}
             >
-              <span className="nav-avatar" aria-label="Profil de démonstration">RH</span>
+              <span className="nav-avatar" aria-label={`Profil de ${currentUser?.name ?? 'l’utilisateur'}`}>{initials}</span>
             </button>
 
             {open && (
               <div className="nav-dropdown" role="menu" aria-label="Menu utilisateur">
-                <Link to="/profile/demo" className="nav-dropdown-item" role="menuitem" onClick={() => setOpen(false)}>
+                <Link to="/profile/me" className="nav-dropdown-item" role="menuitem" onClick={() => setOpen(false)}>
                   <UserRound size={16} />
                   <span>Voir mon profil</span>
                 </Link>
@@ -79,11 +82,11 @@ export default function Navbar() {
 
       {open && (
         <nav className="mobile-nav" aria-label="Navigation mobile">
-          <Link to="/" onClick={() => setOpen(false)}>Accueil</Link>
-          <Link to="/verification" onClick={() => setOpen(false)}>Vérifications</Link>
+          <NavLink to="/" end onClick={() => setOpen(false)}>Accueil</NavLink>
+          <NavLink to="/verification" onClick={() => setOpen(false)}>Vérifications</NavLink>
           <a href="#a-propos" onClick={() => setOpen(false)}>À propos</a>
-          <Link to="/profile/demo" onClick={() => setOpen(false)}>Mon profil</Link>
-          {isAdmin && <Link to="/admin" onClick={() => setOpen(false)}>Administration</Link>}
+          <Link to="/profile/me" onClick={() => setOpen(false)}>Mon profil</Link>
+          {isAdmin && <NavLink to="/admin" onClick={() => setOpen(false)}>Administration</NavLink>}
           <button type="button" className="mobile-logout" onClick={handleLogout}>Se déconnecter</button>
         </nav>
       )}

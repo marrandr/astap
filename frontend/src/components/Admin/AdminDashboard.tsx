@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2, ShieldAlert, XCircle } from 'lucide-react';
+import { CheckCircle2, Search, ShieldAlert, XCircle } from 'lucide-react';
 import { Link } from 'react-router';
 import { useGetAdminUserQuery, useListPendingUsersQuery, useValidateUserMutation } from '../../store/api';
 import './AdminDashboard.css';
@@ -9,9 +9,11 @@ const fmtDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeri
 export default function AdminDashboard() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [error, setError] = useState('');
+  const [userSearch, setUserSearch] = useState('');
   const { data: users = [], isLoading: loadingList, refetch: loadUsers } = useListPendingUsersQuery();
   const { data: user, isLoading: loadingUser } = useGetAdminUserQuery(selectedId ?? 0, { skip: !selectedId });
   const [validateUser, { isLoading: saving }] = useValidateUserMutation();
+  const filteredUsers = users.filter((item) => `${item.name} ${item.email}`.toLocaleLowerCase('fr').includes(userSearch.trim().toLocaleLowerCase('fr')));
 
   useEffect(() => {
     if (users.length && (!selectedId || !users.some(item => item.id === selectedId))) setSelectedId(users[0].id);
@@ -30,20 +32,32 @@ export default function AdminDashboard() {
 
   return (
     <main className="admin-dashboard-page">
+      <header className="admin-page-heading">
+        <h1>Administration</h1>
+        <p>Examinez les demandes et vérifiez les informations avant validation.</p>
+      </header>
       <div className="admin-dashboard-shell">
         <aside className="admin-sidebar">
           <div className="admin-sidebar-header">
-            <h2>À valider</h2>
+            <h2>Comptes à valider <span>{users.length}</span></h2>
             <Link to="/" className="admin-home-link">Accueil</Link>
           </div>
+
+          <label className="admin-search">
+            <Search size={17} aria-hidden="true" />
+            <span className="sr-only">Rechercher un compte</span>
+            <input value={userSearch} onChange={(event) => setUserSearch(event.target.value)} placeholder="Nom ou adresse e-mail" />
+          </label>
 
           {loadingList ? (
             <p className="admin-state-text">Chargement…</p>
           ) : users.length === 0 ? (
             <p className="admin-state-text">Aucun compte en attente.</p>
+          ) : filteredUsers.length === 0 ? (
+            <p className="admin-state-text">Aucun compte ne correspond à cette recherche.</p>
           ) : (
             <ul className="admin-user-list">
-              {users.map((item) => (
+              {filteredUsers.map((item) => (
                 <li key={item.id}>
                   <button
                     type="button"

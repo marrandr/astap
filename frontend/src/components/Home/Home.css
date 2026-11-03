@@ -7,7 +7,8 @@
   color: #0f172a;
   font-family: Inter, "Plus Jakarta Sans", Arial, sans-serif;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
+  min-width: 0;
   font-size: 14px;
 }
 
@@ -150,6 +151,7 @@
 .Home .primary-button:hover {
   background: #106e4e;
 }
+
 
 .Home .trending {
   margin-top: 21px;

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { ArrowLeft, FileText, Link as LinkIcon, FileCheck2, ShieldCheck, MapPin, CalendarDays, User, MessageSquareText } from 'lucide-react';
 import { useCreateCommentMutation, useGetArticleQuery } from '../../store/api';
-import SiteNavbar from '../SiteNavbar';
 import type { ArticleImage } from '../../types/api';
 
 const verdictLabel = (status: string) => {
@@ -39,6 +38,8 @@ export default function ArticleDetail() {
     justification: '',
   });
   const [submitMessage, setSubmitMessage] = useState('');
+  const [commentFilter, setCommentFilter] = useState<'ALL' | 'FOR' | 'AGAINST'>('ALL');
+  const [newCommentId, setNewCommentId] = useState<number | null>(null);
 
   const handleSubmitComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,12 +48,13 @@ export default function ArticleDetail() {
     setSubmitMessage('');
 
     try {
-      await createComment({ articleId: Number(id), payload: {
+      const result = await createComment({ articleId: Number(id), payload: {
         stance: commentForm.stance,
         content: commentForm.content.trim(),
         justification: commentForm.justification.trim(),
       } }).unwrap();
 
+      setNewCommentId(result.comment.id);
       setCommentForm({ stance: 'FOR', content: '', justification: '' });
       setSubmitMessage('Commentaire ajouté avec succès.');
     } catch (err) {
@@ -61,12 +63,12 @@ export default function ArticleDetail() {
   };
 
   if (loading) {
-    return <div className="Home ArticleDetail"><SiteNavbar/><main className="detail-container"><p className="empty-results">Chargement du dossier…</p></main></div>;
+    return <div className="Home ArticleDetail"><main className="detail-container"><p className="empty-results">Chargement du dossier…</p></main></div>;
   }
 
   if (error || !article) {
     return (
-      <div className="Home ArticleDetail"><SiteNavbar/>
+      <div className="Home ArticleDetail">
         <main className="detail-container">
           <p className="empty-results">{error || 'Article introuvable.'}</p>
           <Link to="/verification" className="primary-button" style={{ marginTop: 16 }}><ArrowLeft size={16}/> Retour au fil</Link>
@@ -81,10 +83,10 @@ export default function ArticleDetail() {
   const detailCoverAiScore = detailCoverImage ? imageAiScore(detailCoverImage) : undefined;
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
+  const visibleComments = article.comments?.filter((comment) => commentFilter === 'ALL' || comment.stance === commentFilter) ?? [];
 
   return (
     <div className="Home ArticleDetail">
-      <SiteNavbar/>
       <main className="detail-container">
         <Link to="/verification" className="back-link"><ArrowLeft size={16}/> Retour au fil</Link>
 
@@ -119,22 +121,23 @@ export default function ArticleDetail() {
         <section className="detail-section">
           <h2><MessageSquareText size={18}/> Commentaires ({article.commentsCount ?? article.comments?.length ?? 0})</h2>
           <div className="comment-summary-bar">
-            <span className="stance-pill for-pill">Pour {fmt(forCount)}</span>
-            <span className="stance-pill against-pill">Contre {fmt(againstCount)}</span>
+            <span className="stance-pill for-pill">Confirme {fmt(forCount)}</span>
+            <span className="stance-pill against-pill">Contredit {fmt(againstCount)}</span>
           </div>
 
           <form className="comment-form" onSubmit={handleSubmitComment}>
             <div className="comment-form-row">
-              <label>
-                Avis
-                <select
-                  value={commentForm.stance}
-                  onChange={(event) => setCommentForm((prev) => ({ ...prev, stance: event.target.value as 'FOR' | 'AGAINST' }))}
-                >
-                  <option value="FOR">Pour</option>
-                  <option value="AGAINST">Contre</option>
-                </select>
-              </label>
+              <fieldset className="comment-stance-fieldset">
+                <legend>Avis</legend>
+                <label className={`comment-stance-option comment-stance-confirm ${commentForm.stance === 'FOR' ? 'is-selected' : ''}`}>
+                  <input type="checkbox" checked={commentForm.stance === 'FOR'} onChange={() => setCommentForm((prev) => ({ ...prev, stance: 'FOR' }))} />
+                  <span>Confirme</span>
+                </label>
+                <label className={`comment-stance-option comment-stance-contradict ${commentForm.stance === 'AGAINST' ? 'is-selected' : ''}`}>
+                  <input type="checkbox" checked={commentForm.stance === 'AGAINST'} onChange={() => setCommentForm((prev) => ({ ...prev, stance: 'AGAINST' }))} />
+                  <span>Contredit</span>
+                </label>
+              </fieldset>
             </div>
 
             <label>
@@ -154,7 +157,7 @@ export default function ArticleDetail() {
               <textarea
                 value={commentForm.justification}
                 onChange={(event) => setCommentForm((prev) => ({ ...prev, justification: event.target.value }))}
-                placeholder="Expliquez pourquoi vous êtes pour ou contre, avec une justification claire."
+                placeholder="Expliquez pourquoi vous confirmez ou contredisez cette information, avec une justification claire."
                 minLength={10}
                 maxLength={4000}
                 required
@@ -162,7 +165,7 @@ export default function ArticleDetail() {
             </label>
 
             <div className="comment-form-actions">
-              <button type="submit" className="primary-button" disabled={submitting}>
+              <button type="submit" className={`primary-button comment-submit-${commentForm.stance === 'FOR' ? 'confirm' : 'contradict'}`} disabled={submitting}>
                 {submitting ? 'Envoi...' : 'Publier le commentaire'}
               </button>
             </div>
@@ -170,13 +173,22 @@ export default function ArticleDetail() {
             {submitMessage && <p className="comment-submit-message">{submitMessage}</p>}
           </form>
 
-          {article.comments?.length ? (
+          <label className="comment-filter">
+            Afficher les avis
+            <select value={commentFilter} onChange={(event) => setCommentFilter(event.target.value as 'ALL' | 'FOR' | 'AGAINST')}>
+              <option value="ALL">Tous les avis</option>
+              <option value="FOR">Confirme</option>
+              <option value="AGAINST">Contredit</option>
+            </select>
+          </label>
+
+          {visibleComments.length ? (
             <ul className="detail-comments">
-              {article.comments.map((comment) => (
-                <li key={comment.id} className={comment.stance === 'FOR' ? 'comment-for' : 'comment-against'}>
+              {visibleComments.map((comment) => (
+                <li key={comment.id} className={`${comment.stance === 'FOR' ? 'comment-for' : 'comment-against'}${comment.id === newCommentId ? ' comment-new' : ''}`}>
                   <div className="detail-comment-head">
                     <span className={`stance-pill ${comment.stance === 'FOR' ? 'for-pill' : 'against-pill'}`}>
-                      {comment.stance === 'FOR' ? 'Pour' : 'Contre'}
+                      {comment.stance === 'FOR' ? 'Confirme' : 'Contredit'}
                     </span>
                     <span className="detail-verification-author">{comment.user?.name} · {fmtDate(comment.commentedAt)}</span>
                   </div>
@@ -186,7 +198,7 @@ export default function ArticleDetail() {
               ))}
             </ul>
           ) : (
-            <p className="detail-empty">Aucun commentaire pour ce dossier.</p>
+            <p className="detail-empty">{article.comments?.length ? 'Aucun avis dans cette catégorie.' : 'Aucun commentaire pour ce dossier.'}</p>
           )}
         </section>
 

@@ -56,20 +56,38 @@
   align-items: center;
   gap: 32px;
   align-self: stretch;
+  justify-content: center;
+  flex: 1;
 }
 
 .desktop-nav > a {
+  position: relative;
   display: flex;
   align-items: center;
   font-weight: 600;
   color: #64748b;
   text-decoration: none;
-  border-bottom: 2px solid transparent;
 }
 
-.desktop-nav a[aria-current] {
+.desktop-nav > a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  content: "";
+  background: #168a62;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.desktop-nav a[aria-current="page"] {
   color: #168a62;
-  border-color: #168a62;
+}
+
+.desktop-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 .desktop-nav a:hover {
@@ -176,6 +194,19 @@
 }
 
 @media (max-width: 700px) {
+  .nav-inner {
+    height: 68px;
+    gap: 12px;
+  }
+
+  .home-brand {
+    padding: 6px 0;
+  }
+
+  .home-brand img {
+    width: min(180px, 52vw);
+  }
+
   .desktop-nav,
   .nav-actions {
     display: none;
@@ -197,5 +228,29 @@
     color: #102a45;
     font-weight: 600;
     text-decoration: none;
+  }
+
+  .mobile-nav a[aria-current="page"] {
+    color: #168a62;
+    background: #f0fdf4;
+    border-radius: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktop-nav > a::after { transition: none; }
+}
+
+@media (min-width: 701px) and (max-width: 960px) {
+  .nav-inner {
+    gap: 14px;
+  }
+
+  .home-brand img {
+    width: 150px;
+  }
+
+  .desktop-nav {
+    gap: clamp(14px, 2.2vw, 24px);
   }
 }

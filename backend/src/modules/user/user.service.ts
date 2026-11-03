@@ -14,6 +14,15 @@ export class UsersService {
     private readonly cloudinary: CloudinaryService,
   ) {}
 
+  async getCurrentUser(requester: AppRequestUser) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: requester.sub },
+      select: { id: true, name: true, email: true, role: true, status: true, media: { select: { name: true, city: true } } },
+    });
+    if (!user) throw new NotFoundException('Utilisateur introuvable');
+    return user;
+  }
+
   create(data: {
     name: string;
     email: string;

@@ -36,12 +36,29 @@
 .ArticleDetail .detail-comment-justification{margin:0;color:#334155;line-height:1.7}
 .ArticleDetail .comment-for{border-left:4px solid #16a34a}
 .ArticleDetail .comment-against{border-left:4px solid #dc2626}
+.ArticleDetail .comment-new.comment-for{animation:comment-confirmed-in 700ms ease-out both}
+.ArticleDetail .comment-new.comment-against{animation:comment-contradicted-in 700ms ease-out both}
+@keyframes comment-confirmed-in{0%{background:#bbf7d0;transform:translateY(8px);box-shadow:0 0 0 3px #86efac}100%{background:#fff;transform:translateY(0);box-shadow:none}}
+@keyframes comment-contradicted-in{0%{background:#fecaca;transform:translateY(8px);box-shadow:0 0 0 3px #fca5a5}100%{background:#fff;transform:translateY(0);box-shadow:none}}
 .ArticleDetail .comment-form{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:14px 0 18px;display:grid;gap:14px}
 .ArticleDetail .comment-form label{display:grid;gap:8px;color:var(--navy);font-weight:700;font-size:13px}
-.ArticleDetail .comment-form select,
 .ArticleDetail .comment-form textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;background:#fff;color:var(--navy);font:inherit}
+.ArticleDetail .comment-stance-fieldset{display:flex;flex-direction:row;flex-wrap:nowrap;gap:10px;border:0;padding:0;margin:0;min-width:0;width:100%}
+.ArticleDetail .comment-stance-fieldset legend{width:100%;margin-bottom:2px;color:var(--navy);font-size:13px;font-weight:700}
+.ArticleDetail .comment-stance-option{display:flex!important;flex:1;grid-template-columns:auto 1fr;align-items:center;gap:9px!important;min-width:0;padding:11px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;transition:border-color 150ms,background-color 150ms}
+.ArticleDetail .comment-stance-option input{width:17px;height:17px;margin:0;accent-color:var(--emerald)}
+.ArticleDetail .comment-stance-confirm.is-selected{border-color:#16a34a;background:#f0fdf4;color:#166534}
+.ArticleDetail .comment-stance-contradict.is-selected{border-color:#dc2626;background:#fef2f2;color:#991b1b}
 .ArticleDetail .comment-form textarea{min-height:110px;resize:vertical}
 .ArticleDetail .comment-form-row{display:flex;gap:12px;align-items:end}
 .ArticleDetail .comment-form-actions{display:flex;justify-content:flex-start}
+.ArticleDetail .comment-form-actions .primary-button{min-height:40px;padding:9px 16px;border-radius:8px;font-size:13px}
+.ArticleDetail .comment-form-actions .comment-submit-confirm{background:#16a34a;color:#fff}
+.ArticleDetail .comment-form-actions .comment-submit-confirm:hover{background:#15803d}
+.ArticleDetail .comment-form-actions .comment-submit-contradict{background:#dc2626;color:#fff}
+.ArticleDetail .comment-form-actions .comment-submit-contradict:hover{background:#b91c1c}
+.ArticleDetail .comment-filter{display:flex;align-items:center;gap:10px;width:min(100%,360px);margin:0 0 14px;color:var(--navy);font-size:13px;font-weight:700}
+.ArticleDetail .comment-filter select{flex:1;min-width:0;border:1px solid var(--border);border-radius:9px;padding:9px 12px;background:#fff;color:var(--navy);font:inherit}
 .ArticleDetail .comment-submit-message{margin:0;color:var(--emerald);font-size:12px;font-weight:700}
 @media(max-width:700px){.ArticleDetail .detail-container{width:min(100% - 32px, 980px);padding-top:18px}}
+@media(prefers-reduced-motion:reduce){.ArticleDetail .comment-new{animation:none!important}}

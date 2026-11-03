@@ -10,6 +10,11 @@ import type { AppRequestUser } from '../../common/request-user.js';
 export class UserController {
   constructor(private readonly userService: UsersService) {}
 
+  @Get('me')
+  getCurrentUser(@Req() req: { user: AppRequestUser }) {
+    return this.userService.getCurrentUser(req.user);
+  }
+
   @Get(':id/proofs')
   @ApiOperation({
     summary: 'Consulter les pièces d’identité (propriétaire ou administrateur)',

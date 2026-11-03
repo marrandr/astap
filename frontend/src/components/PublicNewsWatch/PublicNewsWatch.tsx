@@ -1,4 +1,5 @@
-import { ExternalLink, Newspaper, RefreshCw } from 'lucide-react';
+import { ExternalLink, Newspaper, PenLine, RefreshCw } from 'lucide-react';
+import { Link } from 'react-router';
 import { useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation } from '../../store/api';
 import '../Home/Home.css';
 import './PublicNewsWatch.css';
@@ -21,9 +22,12 @@ export default function PublicNewsWatch() {
             <h1>Veille Madagascar</h1>
             <p>Une sélection d’articles récents pour suivre l’actualité malgache.</p>
           </div>
-          <button type="button" className="news-watch-sync" onClick={() => { void refresh(); }} disabled={loading || refreshing}>
-            <RefreshCw size={17} className={loading || refreshing ? 'news-watch-spin' : ''} /> {refreshing ? 'Recherche…' : 'Actualiser'}
-          </button>
+          <div className="news-watch-actions">
+            <button type="button" className="news-watch-sync" onClick={() => { void refresh(); }} disabled={loading || refreshing}>
+              <RefreshCw size={17} className={loading || refreshing ? 'news-watch-spin' : ''} /> {refreshing ? 'Recherche…' : 'Actualiser'}
+            </button>
+            <Link className="news-watch-publish" to="/articles/new"><PenLine size={17} /> Publier un article</Link>
+          </div>
         </div>
 
         {error && <p className="news-watch-error">{error}</p>}

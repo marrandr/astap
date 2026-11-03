@@ -102,7 +102,6 @@ export default function CreatePost() {
           <header className="create-post-header">
             <div className="create-post-heading">
               <h1 id="create-post-title">Créer des articles</h1>
-              <span className="certified-badge"><BadgeCheck size={14} aria-hidden="true" />Journaliste certifié</span>
             </div>
             <p>Préparez un ou plusieurs articles vérifiables et documentés pour la communauté Hamarino.io.</p>
           </header>

@@ -28,6 +28,7 @@ const excerptOf = (content: string, max = 220) =>
   content.length > max ? `${content.slice(0, max).trimEnd()}…` : content;
 
 const fmt = (n: number) => new Intl.NumberFormat("fr-FR").format(n);
+const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
 
 function StatusBadge({ status }: { status: ArticleVerdict }) {
   const verdict = verdictLabel(status);
@@ -74,8 +75,8 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           </div>
         </div>
         <div className="comment-stance-summary" aria-label="Répartition des commentaires">
-          <span className="stance-pill for-pill">Pour {fmt(forCount)}</span>
-          <span className="stance-pill against-pill">Contre {fmt(againstCount)}</span>
+          <span className="stance-pill for-pill">Confirme {fmt(forCount)}</span>
+          <span className="stance-pill against-pill">Contredit {fmt(againstCount)}</span>
         </div>
         {averageAiScore !== null && (
           <div className="article-ai-score">
@@ -149,9 +150,9 @@ export default function Home() {
   const error = queryError ? "Impossible de charger les vérifications" : "";
 
   const results = useMemo(() => {
-    const normalized = search.trim().toLocaleLowerCase("fr");
+    const normalized = normalizeSearch(search.trim());
     let list = articles.filter((a) => {
-      const haystack = `${a.title} ${a.content} ${a.topic?.label ?? ""}`.toLocaleLowerCase("fr");
+      const haystack = normalizeSearch(`${a.title} ${a.content} ${a.topic?.label ?? ""} ${a.author?.name ?? ""} ${a.location ?? ""}`);
       return haystack.includes(normalized);
     });
 

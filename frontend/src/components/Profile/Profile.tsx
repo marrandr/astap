@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router';
 import { Award, BookOpenText, Camera, CheckCircle2, MapPin, ShieldCheck } from 'lucide-react';
 import './Profile.css';
+import { useAuth } from '../../lib/auth';
+import { useGetCurrentUserQuery } from '../../store/api';
 
 type ProfileData = {
   id: string;
@@ -29,12 +31,12 @@ type ProfileData = {
 const profiles: Record<string, ProfileData> = {
   demo: {
     id: 'demo',
-    name: 'Rova Hery',
+    name: 'Hery Fitahiana',
     role: 'Journaliste fact-checking',
     location: 'Antananarivo, Madagascar',
     bio: 'Journaliste spécialisé dans la vérification des informations et l’analyse des contenus à fort impact public. S’investit dans la documentation des faits, les sources et l’accès aux preuves.',
     email: 'rova.hery@hamarino.io',
-    avatar: 'RH',
+    avatar: 'HF',
     badge: 'Vérificateur certifié',
     stats: {
       articles: 24,
@@ -74,8 +76,13 @@ const profiles: Record<string, ProfileData> = {
 };
 
 export default function ProfilePage() {
-  const { id = 'demo' } = useParams();
+  const { isAuthenticated } = useAuth();
+  const { data: currentUser, isLoading } = useGetCurrentUserQuery(undefined, { skip: !isAuthenticated });
+  const { id = 'me' } = useParams();
   const profile = profiles[id] ?? profiles.demo;
+  const displayName = currentUser?.name ?? (isLoading ? 'Chargement du profil…' : profile.name);
+  const displayEmail = currentUser?.email ?? profile.email;
+  const avatar = displayName.split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('');
 
   return (
     <div className="Profile">
@@ -85,8 +92,8 @@ export default function ProfilePage() {
             <div className="profile-cover" aria-hidden="true" />
 
             <div className="profile-main">
-              <div className="profile-avatar" aria-label={`Avatar de ${profile.name}`}>
-                {profile.avatar}
+              <div className="profile-avatar" aria-label={`Avatar de ${displayName}`}>
+                {avatar}
               </div>
 
               <div className="profile-summary">
@@ -95,12 +102,12 @@ export default function ProfilePage() {
                   <span className="profile-status"><CheckCircle2 size={14} /> En ligne</span>
                 </div>
 
-                <h1>{profile.name}</h1>
-                <p className="profile-role">{profile.role}</p>
+                <h1>{displayName}</h1>
+                <p className="profile-role">{currentUser?.role === 'ADMIN' ? 'Administrateur' : profile.role}</p>
 
                 <div className="profile-meta">
                   <span><MapPin size={15} /> {profile.location}</span>
-                  <span><Camera size={15} /> {profile.email}</span>
+                  <span><Camera size={15} /> {displayEmail}</span>
                 </div>
               </div>
 
