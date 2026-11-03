@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { ArrowRight, BadgeCheck, CheckCircle2, Plus, X } from 'lucide-react';
 import { createPostDraft, validatePostDraft } from './postDraft';
 import ArticleFields from './ArticleFields';
@@ -30,6 +30,8 @@ export default function CreatePost() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -92,6 +94,7 @@ export default function CreatePost() {
       setErrors({});
       setSavedVersion(current => current + 1);
       setSavedCount(articles.length);
+      navigate('/');
     } catch (err) {
       setSaveError(err instanceof Error ? err.message : 'L’envoi a échoué. Merci de réessayer.');
     } finally {

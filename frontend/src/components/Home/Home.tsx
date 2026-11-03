@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowUpRight, Check, FileCheck2, MessageCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
+import { Check, FileCheck2, MessageCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import "./Home.css";
 import NavBar from "../NavBar/NavBar";
