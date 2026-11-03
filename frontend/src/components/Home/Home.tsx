@@ -181,7 +181,7 @@ export default function Home() {
       <main>
         <section className="home-hero">
           <div className="hero-content">
-            <div className="hero-eyebrow"><ShieldCheck size={16} /> L’information, examinée avec rigueur</div>
+            {/* <div className="hero-eyebrow"><ShieldCheck size={16} /> L’information, examinée avec rigueur</div> */}
             <h1>
               Vérifiez <span>avant de partager.</span>
             </h1>
@@ -196,14 +196,14 @@ export default function Home() {
               />
               <button type="submit" className="primary-button">Rechercher</button>
             </form>
-            <div className="trending">
+            {/* <div className="trending">
               <span>TENDANCES :</span>
               {['Jirama', 'PrixDuRiz', 'Cyclone', 'Électricité', 'Examens'].map((tag) => (
                 <button type="button" key={tag} onClick={() => { setQuery(tag); setSearch(tag); setVisible(5); }}>
                   #{tag}
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
         </section>
 
