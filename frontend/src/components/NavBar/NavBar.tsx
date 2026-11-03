@@ -2,7 +2,7 @@ import './NavBar.css';
 import '../Home/Home.css';
 import { useState } from 'react';
 import { Bell, Menu, X } from 'lucide-react';
-import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
+import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.svg';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -16,7 +16,7 @@ export default function Navbar() {
         <nav className="desktop-nav" aria-label="Navigation principale">
           <a href="/" aria-current="page">Accueil</a>
           <a href="#verifications">Vérifications</a>
-          <a href="#a-propos">À propos</a>
+          <a href="/articles/new">Publier</a>
         </nav>
         <div className="nav-actions">
           <button type="button" className="icon-button" aria-label="Notifications">

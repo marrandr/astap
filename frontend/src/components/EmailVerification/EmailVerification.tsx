@@ -1,7 +1,18 @@
+import './EmailVerification.css';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { ArrowRight, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
+import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
 import { api } from '../../lib/api';
 import { clearPendingEmail, getPendingEmail, getStoredToken, useAuth } from '../../lib/auth';
+
+function Brand({ mobile = false }: { mobile?: boolean }) {
+  return (
+    <Link to='/' className={`email-verification-brand${mobile ? ' email-verification-brand-mobile' : ''}`} aria-label='Hamarino.io, accueil'>
+      <img src={hamarinoLogo} width={2048} height={518} alt='Hamarino.io' />
+    </Link>
+  );
+}
 
 export default function EmailVerification() {
   const navigate = useNavigate();
@@ -73,81 +84,64 @@ export default function EmailVerification() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: '#f5f7fb',
-      padding: 20,
-    }}>
-      <form
-        onSubmit={handleVerify}
-        style={{
-          width: '100%',
-          maxWidth: 440,
-          background: '#fff',
-          borderRadius: 16,
-          padding: 32,
-          boxShadow: '0 12px 40px rgba(15, 23, 42, 0.08)',
-        }}
-      >
-        <h2 style={{ margin: '0 0 12px', fontSize: 28 }}>Vérification email</h2>
-        <p style={{ margin: '0 0 20px', color: '#475569' }}>
-          Un code à 6 chiffres a été envoyé à <strong>{email || 'votre adresse email'}</strong>.
-        </p>
+    <main className='email-verification-page'>
+      <section className='email-verification-story' aria-labelledby='email-verification-headline'>
+        <Brand />
+        <svg className='email-verification-watermark' viewBox='0 0 24 24' fill='currentColor' aria-hidden='true'>
+          <path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z' />
+        </svg>
+        <div className='email-verification-story-copy'>
+          <h1 id='email-verification-headline'>Sécurisez votre accès,<br />vérifiez avant de publier.</h1>
+          <p>Confirmez votre email pour activer votre compte et poursuivre les vérifications de sources en toute confiance.</p>
+        </div>
+      </section>
 
-        <label style={{ display: 'block', marginBottom: 8, fontWeight: 600 }}>Code de vérification</label>
-        <input
-          type='text'
-          inputMode='numeric'
-          maxLength={6}
-          value={code}
-          onChange={(event) => setCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
-          placeholder='123456'
-          autoFocus
-          style={{ width: '100%', padding: '12px 14px', marginBottom: 16, borderRadius: 10, border: '1px solid #cbd5e1' }}
-        />
+      <section className='email-verification-panel' aria-labelledby='email-verification-title'>
+        <div className='email-verification-container'>
+          <Brand mobile />
+          <header className='email-verification-header'>
+            <div className='email-verification-icon' aria-hidden='true'>
+              <CheckCircle2 size={34} />
+            </div>
+            <h2 id='email-verification-title'>Validez votre adresse email</h2>
+            <p>
+              Un code à 6 chiffres a été envoyé à <strong>{email || 'votre adresse email'}</strong>.
+            </p>
+          </header>
 
-        {error && <p style={{ color: '#dc2626', marginBottom: 16 }}>{error}</p>}
+          <form className='email-verification-form' onSubmit={handleVerify} aria-busy={loading}>
+            <div className='email-verification-field'>
+              <label htmlFor='email-verification-code'>Code de vérification <span>*</span></label>
+              <div className='email-verification-input-wrap'>
+                <CheckCircle2 size={18} aria-hidden='true' />
+                <input
+                  id='email-verification-code'
+                  name='code'
+                  type='text'
+                  inputMode='numeric'
+                  maxLength={6}
+                  value={code}
+                  onChange={(event) => setCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder='123456'
+                  autoFocus
+                />
+              </div>
+            </div>
 
-        <button
-          type='submit'
-          disabled={loading}
-          style={{
-            width: '100%',
-            padding: '12px 16px',
-            border: 'none',
-            borderRadius: 10,
-            background: '#1d4ed8',
-            color: '#fff',
-            fontWeight: 700,
-            cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.7 : 1,
-          }}
-        >
-          {loading ? 'Vérification...' : 'Vérifier mon email'}
-        </button>
+            {error && <p className='email-verification-error' role='alert'>{error}</p>}
 
-        <button
-          type='button'
-          onClick={handleResend}
-          disabled={resendLoading}
-          style={{
-            width: '100%',
-            marginTop: 12,
-            padding: '12px 16px',
-            border: '1px solid #cbd5e1',
-            borderRadius: 10,
-            background: '#fff',
-            color: '#0f172a',
-            fontWeight: 600,
-            cursor: resendLoading ? 'not-allowed' : 'pointer',
-          }}
-        >
-          {resendLoading ? 'Envoi...' : 'Renvoyer le code'}
-        </button>
-      </form>
-    </div>
+            <button className='email-verification-submit' type='submit' disabled={loading}>
+              <span>{loading ? 'Vérification…' : 'Vérifier mon email'}</span>
+              {!loading && <ArrowRight size={18} aria-hidden='true' />}
+            </button>
+
+            <button className='email-verification-resend' type='button' onClick={handleResend} disabled={resendLoading}>
+              <span>{resendLoading ? 'Envoi…' : 'Renvoyer le code'}</span>
+              {!resendLoading && <RefreshCw size={16} aria-hidden='true' />}
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
   );
 }

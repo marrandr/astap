@@ -38,10 +38,10 @@ export default function ArticleDetail() {
   });
   const [submitMessage, setSubmitMessage] = useState('');
 
-  const loadArticle = async (articleId: number) => {
-    const data = await api.getArticle(articleId);
-    setArticle(data);
-  };
+  // const loadArticle = async (articleId: number) => {
+  //   const data = await api.getArticle(articleId);
+  //   setArticle(data);
+  // };
 
   useEffect(() => {
     const articleId = Number(id);
