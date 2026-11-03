@@ -22,4 +22,21 @@
 .ArticleDetail .evidence-type{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--emerald);background:#e5f5ed;border-radius:5px;padding:5px 8px}
 .ArticleDetail .detail-evidences a{display:flex;align-items:center;gap:5px;color:#1d4ed8;font-weight:600}
 .ArticleDetail .detail-empty{color:var(--muted)}
+.ArticleDetail .comment-summary-bar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 18px}
+.ArticleDetail .comment-summary-bar .stance-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800}
+.ArticleDetail .detail-comments{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.ArticleDetail .detail-comments li{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.ArticleDetail .detail-comment-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.ArticleDetail .detail-comment-content{margin:0 0 10px;color:#1e293b;line-height:1.75}
+.ArticleDetail .detail-comment-justification{margin:0;color:#334155;line-height:1.7}
+.ArticleDetail .comment-for{border-left:4px solid #16a34a}
+.ArticleDetail .comment-against{border-left:4px solid #dc2626}
+.ArticleDetail .comment-form{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;margin:14px 0 18px;display:grid;gap:14px}
+.ArticleDetail .comment-form label{display:grid;gap:8px;color:var(--navy);font-weight:700;font-size:13px}
+.ArticleDetail .comment-form select,
+.ArticleDetail .comment-form textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;background:#fff;color:var(--navy);font:inherit}
+.ArticleDetail .comment-form textarea{min-height:110px;resize:vertical}
+.ArticleDetail .comment-form-row{display:flex;gap:12px;align-items:end}
+.ArticleDetail .comment-form-actions{display:flex;justify-content:flex-start}
+.ArticleDetail .comment-submit-message{margin:0;color:var(--emerald);font-size:12px;font-weight:700}
 @media(max-width:700px){.ArticleDetail .detail-container{width:min(100% - 32px, 980px);padding-top:18px}}

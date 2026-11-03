@@ -2,7 +2,7 @@ import './ArticleDetail.css';
 import '../Home/Home.css';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { ArrowLeft, FileText, Link as LinkIcon, FileCheck2, ShieldCheck, MapPin, CalendarDays, User } from 'lucide-react';
+import { ArrowLeft, FileText, Link as LinkIcon, FileCheck2, ShieldCheck, MapPin, CalendarDays, User, MessageSquareText } from 'lucide-react';
 import { api } from '../../lib/api';
 import type { ArticleDetail as ArticleDetailData } from '../../types/api';
 import SiteNavbar from '../SiteNavbar';
@@ -23,12 +23,25 @@ const fmtDate = (iso: string) =>
   new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 
 const verdictFr = (verdict: string) => (verdict === 'CONFIRMED' ? 'Confirmé' : 'Contesté');
+const fmt = (n: number) => new Intl.NumberFormat('fr-FR').format(n);
 
 export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
   const [article, setArticle] = useState<ArticleDetailData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [commentForm, setCommentForm] = useState({
+    stance: 'FOR' as 'FOR' | 'AGAINST',
+    content: '',
+    justification: '',
+  });
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const loadArticle = async (articleId: number) => {
+    const data = await api.getArticle(articleId);
+    setArticle(data);
+  };
 
   useEffect(() => {
     const articleId = Number(id);
@@ -48,6 +61,29 @@ export default function ArticleDetail() {
     return () => { cancelled = true; };
   }, [id]);
 
+  const handleSubmitComment = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!id) return;
+
+    setSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      await api.createComment(Number(id), {
+        stance: commentForm.stance,
+        content: commentForm.content.trim(),
+        justification: commentForm.justification.trim(),
+      });
+
+      setCommentForm({ stance: 'FOR', content: '', justification: '' });
+      setSubmitMessage('Commentaire ajouté avec succès.');
+    } catch (err) {
+      setSubmitMessage(err instanceof Error ? err.message : 'Impossible d’ajouter le commentaire.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   if (loading) {
     return <div className="Home ArticleDetail"><SiteNavbar/><main className="detail-container"><p className="empty-results">Chargement du dossier…</p></main></div>;
   }
@@ -64,8 +100,9 @@ export default function ArticleDetail() {
   }
 
   const verdict = verdictLabel(article.status);
-
   const detailCover = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
+  const forCount = article.commentCounts?.for ?? 0;
+  const againstCount = article.commentCounts?.against ?? 0;
 
   return (
     <div className="Home ArticleDetail">
@@ -95,6 +132,80 @@ export default function ArticleDetail() {
             <p key={i}>{paragraph}</p>
           ))}
         </article>
+
+        <section className="detail-section">
+          <h2><MessageSquareText size={18}/> Commentaires ({article.commentsCount ?? article.comments?.length ?? 0})</h2>
+          <div className="comment-summary-bar">
+            <span className="stance-pill for-pill">Pour {fmt(forCount)}</span>
+            <span className="stance-pill against-pill">Contre {fmt(againstCount)}</span>
+          </div>
+
+          <form className="comment-form" onSubmit={handleSubmitComment}>
+            <div className="comment-form-row">
+              <label>
+                Avis
+                <select
+                  value={commentForm.stance}
+                  onChange={(event) => setCommentForm((prev) => ({ ...prev, stance: event.target.value as 'FOR' | 'AGAINST' }))}
+                >
+                  <option value="FOR">Pour</option>
+                  <option value="AGAINST">Contre</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              Commentaire
+              <textarea
+                value={commentForm.content}
+                onChange={(event) => setCommentForm((prev) => ({ ...prev, content: event.target.value }))}
+                placeholder="Votre commentaire"
+                minLength={3}
+                maxLength={2000}
+                required
+              />
+            </label>
+
+            <label>
+              Justification
+              <textarea
+                value={commentForm.justification}
+                onChange={(event) => setCommentForm((prev) => ({ ...prev, justification: event.target.value }))}
+                placeholder="Expliquez pourquoi vous êtes pour ou contre, avec une justification claire."
+                minLength={10}
+                maxLength={4000}
+                required
+              />
+            </label>
+
+            <div className="comment-form-actions">
+              <button type="submit" className="primary-button" disabled={submitting}>
+                {submitting ? 'Envoi...' : 'Publier le commentaire'}
+              </button>
+            </div>
+
+            {submitMessage && <p className="comment-submit-message">{submitMessage}</p>}
+          </form>
+
+          {article.comments?.length ? (
+            <ul className="detail-comments">
+              {article.comments.map((comment) => (
+                <li key={comment.id} className={comment.stance === 'FOR' ? 'comment-for' : 'comment-against'}>
+                  <div className="detail-comment-head">
+                    <span className={`stance-pill ${comment.stance === 'FOR' ? 'for-pill' : 'against-pill'}`}>
+                      {comment.stance === 'FOR' ? 'Pour' : 'Contre'}
+                    </span>
+                    <span className="detail-verification-author">{comment.user?.name} · {fmtDate(comment.commentedAt)}</span>
+                  </div>
+                  <p className="detail-comment-content">{comment.content}</p>
+                  <p className="detail-comment-justification"><strong>Justification :</strong> {comment.justification}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="detail-empty">Aucun commentaire pour ce dossier.</p>
+          )}
+        </section>
 
         {article.images?.length > 0 && (
           <section className="detail-section">
