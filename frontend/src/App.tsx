@@ -8,6 +8,7 @@ import EmailVerification from './components/EmailVerification/EmailVerification.
 import CreatePost from './components/CreatePost/CreatePost.tsx';
 import CreateSubPost from './components/CreateSubPost/CreateSubPost.tsx';
 import AdminDashboard from './components/Admin/AdminDashboard.tsx';
+import AdminRoute from './components/AdminRoute.tsx';
 import NewsWatch from './components/Admin/NewsWatch.tsx';
 import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
@@ -25,7 +26,7 @@ function App() {
     () => ({
       token,
       role,
-      isAuthenticated: !!token,
+      isAuthenticated: !!token && role !== null,
       isAdmin: role === 'ADMIN',
       login: (newToken: string, remember = true) => {
         setStoredToken(newToken, remember);
@@ -43,21 +44,21 @@ function App() {
     <AuthContext.Provider value={authValue}>
       <BrowserRouter>
         <Routes>
-          <Route element={<div className='MainContent'><Navbar /><div className='Maincontent'><Outlet /></div></div>}>
-            <Route path="/" element={<PublicNewsWatch />} />
-            <Route path="/veille" element={<Navigate to="/" replace />} />
-            <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<div className='MainContent'><Navbar /><div className='Maincontent'><Outlet /></div></div>}>
+              <Route path="/" element={<PublicNewsWatch />} />
+              <Route path="/veille" element={<Navigate to="/" replace />} />
               <Route path="/verification" element={<Home />} />
               <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/articles/:id" element={<ArticleDetail />} />
               <Route path="/articles/new" element={<CreatePost />} />
               <Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
-            </Route>
-
-            <Route element={<ProtectedRoute />}>
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/validation" element={<AdminDashboard />} />
-              <Route path="/admin/watch" element={<NewsWatch />} />
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/validation" element={<AdminDashboard />} />
+                <Route path="/admin/watch" element={<NewsWatch />} />
+              </Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Route>
 

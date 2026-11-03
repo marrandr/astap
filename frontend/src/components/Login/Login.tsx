@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { ArrowRight, AtSign, Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
 import { api } from '../../lib/api';
-import { getTokenRole, useAuth } from '../../lib/auth';
+import { useAuth } from '../../lib/auth';
 
 function LoginBrand({ mobile = false }: { mobile?: boolean }) {
   return (
@@ -40,9 +40,8 @@ const Login = () => {
 
     try {
       const response = await api.login({ email: email.trim(), password });
-      const nextRole = getTokenRole(response.access_token) ?? 'PERSONAL';
       login(response.access_token, remember);
-      navigate(nextRole === 'ADMIN' ? '/admin' : '/verification');
+      navigate('/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion');
     } finally {

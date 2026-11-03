@@ -35,8 +35,10 @@ export function getTokenRole(token: string | null): 'ADMIN' | 'PERSONAL' | null 
     const normalized = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
     const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
     const decoded = atob(padded);
-    const parsed = JSON.parse(decoded) as { role?: 'ADMIN' | 'PERSONAL' };
-    return parsed.role ?? null;
+    const parsed = JSON.parse(decoded) as { role?: unknown; exp?: unknown };
+    if (typeof parsed.exp !== 'number' || Date.now() >= parsed.exp * 1000) return null;
+    if (parsed.role === 'ADMIN' || parsed.role === 'PERSONAL') return parsed.role;
+    return null;
   } catch {
     return null;
   }
