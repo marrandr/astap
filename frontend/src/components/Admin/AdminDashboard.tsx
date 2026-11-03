@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2, ShieldAlert, XCircle } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { adminApi } from '../../lib/admin-api';
+import { useAuth } from '../../lib/auth';
 import type { AdminPendingUser, AdminUserDetail } from '../../types/admin';
 
 const fmtDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
   const [users, setUsers] = useState<AdminPendingUser[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [user, setUser] = useState<AdminUserDetail | null>(null);
@@ -73,6 +76,28 @@ export default function AdminDashboard() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#f3f6fb', padding: 24 }}>
+      <header style={{ maxWidth: 1200, margin: '0 auto 20px', background: '#fff', borderRadius: 18, boxShadow: '0 10px 30px rgba(15, 23, 42, .08)', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <strong style={{ fontSize: 18 }}>Admin</strong>
+          <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <Link to="/" style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 600 }}>Accueil</Link>
+            <Link to="/admin" style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 600 }}>Dashboard</Link>
+            <Link to="/admin" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 700 }}>Validation</Link>
+          </nav>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            logout();
+            navigate('/auth/login');
+          }}
+          style={{ background: '#0f172a', color: '#fff', border: 'none', borderRadius: 999, padding: '10px 16px', fontWeight: 700, cursor: 'pointer' }}
+        >
+          Déconnexion
+        </button>
+      </header>
+
       <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24 }}>
         <aside style={{ background: '#fff', borderRadius: 18, boxShadow: '0 10px 30px rgba(15, 23, 42, .08)', padding: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>

@@ -11,7 +11,7 @@ export default function SiteNavbar() {
   return <header className="home-navbar">
     <div className="home-container nav-inner">
       <Link to="/" className="home-brand" aria-label="Hamarino.io, accueil"><span className="brand-icon"><ShieldCheck size={23}/></span><span>hamarino<span className="accent">.io</span></span></Link>
-      <nav className="desktop-nav" aria-label="Navigation principale"><Link to="/">Accueil</Link><a href="/#verifications">Vérifications</a><a href="/#a-propos">À propos</a>{isAdmin && <Link to="/admin">Admin</Link>}</nav>
+      <nav className="desktop-nav" aria-label="Navigation principale"><Link to="/">Accueil</Link><a href="/#verifications">Vérifications</a><a href="/#a-propos">À propos</a>{isAdmin && <Link to="/admin">Dashboard admin</Link>}</nav>
       <div className="nav-actions">
         <button
           type="button"
@@ -27,6 +27,6 @@ export default function SiteNavbar() {
       </div>
       <button className="menu-toggle" type="button" aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button>
     </div>
-    {open && <nav className="mobile-nav" aria-label="Navigation mobile"><Link to="/" onClick={() => setOpen(false)}>Accueil</Link><a href="/#verifications" onClick={() => setOpen(false)}>Vérifications</a><a href="/#a-propos" onClick={() => setOpen(false)}>À propos</a>{isAdmin && <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>}</nav>}
+    {open && <nav className="mobile-nav" aria-label="Navigation mobile"><Link to="/" onClick={() => setOpen(false)}>Accueil</Link><a href="/#verifications" onClick={() => setOpen(false)}>Vérifications</a><a href="/#a-propos" onClick={() => setOpen(false)}>À propos</a>{isAdmin && <Link to="/admin" onClick={() => setOpen(false)}>Dashboard admin</Link>}</nav>}
   </header>;
 }

@@ -56,6 +56,7 @@ function App() {
 
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/validation" element={<AdminDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
