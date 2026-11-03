@@ -12,6 +12,7 @@ import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
 import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
+import ProfilePage from './components/Profile/Profile.tsx';
 
 function App() {
   const [token, setToken] = useState<string | null>(() => getStoredToken());
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
+            <Route path="/profile/:id" element={<ProfilePage />} />
             <Route path="/articles/:id" element={<ArticleDetail />} />
             <Route path="/articles/new" element={<CreatePost />} />
             <Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
