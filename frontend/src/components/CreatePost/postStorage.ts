@@ -5,6 +5,8 @@ export type LocalPost = {
   content: string;
   sources: string[];
   media?: File[];
+  parentPostId?: string | null;
+  originalPostId?: string | null;
   // Preserve images saved by the first version of the form.
   image?: File | null;
   createdAt: string;
@@ -55,7 +57,7 @@ export function saveLocalPost(post: LocalPost): Promise<void> {
 
 export function saveLocalPosts(posts: LocalPost[]): Promise<void> {
   return withStore('readwrite', store => {
-    for (const post of posts) store.add(post);
+    for (const post of posts) store.put(post);
   });
 }
 
@@ -78,5 +80,25 @@ export function listLocalPosts(limit = 10): Promise<{ posts: PostSummary[]; tota
 export function getLocalPost(id: string): Promise<LocalPost | undefined> {
   return withStore('readonly', (store, result) => {
     store.get(id).onsuccess = event => result((event.target as IDBRequest<LocalPost | undefined>).result);
+  });
+}
+
+export function getArticle(id: string): Promise<LocalPost | undefined> {
+  return getLocalPost(id);
+}
+
+export function listChildPosts(parentId: string): Promise<LocalPost[]> {
+  return withStore('readonly', (store, result) => {
+    const posts: LocalPost[] = [];
+    store.openCursor().onsuccess = event => {
+      const cursor = (event.target as IDBRequest<IDBCursorWithValue | null>).result;
+      if (cursor) {
+        const post = cursor.value as LocalPost;
+        if (post.parentPostId === parentId) posts.push(post);
+        cursor.continue();
+      } else {
+        result(posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+      }
+    };
   });
 }
