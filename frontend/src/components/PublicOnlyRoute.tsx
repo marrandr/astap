@@ -2,10 +2,10 @@ import { Navigate, Outlet } from 'react-router';
 import { useAuth } from '../lib/auth';
 
 export default function PublicOnlyRoute() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={isAdmin ? '/admin' : '/'} replace />;
   }
 
   return <Outlet />;

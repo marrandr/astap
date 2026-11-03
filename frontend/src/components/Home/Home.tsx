@@ -41,6 +41,8 @@ function StatusBadge({ status }: { status: ArticleVerdict }) {
 }
 
 function ArticleCard({ article }: { article: ArticleSummary }) {
+  const imageSrc = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
+
   return (
     <article className="article-card">
       <div className="article-summary">
@@ -64,8 +66,8 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
       </div>
 
       <div className="article-image">
-        {article.coverImageUrl ? (
-          <img src={article.coverImageUrl} alt={`Illustration de ${article.title}`} loading="lazy" />
+        {imageSrc ? (
+          <img src={imageSrc} alt={`Illustration de ${article.title}`} loading="lazy" />
         ) : (
           <div className="article-image-placeholder">Dossier</div>
         )}

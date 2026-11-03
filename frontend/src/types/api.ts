@@ -31,6 +31,7 @@ export interface ArticleSummary {
   relationType: 'SUPPORTS' | 'CONTRADICTS' | null;
   author: { id: number; name: string };
   topic: { id: number; label: string };
+  images?: Array<{ id: number; fileUrl: string }>;
   _count: {
     verifications: number;
     evidences: number;

@@ -5,7 +5,7 @@ import { ArrowRight, AtSign, Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
 import googleLogo from './Google.svg';
 import { api } from '../../lib/api';
-import { useAuth } from '../../lib/auth';
+import { getTokenRole, useAuth } from '../../lib/auth';
 
 function LoginBrand({ mobile = false }: { mobile?: boolean }) {
   return (
@@ -41,8 +41,9 @@ const Login = () => {
 
     try {
       const response = await api.login({ email: email.trim(), password });
+      const nextRole = getTokenRole(response.access_token) ?? 'PERSONAL';
       login(response.access_token, remember);
-      navigate('/');
+      navigate(nextRole === 'ADMIN' ? '/admin' : '/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion');
     } finally {

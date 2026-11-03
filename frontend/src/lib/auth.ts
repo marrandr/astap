@@ -6,12 +6,40 @@ const REMEMBER_DURATION = 30 * 24 * 60 * 60 * 1000;
 const AUTH_PENDING_EMAIL_KEY = 'astap_pending_email';
 
 export function getStoredToken(): string | null {
-  const expiresAt = localStorage.getItem(AUTH_EXPIRY_KEY);
-  if (expiresAt && (!Number.isFinite(Number(expiresAt)) || Date.now() >= Number(expiresAt))) {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(AUTH_EXPIRY_KEY);
+  const localToken = localStorage.getItem(AUTH_TOKEN_KEY);
+  if (localToken) {
+    const expiresAt = localStorage.getItem(AUTH_EXPIRY_KEY);
+    if (expiresAt && (!Number.isFinite(Number(expiresAt)) || Date.now() >= Number(expiresAt))) {
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+      localStorage.removeItem(AUTH_EXPIRY_KEY);
+      return sessionStorage.getItem(AUTH_TOKEN_KEY);
+    }
+    return localToken;
   }
-  return sessionStorage.getItem(AUTH_TOKEN_KEY) ?? localStorage.getItem(AUTH_TOKEN_KEY);
+
+  const sessionToken = sessionStorage.getItem(AUTH_TOKEN_KEY);
+  if (sessionToken) {
+    return sessionToken;
+  }
+
+  return null;
+}
+
+export function getTokenRole(token: string | null): 'ADMIN' | 'PERSONAL' | null {
+  if (!token) return null;
+
+  try {
+    const payloadPart = token.split('.')[1];
+    if (!payloadPart) return null;
+
+    const normalized = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
+    const decoded = atob(padded);
+    const parsed = JSON.parse(decoded) as { role?: 'ADMIN' | 'PERSONAL' };
+    return parsed.role ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export function setStoredToken(token: string, remember = true) {
@@ -44,7 +72,9 @@ export function clearPendingEmail() {
 
 interface AuthContextValue {
   token: string | null;
+  role: 'ADMIN' | 'PERSONAL' | null;
   isAuthenticated: boolean;
+  isAdmin: boolean;
   login: (token: string, remember?: boolean) => void;
   logout: () => void;
 }
@@ -59,4 +89,8 @@ export function useAuth() {
   }
 
   return context;
+}
+
+export function getStoredUserRole(): 'ADMIN' | 'PERSONAL' | null {
+  return getTokenRole(getStoredToken());
 }

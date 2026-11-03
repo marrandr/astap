@@ -65,6 +65,8 @@ export default function ArticleDetail() {
 
   const verdict = verdictLabel(article.status);
 
+  const detailCover = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
+
   return (
     <div className="Home ArticleDetail">
       <SiteNavbar/>
@@ -84,8 +86,8 @@ export default function ArticleDetail() {
           </div>
         </header>
 
-        {article.coverImageUrl && (
-          <div className="detail-cover"><img src={article.coverImageUrl} alt={`Illustration : ${article.title}`}/></div>
+        {detailCover && (
+          <div className="detail-cover"><img src={detailCover} alt={`Illustration : ${article.title}`}/></div>
         )}
 
         <article className="detail-content">

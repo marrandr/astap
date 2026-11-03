@@ -7,15 +7,22 @@ import Signup from './components/Signup/Signup.tsx';
 import EmailVerification from './components/EmailVerification/EmailVerification.tsx';
 import CreatePost from './components/CreatePost/CreatePost.tsx';
 import CreateSubPost from './components/CreateSubPost/CreateSubPost.tsx';
-import { AuthContext, getStoredToken, setStoredToken, clearStoredToken } from './lib/auth';
+import AdminDashboard from './components/Admin/AdminDashboard.tsx';
+import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
+import AdminRoute from './components/AdminRoute';
+import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
 
 function App() {
-  const [token, setToken] = useState<string | null>(getStoredToken);
+  const [token, setToken] = useState<string | null>(() => getStoredToken());
+  const role = useMemo(() => getTokenRole(token), [token]);
 
   const authValue = useMemo(
     () => ({
       token,
+      role,
       isAuthenticated: !!token,
+      isAdmin: role === 'ADMIN',
       login: (newToken: string, remember = true) => {
         setStoredToken(newToken, remember);
         setToken(newToken);
@@ -25,25 +32,35 @@ function App() {
         setToken(null);
       },
     }),
-    [token],
+    [token, role],
   );
 
   return (
     <AuthContext.Provider value={authValue}>
-    <BrowserRouter>
-		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/articles/new" element={<CreatePost />} />
-			<Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
-			<Route path='auth'>
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Signup />} />
-				<Route path="verify-email" element={<EmailVerification />} />
-			</Route>
-		</Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Signup />} />
+            <Route path="/auth/verify-email" element={<EmailVerification />} />
+          </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/articles/new" element={<CreatePost />} />
+            <Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
+          </Route>
+
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </AuthContext.Provider>
-  )
+  );
 }
 
 export default App;

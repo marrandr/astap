@@ -66,6 +66,10 @@ export class ArticleService {
       galleryUrls.push(result.secure_url);
     }
 
+    if (!coverImageUrl && galleryUrls.length > 0) {
+      coverImageUrl = galleryUrls[0];
+    }
+
     const article = await this.prisma.article.create({
       data: {
         title: dto.title,
@@ -120,6 +124,10 @@ export class ArticleService {
       throw new NotFoundException('Article introuvable');
     }
 
+    if (!article.coverImageUrl && article.images.length > 0) {
+      article.coverImageUrl = article.images[0].fileUrl;
+    }
+
     return article;
   }
 
@@ -138,6 +146,9 @@ export class ArticleService {
             select: { id: true, name: true },
           },
           topic: true,
+          images: {
+            select: { id: true, fileUrl: true },
+          },
           _count: {
             select: {
               verifications: true,
@@ -150,7 +161,10 @@ export class ArticleService {
     ]);
 
     return {
-      items,
+      items: items.map((article) => ({
+        ...article,
+        coverImageUrl: article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null,
+      })),
       total,
       page,
       limit,
