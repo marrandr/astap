@@ -1,11 +1,11 @@
 import {
-  BadRequestException,
-  ConflictException,
+  ForbiddenException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
-import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import type { AppRequestUser } from '../../common/request-user.js';
 
 @Injectable()
 export class UsersService {
@@ -72,11 +72,21 @@ export class UsersService {
     };
   }
 
-  async getProofUrls(id: number) {
+  /**
+   * Les pièces d'identité ne sont accessibles qu'à leur propriétaire
+   * ou aux administrateurs.
+   */
+  async getProofUrls(requester: AppRequestUser, id: number) {
+    if (requester.role !== 'ADMIN' && requester.sub !== id) {
+      throw new ForbiddenException(
+        'Vous ne pouvez consulter que vos propres pièces d’identité',
+      );
+    }
+
     const user = await this.findById(id);
 
     if (!user) {
-      throw new BadRequestException('Utilisateur introuvable');
+      throw new NotFoundException('Utilisateur introuvable');
     }
 
     return {
@@ -85,11 +95,8 @@ export class UsersService {
       proofBackUrl: user.proofBackUrl,
     };
   }
-  async findByEmail(email:string)
-  {
-    const user = await this.prisma.user.findUnique({where:{email}})
-    if (!user)
-      return null;
-    return user
+
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({ where: { email } });
   }
 }

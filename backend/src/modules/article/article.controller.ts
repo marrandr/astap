@@ -5,31 +5,38 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Req,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../guards/jwt.guard';
+import { ApiBody, ApiConsumes, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../guards/jwt.guard.js';
+import { AccountValidatedGuard } from '../../guards/account-validated.guard.js';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { ListArticlesQueryDto } from './dto/list-articles.dto';
 import { VerifyArticleDto } from './dto/verify-article.dto';
 import { CreateEvidenceDto } from './dto/create-evidence.dto';
+import type { AppRequestUser } from '../../common/request-user.js';
+import type { UploadedFile } from '../../common/uploads.js';
 
 interface UploadedArticleFiles {
-  coverImage?: any[];
-  images?: any[];
+  coverImage?: UploadedFile[];
+  images?: UploadedFile[];
 }
 
 @Controller('article')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccountValidatedGuard)
   @Post()
-  @ApiOperation({ summary: 'Publier un article avec images facultatives' })
+  @ApiOperation({ summary: 'Publier un article avec images facultatives (compte validé requis)' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Article à publier, avec option de fichiers image',
@@ -68,39 +75,43 @@ export class ArticleController {
     ),
   )
   create(
-    @Req() req: any,
+    @Req() req: { user: AppRequestUser },
     @Body() dto: CreateArticleDto,
     @UploadedFiles() files: UploadedArticleFiles,
   ) {
     return this.articleService.createArticle(req.user.sub, dto, files);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.articleService.listArticles();
+  @ApiOperation({ summary: 'Lister les articles (paginé)' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  findAll(@Query() query: ListArticlesQueryDto) {
+    return this.articleService.listArticles(query);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
+  @ApiOperation({ summary: 'Consulter un article avec ses vérifications et preuves' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.articleService.getArticleById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccountValidatedGuard)
   @Post('verify')
-  verify(@Req() req: any, @Body() dto: VerifyArticleDto) {
+  @ApiOperation({ summary: 'Enregistrer une vérification (compte validé requis)' })
+  verify(@Req() req: { user: AppRequestUser }, @Body() dto: VerifyArticleDto) {
     return this.articleService.verifyArticle(req.user.sub, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccountValidatedGuard)
   @Post('evidence')
-  addEvidence(@Req() req: any, @Body() dto: CreateEvidenceDto) {
+  @ApiOperation({ summary: 'Ajouter une preuve (compte validé requis)' })
+  addEvidence(@Req() req: { user: AppRequestUser }, @Body() dto: CreateEvidenceDto) {
     return this.articleService.addEvidence(req.user.sub, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id/verifications')
+  @ApiOperation({ summary: 'Lister les vérifications d’un article' })
   getVerifications(@Param('id', ParseIntPipe) id: number) {
     return this.articleService.getArticleVerifications(id);
   }

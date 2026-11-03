@@ -1,14 +1,21 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { assertAllowedImage, type UploadedFile } from '../../common/uploads.js';
+import type { Verdict, RelationType, EvidenceType } from '../../generated/prisma/enums.js';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { ListArticlesQueryDto } from './dto/list-articles.dto';
 import { VerifyArticleDto } from './dto/verify-article.dto';
 import { CreateEvidenceDto } from './dto/create-evidence.dto';
 
 interface UploadedArticleFiles {
-  coverImage?: any[];
-  images?: any[];
+  coverImage?: UploadedFile[];
+  images?: UploadedFile[];
 }
+
+const authorSelect = {
+  select: { id: true, name: true, email: true },
+} as const;
 
 @Injectable()
 export class ArticleService {
@@ -41,16 +48,21 @@ export class ArticleService {
     const uploadedCover = files?.coverImage?.[0];
     const uploadedImages = files?.images ?? [];
 
+    if (uploadedCover) {
+      assertAllowedImage(uploadedCover);
+    }
+    uploadedImages.forEach(assertAllowedImage);
+
     let coverImageUrl = dto.coverImageUrl ?? null;
     if (uploadedCover) {
-      const result = await this.cloudinary.uploadPrivate(uploadedCover, 'article-covers');
+      const result = await this.cloudinary.uploadPublic(uploadedCover, 'article-covers');
       coverImageUrl = result.secure_url;
     }
 
     const galleryUrls: string[] = [...(dto.images ?? [])];
 
     for (const file of uploadedImages) {
-      const result = await this.cloudinary.uploadPrivate(file, 'article-images');
+      const result = await this.cloudinary.uploadPublic(file, 'article-images');
       galleryUrls.push(result.secure_url);
     }
 
@@ -64,7 +76,7 @@ export class ArticleService {
         authorId: userId,
         topicId: dto.topicId,
         parentArticleId: dto.parentArticleId ?? null,
-        relationType: dto.relationType ? (dto.relationType as any) : null,
+        relationType: dto.relationType ? (dto.relationType as RelationType) : null,
         images: galleryUrls.length > 0
           ? {
               create: galleryUrls.map((url) => ({
@@ -74,9 +86,7 @@ export class ArticleService {
           : undefined,
       },
       include: {
-        author: {
-          select: { id: true, name: true, email: true },
-        },
+        author: authorSelect,
         topic: true,
         images: true,
       },
@@ -92,9 +102,7 @@ export class ArticleService {
     const article = await this.prisma.article.findUnique({
       where: { id },
       include: {
-        author: {
-          select: { id: true, name: true, email: true },
-        },
+        author: authorSelect,
         topic: true,
         verifications: {
           include: {
@@ -115,22 +123,39 @@ export class ArticleService {
     return article;
   }
 
-  async listArticles() {
-    return this.prisma.article.findMany({
-      orderBy: { publishedAt: 'desc' },
-      include: {
-        author: {
-          select: { id: true, name: true },
-        },
-        topic: true,
-        _count: {
-          select: {
-            verifications: true,
-            evidences: true,
+  async listArticles(query: ListArticlesQueryDto) {
+    const { page, limit } = query;
+    const skip = (page - 1) * limit;
+
+    const [total, items] = await this.prisma.$transaction([
+      this.prisma.article.count(),
+      this.prisma.article.findMany({
+        skip,
+        take: limit,
+        orderBy: { publishedAt: 'desc' },
+        include: {
+          author: {
+            select: { id: true, name: true },
+          },
+          topic: true,
+          _count: {
+            select: {
+              verifications: true,
+              evidences: true,
+              comments: true,
+            },
           },
         },
-      },
-    });
+      }),
+    ]);
+
+    return {
+      items,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async verifyArticle(userId: number, dto: VerifyArticleDto) {
@@ -160,7 +185,7 @@ export class ArticleService {
       data: {
         userId,
         articleId: dto.articleId,
-        verdict: dto.verdict as any,
+        verdict: dto.verdict as Verdict,
         justification: dto.justification,
       },
       include: {
@@ -192,7 +217,7 @@ export class ArticleService {
       data: {
         userId,
         articleId: dto.articleId,
-        type: dto.type as any,
+        type: dto.type as EvidenceType,
         url: dto.url ?? null,
         file: dto.file ?? null,
         description: dto.description ?? null,

@@ -5,6 +5,7 @@ import Home from './components/Home/Home.tsx';
 import Login from './components/Login/Login.tsx';
 import Signup from './components/Signup/Signup.tsx';
 import EmailVerification from './components/EmailVerification/EmailVerification';
+import ArticleDetail from './components/ArticleDetail/ArticleDetail';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicOnlyRoute from './components/PublicOnlyRoute';
 import { AuthContext, clearStoredToken, getStoredToken, setStoredToken } from './lib/auth';
@@ -34,6 +35,7 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
+            <Route path="/articles/:id" element={<ArticleDetail />} />
           </Route>
 
           <Route element={<PublicOnlyRoute />}>
