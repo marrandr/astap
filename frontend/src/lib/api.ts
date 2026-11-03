@@ -1,10 +1,19 @@
+import { clearStoredToken, getStoredToken } from './auth';
+import type {
+  PaginatedArticles,
+  ArticleDetail,
+  LoginResponse,
+  RegisterResponse,
+  VerifyEmailResponse,
+} from '../types/api';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
 
 async function request<T>(
   endpoint: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const token = localStorage.getItem('astap_access_token');
+  const token = getStoredToken();
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
@@ -18,8 +27,14 @@ async function request<T>(
   const data = contentType.includes('application/json') ? await response.json() : await response.text();
 
   if (!response.ok) {
+    // Si un token était présent et est rejeté, il est expiré : on déconnecte proprement.
+    if (response.status === 401 && token) {
+      clearStoredToken();
+      window.location.assign('/auth/login');
+    }
+
     const errorMessage = typeof data === 'string' ? data : data?.message || 'Une erreur est survenue';
-    throw new Error(errorMessage);
+    throw new Error(Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage);
   }
 
   return data as T;
@@ -27,7 +42,7 @@ async function request<T>(
 
 export const api = {
   login: (payload: { email: string; password: string }) =>
-    request<{ access_token: string }>('/auth/login', {
+    request<LoginResponse>('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,14 +73,14 @@ export const api = {
       }
     }
 
-    return request<{ access_token: string; message: string }>('/auth/register', {
+    return request<RegisterResponse>('/auth/register', {
       method: 'POST',
       body: formData,
     });
   },
 
   verifyEmail: (payload: { email: string; code: string }) =>
-    request<{ message: string; access_token?: string }>('/auth/verify-email', {
+    request<VerifyEmailResponse>('/auth/verify-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,4 +96,14 @@ export const api = {
       },
       body: JSON.stringify({ email }),
     }),
+
+  listArticles: (params: { page?: number; limit?: number } = {}) => {
+    const search = new URLSearchParams();
+    if (params.page) search.set('page', String(params.page));
+    if (params.limit) search.set('limit', String(params.limit));
+    const qs = search.toString();
+    return request<PaginatedArticles>(`/article${qs ? `?${qs}` : ''}`);
+  },
+
+  getArticle: (id: number) => request<ArticleDetail>(`/article/${id}`),
 };

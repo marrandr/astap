@@ -137,7 +137,7 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      const response = await api.register(
+      await api.register(
         {
           name,
           email,
@@ -151,7 +151,6 @@ const Signup = () => {
 
       setPendingEmail(email);
       navigate('/auth/verify-email');
-      console.log(response);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de l’inscription');
     } finally {

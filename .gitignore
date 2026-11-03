@@ -149,3 +149,11 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Generated Prisma clients (regenerated via `prisma generate`)
+backend/src/generated/
+backend/generated/
+
+# pnpm artefacts (project uses npm)
+pnpm-lock.yaml
+pnpm-workspace.yaml

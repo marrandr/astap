@@ -1,0 +1,118 @@
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  Req,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../../guards/jwt.guard.js';
+import { AccountValidatedGuard } from '../../guards/account-validated.guard.js';
+import { ArticleService } from './article.service';
+import { CreateArticleDto } from './dto/create-article.dto';
+import { ListArticlesQueryDto } from './dto/list-articles.dto';
+import { VerifyArticleDto } from './dto/verify-article.dto';
+import { CreateEvidenceDto } from './dto/create-evidence.dto';
+import type { AppRequestUser } from '../../common/request-user.js';
+import type { UploadedFile } from '../../common/uploads.js';
+
+interface UploadedArticleFiles {
+  coverImage?: UploadedFile[];
+  images?: UploadedFile[];
+}
+
+@Controller('article')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+export class ArticleController {
+  constructor(private readonly articleService: ArticleService) {}
+
+  @UseGuards(AccountValidatedGuard)
+  @Post()
+  @ApiOperation({ summary: 'Publier un article avec images facultatives (compte validé requis)' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Article à publier, avec option de fichiers image',
+    schema: {
+      type: 'object',
+      required: ['title', 'content', 'topicId'],
+      properties: {
+        title: { type: 'string', example: 'Une information très importante' },
+        content: { type: 'string', example: 'Voici le détail de l’information...' },
+        topicId: { type: 'integer', example: 1 },
+        location: { type: 'string', example: 'Paris', nullable: true },
+        eventDate: { type: 'string', format: 'date-time', nullable: true },
+        coverImageUrl: { type: 'string', example: 'https://example.com/cover.jpg', nullable: true },
+        images: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Images de galerie de l’article',
+        },
+        coverImage: {
+          type: 'string',
+          format: 'binary',
+          description: 'Image de couverture de l’article',
+        },
+        parentArticleId: { type: 'integer', nullable: true },
+        relationType: { type: 'string', enum: ['SUPPORTS', 'CONTRADICTS'], nullable: true },
+      },
+    },
+  })
+  @UseInterceptors(
+    FileFieldsInterceptor(
+      [
+        { name: 'coverImage', maxCount: 1 },
+        { name: 'images', maxCount: 10 },
+      ],
+      { limits: { fileSize: 5 * 1024 * 1024 } },
+    ),
+  )
+  create(
+    @Req() req: { user: AppRequestUser },
+    @Body() dto: CreateArticleDto,
+    @UploadedFiles() files: UploadedArticleFiles,
+  ) {
+    return this.articleService.createArticle(req.user.sub, dto, files);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Lister les articles (paginé)' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  findAll(@Query() query: ListArticlesQueryDto) {
+    return this.articleService.listArticles(query);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Consulter un article avec ses vérifications et preuves' })
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.articleService.getArticleById(id);
+  }
+
+  @UseGuards(AccountValidatedGuard)
+  @Post('verify')
+  @ApiOperation({ summary: 'Enregistrer une vérification (compte validé requis)' })
+  verify(@Req() req: { user: AppRequestUser }, @Body() dto: VerifyArticleDto) {
+    return this.articleService.verifyArticle(req.user.sub, dto);
+  }
+
+  @UseGuards(AccountValidatedGuard)
+  @Post('evidence')
+  @ApiOperation({ summary: 'Ajouter une preuve (compte validé requis)' })
+  addEvidence(@Req() req: { user: AppRequestUser }, @Body() dto: CreateEvidenceDto) {
+    return this.articleService.addEvidence(req.user.sub, dto);
+  }
+
+  @Get(':id/verifications')
+  @ApiOperation({ summary: 'Lister les vérifications d’un article' })
+  getVerifications(@Param('id', ParseIntPipe) id: number) {
+    return this.articleService.getArticleVerifications(id);
+  }
+}
