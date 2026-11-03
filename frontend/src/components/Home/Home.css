@@ -81,6 +81,16 @@
   font-weight: 800;
   letter-spacing: -0.9px;
   white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #142d4e;
+  flex-shrink: 0;
+}
+
+.Home .home-brand img {
+  display: block;
+  width: 180px;
+  height: auto;
 }
 
 .Home .brand-icon {

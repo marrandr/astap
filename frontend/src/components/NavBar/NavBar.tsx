@@ -1,7 +1,8 @@
 import './NavBar.css';
 import '../Home/Home.css';
 import { useState } from 'react';
-import { Bell, ShieldCheck, Menu, X } from 'lucide-react';
+import { Bell, Menu, X } from 'lucide-react';
+import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -10,8 +11,7 @@ export default function Navbar() {
     <header className="home-navbar">
       <div className="home-container nav-inner">
         <a href="/" className="home-brand" aria-label="Hamarino.io, accueil">
-          <span className="brand-icon"><ShieldCheck size={23}/></span>
-          <span>hamarino<span className="accent">.io</span></span>
+          <img src={hamarinoLogo} alt="Hamarino.io" width={2048} height={518} />
         </a>
         <nav className="desktop-nav" aria-label="Navigation principale">
           <a href="/" aria-current="page">Accueil</a>
