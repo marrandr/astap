@@ -6,33 +6,50 @@ const IMAGE_ENDPOINT = 'https://api.aiornot.com/v2/image/sync';
 
 @Injectable()
 export class AiornotService {
+  private nextKeyIndex = 0;
+
   constructor(private readonly config: ConfigService) {}
 
   async analyze(file: UploadedFile): Promise<{ aiScore: number; detail: Record<string, unknown> }> {
-    const apiKey =
-      this.config.get<string>('AIORNOT_API_KEY') ?? this.config.get<string>('AI_OR_NOT_API');
-    if (!apiKey) {
+    const apiKeys = this.getApiKeys();
+    if (apiKeys.length === 0) {
       throw new InternalServerErrorException(
-        'La clé AIORNOT_API_KEY ou AI_OR_NOT_API est absente de la configuration',
+        'Configurez AI_OR_NOT_API_KEYS ou AIORNOT_API_KEY',
       );
     }
 
     const form = new FormData();
     form.append('image', new Blob([new Uint8Array(file.buffer)], { type: file.mimetype }), file.originalname);
 
-    let response: Response;
-    try {
-      response = await fetch(IMAGE_ENDPOINT, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${apiKey}` },
-        body: form,
-      });
-    } catch {
-      throw new BadGatewayException("Le service d'analyse d'image est indisponible");
+    const startIndex = this.nextKeyIndex % apiKeys.length;
+    this.nextKeyIndex = (startIndex + 1) % apiKeys.length;
+    let response: Response | undefined;
+
+    for (let attempt = 0; attempt < apiKeys.length; attempt += 1) {
+      const keyIndex = (startIndex + attempt) % apiKeys.length;
+      try {
+        response = await fetch(IMAGE_ENDPOINT, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${apiKeys[keyIndex]}` },
+          body: form,
+        });
+      } catch {
+        throw new BadGatewayException("Le service d'analyse d'image est indisponible");
+      }
+
+      const quotaReached = response.status === 402 || response.status === 429;
+      if (quotaReached) {
+        if (attempt < apiKeys.length - 1) continue;
+        break;
+      }
+      if (!response.ok) {
+        throw new BadGatewayException(`AI or Not a refusé l'analyse (HTTP ${response.status})`);
+      }
+      break;
     }
 
-    if (!response.ok) {
-      throw new BadGatewayException(`AI or Not a refusé l'analyse (HTTP ${response.status})`);
+    if (!response?.ok) {
+      throw new BadGatewayException("Toutes les clés AI or Not ont atteint leur quota");
     }
 
     const payload: unknown = await response.json();
@@ -48,6 +65,18 @@ export class AiornotService {
     }
 
     return { aiScore, detail };
+  }
+
+  private getApiKeys(): string[] {
+    const configuredKeys =
+      this.config.get<string>('AI_OR_NOT_API_KEYS') ?? this.config.get<string>('AIORNOT_API_KEYS');
+    if (configuredKeys) {
+      return configuredKeys.split(/[\n,]/).map((key) => key.trim()).filter(Boolean);
+    }
+
+    const singleKey =
+      this.config.get<string>('AIORNOT_API_KEY') ?? this.config.get<string>('AI_OR_NOT_API');
+    return singleKey?.trim() ? [singleKey.trim()] : [];
   }
 
   private getAiGeneratedConfidence(value: unknown): number | null {
