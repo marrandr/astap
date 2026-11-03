@@ -2,15 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { Readable } from 'stream';
+import type { UploadedFile } from '../../common/uploads.js';
 
-export interface UploadedFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  size: number;
-  buffer: Buffer;
-}
+export type { UploadedFile };
 
 @Injectable()
 export class CloudinaryService {
@@ -23,10 +17,30 @@ export class CloudinaryService {
     });
   }
 
-  uploadPrivate(file: UploadedFile, folder = 'journalist-proofs'): Promise<UploadApiResponse> {
+  /** Documents sensibles (pièces d'identité) : accès sur URL signée uniquement. */
+  uploadPrivate(
+    file: UploadedFile,
+    folder = 'journalist-proofs',
+  ): Promise<UploadApiResponse> {
+    return this.upload(file, folder, 'authenticated');
+  }
+
+  /** Images d'articles, destinées à être affichées publiquement. */
+  uploadPublic(
+    file: UploadedFile,
+    folder = 'article-images',
+  ): Promise<UploadApiResponse> {
+    return this.upload(file, folder, 'upload');
+  }
+
+  private upload(
+    file: UploadedFile,
+    folder: string,
+    type: 'authenticated' | 'upload',
+  ): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder, type: 'authenticated', resource_type: 'image' },
+        { folder, type, resource_type: 'image' },
         (error, result) => (error || !result ? reject(error) : resolve(result)),
       );
       Readable.from(file.buffer).pipe(stream);

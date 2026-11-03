@@ -9,29 +9,18 @@ import {
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
+import { Throttle } from '@nestjs/throttler';
+import { AuthService, type UploadedProofs } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
-
-export interface UploadedFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  size: number;
-  buffer: Buffer;
-}
-
-export interface UploadedProofs {
-  front?: UploadedFile[];
-  back?: UploadedFile[];
-}
+import { ResendVerificationDto } from './dto/resend-verification.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly auth: AuthService) { }
 
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Créer un compte utilisateur avec pièces d’identité' })
@@ -90,13 +79,28 @@ export class AuthController {
   register(@Body() dto: RegisterDto, @UploadedFiles() files: UploadedProofs) {
     return this.auth.register(dto, files);
   }
+
+  @Throttle({ default: { limit: 10, ttl: 60_000 } })
   @Post('login')
-  async login(@Body() dto: LoginDto) {
-    return this.auth.login(dto)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Se connecter avec email et mot de passe' })
+  login(@Body() dto: LoginDto) {
+    return this.auth.login(dto);
   }
+
+  @Throttle({ default: { limit: 10, ttl: 60_000 } })
   @Post('verify-email')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Vérifier l’email avec le code à 6 chiffres' })
   verifyEmail(@Body() dto: VerifyEmailDto) {
     return this.auth.verifyEmail(dto.email, dto.code);
+  }
+
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  @Post('resend-verification')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Renvoyer un code de vérification (cooldown 1 minute)' })
+  resendVerification(@Body() dto: ResendVerificationDto) {
+    return this.auth.resendVerification(dto.email);
   }
 }

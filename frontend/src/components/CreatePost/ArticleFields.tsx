@@ -4,19 +4,15 @@ import { MEDIA_ACCEPT, validateMediaSelection } from './postMedia';
 import { emptySource, type PostDraft } from './postDraft';
 import MediaPreview from './MediaPreview';
 
-const categories = [
-  ['politique', 'Politique'], ['economie', 'Économie'], ['societe', 'Société'],
-  ['sante', 'Santé'], ['education', 'Éducation'], ['technologie', 'Technologie'], ['autre', 'Autre'],
-];
-
 type Props = {
   draft: PostDraft;
   onChange: (update: (current: PostDraft) => PostDraft) => void;
   saving: boolean;
   errors: Record<string, string>;
+  categories?: Array<{ id: number; label: string }>;
 };
 
-export default function ArticleFields({ draft, onChange, saving, errors }: Props) {
+export default function ArticleFields({ draft, onChange, saving, errors, categories = [] }: Props) {
   const { title, category, content, sources, media } = draft;
   const [imageError, setImageError] = useState('');
   const [dragging, setDragging] = useState(false);
@@ -54,7 +50,7 @@ export default function ArticleFields({ draft, onChange, saving, errors }: Props
                 <div className="post-select-wrapper">
                   <select id={`post-category-${draft.id}`} name="category" value={category} onChange={event => setCategory(event.target.value)} required aria-invalid={!!errors.category} aria-describedby={errors.category ? `category-error-${draft.id}` : undefined}>
                     <option value="" disabled>Sélectionnez une catégorie</option>
-                    {categories.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
+                    {categories.map((item) => <option value={item.label} key={item.id}>{item.label}</option>)}
                   </select>
                   <ChevronDown size={17} aria-hidden="true" />
                 </div>

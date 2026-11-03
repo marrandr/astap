@@ -1,7 +1,0 @@
--- CreateEnum
-CREATE TYPE "Status" AS ENUM ('VALIDATE', 'PENDING', 'REFUSED');
-
--- AlterTable
-ALTER TABLE "user" ADD COLUMN     "status" "Status" NOT NULL DEFAULT 'PENDING',
-ADD COLUMN     "verified" BOOLEAN NOT NULL DEFAULT false,
-ALTER COLUMN "role" SET DEFAULT 'PERSONAL';
