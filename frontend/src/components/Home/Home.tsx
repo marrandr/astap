@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { Check, FileCheck2, MessageCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import "./Home.css";
-import { api } from "../../lib/api";
+import { useListArticlesQuery } from "../../store/api";
 import type { ArticleSummary, ArticleVerdict } from "../../types/api";
 
 type SortKey = "recent" | "verifications" | "comments";
@@ -49,6 +49,7 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
   const aiScores = getImageAiScores(article.images);
+  const textAiScore = article.aiAnalyses?.[0]?.aiScore;
   const averageAiScore = aiScores.length
     ? aiScores.reduce((total, score) => total + score, 0) / aiScores.length
     : null;
@@ -87,6 +88,18 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
               <span style={{ width: `${Math.max(0, Math.min(100, averageAiScore * 100))}%` }} />
             </div>
             <small>{aiScores.length} image{aiScores.length > 1 ? 's' : ''} analysée{aiScores.length > 1 ? 's' : ''}</small>
+          </div>
+        )}
+        {textAiScore !== undefined && (
+          <div className="article-ai-score article-text-ai-score">
+            <div className="article-ai-score-heading">
+              <span><Sparkles size={15} /> Confiance du détecteur texte</span>
+              <strong>{Math.round(textAiScore * 100)}%</strong>
+            </div>
+            <div className="article-ai-score-track" aria-label={`Indice IA du texte : ${Math.round(textAiScore * 100)}%`}>
+              <span style={{ width: `${Math.max(0, Math.min(100, textAiScore * 100))}%` }} />
+            </div>
+            <small>{article.aiAnalyses?.[0]?.isAiGenerated ? 'Écriture IA détectée' : 'Écriture IA non détectée'} · ne vérifie pas la véracité des faits.</small>
           </div>
         )}
         <Link className="secondary-button comments-link" to={`/articles/${article.id}`}>
@@ -143,34 +156,10 @@ export default function Home() {
   const [sort, setSort] = useState<SortKey>("recent");
   const [visible, setVisible] = useState(5);
 
-  const [articles, setArticles] = useState<ArticleSummary[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError("");
-
-    api.listArticles({ page: 1, limit: 50 })
-      .then((data) => {
-        if (cancelled) return;
-        setArticles(data.items);
-        setTotal(data.total);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setError(err instanceof Error ? err.message : "Impossible de charger les vérifications");
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { data, isLoading: loading, error: queryError } = useListArticlesQuery({ page: 1, limit: 50 });
+  const articles: ArticleSummary[] = data?.items ?? [];
+  const total = data?.total ?? 0;
+  const error = queryError ? "Impossible de charger les vérifications" : "";
 
   const results = useMemo(() => {
     const normalized = search.trim().toLocaleLowerCase("fr");

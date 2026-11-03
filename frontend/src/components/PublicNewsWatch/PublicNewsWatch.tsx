@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
 import { ExternalLink, Newspaper, RefreshCw } from 'lucide-react';
-import { api } from '../../lib/api';
-import type { NewsWatchItem } from '../../types/api';
+import { useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation } from '../../store/api';
 import '../Home/Home.css';
 import './PublicNewsWatch.css';
 
@@ -10,23 +8,9 @@ const formatDate = (value: string | null) => value
   : 'Date inconnue';
 
 export default function PublicNewsWatch() {
-  const [items, setItems] = useState<NewsWatchItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  const loadItems = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      setItems(await api.getPublicWatchArticles());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Impossible de charger les actualités.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { void loadItems(); }, []);
+  const { data: items = [], isLoading: loading, error: queryError } = useGetPublicWatchArticlesQuery();
+  const [refresh, { isLoading: refreshing, error: refreshError }] = useRefreshPublicWatchMutation();
+  const error = queryError || refreshError ? 'Impossible de rechercher les actualités. Réessayez dans un instant.' : '';
 
   return (
     <main className="news-watch-page">
@@ -37,8 +21,8 @@ export default function PublicNewsWatch() {
             <h1>Veille Madagascar</h1>
             <p>Une sélection d’articles récents pour suivre l’actualité malgache.</p>
           </div>
-          <button type="button" className="news-watch-sync" onClick={() => void loadItems()} disabled={loading}>
-            <RefreshCw size={17} className={loading ? 'news-watch-spin' : ''} /> Actualiser
+          <button type="button" className="news-watch-sync" onClick={() => { void refresh(); }} disabled={loading || refreshing}>
+            <RefreshCw size={17} className={loading || refreshing ? 'news-watch-spin' : ''} /> {refreshing ? 'Recherche…' : 'Actualiser'}
           </button>
         </div>
 

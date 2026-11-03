@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ExternalLink, Newspaper, RefreshCw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
-import { adminApi } from '../../lib/admin-api';
-import type { NewsWatchItem } from '../../types/api';
+import { useListAdminWatchArticlesQuery, useSyncWatchArticlesMutation } from '../../store/api';
 import { useAuth } from '../../lib/auth';
 import './NewsWatch.css';
 
@@ -13,38 +12,19 @@ const formatDate = (value: string | null) => value
 export default function NewsWatch() {
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const [items, setItems] = useState<NewsWatchItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [syncing, setSyncing] = useState(false);
+  const { data: items = [], isLoading: loading } = useListAdminWatchArticlesQuery();
+  const [syncWatch, { isLoading: syncing }] = useSyncWatchArticlesMutation();
   const [error, setError] = useState('');
   const [syncMessage, setSyncMessage] = useState('');
 
-  const loadItems = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      setItems(await adminApi.listWatchArticles());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Impossible de charger la veille.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { void loadItems(); }, []);
-
   const synchronize = async () => {
-    setSyncing(true);
     setError('');
     setSyncMessage('');
     try {
-      const result = await adminApi.syncWatchArticles();
-      setItems(result.items);
+      const result = await syncWatch().unwrap();
       setSyncMessage(`${result.received} résultat(s) reçus, ${result.saved} article(s) synchronisé(s).`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'La synchronisation a échoué.');
-    } finally {
-      setSyncing(false);
     }
   };
 

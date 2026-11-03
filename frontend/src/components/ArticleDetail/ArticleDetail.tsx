@@ -1,10 +1,9 @@
 import './ArticleDetail.css';
 import '../Home/Home.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { ArrowLeft, FileText, Link as LinkIcon, FileCheck2, ShieldCheck, MapPin, CalendarDays, User, MessageSquareText } from 'lucide-react';
-import { api } from '../../lib/api';
-import type { ArticleDetail as ArticleDetailData } from '../../types/api';
+import { useCreateCommentMutation, useGetArticleQuery } from '../../store/api';
 import SiteNavbar from '../SiteNavbar';
 import type { ArticleImage } from '../../types/api';
 
@@ -29,10 +28,11 @@ const imageAiScore = (image: ArticleImage) => image.analyses?.[0]?.aiScore;
 
 export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
-  const [article, setArticle] = useState<ArticleDetailData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const articleId = Number(id);
+  const validId = Number.isInteger(articleId) && articleId > 0;
+  const { data: article, isLoading: loading, error: queryError } = useGetArticleQuery(articleId, { skip: !validId });
+  const [createComment, { isLoading: submitting }] = useCreateCommentMutation();
+  const error = validId ? (queryError ? 'Article introuvable' : '') : 'Identifiant d’article invalide.';
   const [commentForm, setCommentForm] = useState({
     stance: 'FOR' as 'FOR' | 'AGAINST',
     content: '',
@@ -40,49 +40,23 @@ export default function ArticleDetail() {
   });
   const [submitMessage, setSubmitMessage] = useState('');
 
-  // const loadArticle = async (articleId: number) => {
-  //   const data = await api.getArticle(articleId);
-  //   setArticle(data);
-  // };
-
-  useEffect(() => {
-    const articleId = Number(id);
-    if (!Number.isInteger(articleId) || articleId < 1) {
-      setError('Identifiant d’article invalide.');
-      setLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    setLoading(true);
-    api.getArticle(articleId)
-      .then((data) => { if (!cancelled) setArticle(data); })
-      .catch((err) => { if (!cancelled) setError(err instanceof Error ? err.message : 'Article introuvable'); })
-      .finally(() => { if (!cancelled) setLoading(false); });
-
-    return () => { cancelled = true; };
-  }, [id]);
-
   const handleSubmitComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!id) return;
 
-    setSubmitting(true);
     setSubmitMessage('');
 
     try {
-      await api.createComment(Number(id), {
+      await createComment({ articleId: Number(id), payload: {
         stance: commentForm.stance,
         content: commentForm.content.trim(),
         justification: commentForm.justification.trim(),
-      });
+      } }).unwrap();
 
       setCommentForm({ stance: 'FOR', content: '', justification: '' });
       setSubmitMessage('Commentaire ajouté avec succès.');
     } catch (err) {
       setSubmitMessage(err instanceof Error ? err.message : 'Impossible d’ajouter le commentaire.');
-    } finally {
-      setSubmitting(false);
     }
   };
 
@@ -105,6 +79,7 @@ export default function ArticleDetail() {
   const detailCover = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
   const detailCoverImage = article.images?.find((image) => image.fileUrl === detailCover);
   const detailCoverAiScore = detailCoverImage ? imageAiScore(detailCoverImage) : undefined;
+  const textAiScore = article.aiAnalyses?.[0]?.aiScore;
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
 
@@ -236,6 +211,24 @@ export default function ArticleDetail() {
             </div>
           </section>
         )}
+
+        <section className="detail-section">
+          <h2><ShieldCheck size={18}/> Analyse IA du texte</h2>
+          {textAiScore === undefined ? (
+            <p className="detail-empty">Aucun score disponible. L’analyse nécessite au moins 250 caractères et peut être indisponible si le service AI or Not échoue.</p>
+          ) : (
+            <div className="article-ai-score article-text-ai-score">
+              <div className="article-ai-score-heading">
+                <span>Confiance du détecteur texte · {article.aiAnalyses?.[0]?.isAiGenerated ? 'IA détectée' : 'IA non détectée'}</span>
+                <strong>{Math.round(textAiScore * 100)}%</strong>
+              </div>
+              <div className="article-ai-score-track" aria-label={`Probabilité d’écriture IA détectée : ${Math.round(textAiScore * 100)}%`}>
+                <span style={{ width: `${Math.max(0, Math.min(100, textAiScore * 100))}%` }} />
+              </div>
+              <small>Ce résultat ne permet pas de conclure si les informations de l’article sont vraies ou fausses.</small>
+            </div>
+          )}
+        </section>
 
         <section className="detail-section">
           <h2><ShieldCheck size={18}/> Vérifications ({article.verifications?.length ?? 0})</h2>

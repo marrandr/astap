@@ -5,7 +5,7 @@ import { createPostDraft, validatePostDraft } from './postDraft';
 import ArticleFields from './ArticleFields';
 import SavedPosts from './SavedPosts';
 import './CreatePost.css';
-import { api } from '../../lib/api';
+import { useCreateArticleMutation, useListTopicsQuery } from '../../store/api';
 import type { TopicOption } from '../../types/api';
 
 const fallbackTopics: TopicOption[] = [
@@ -21,7 +21,9 @@ const fallbackTopics: TopicOption[] = [
 
 export default function CreatePost() {
   const [articles, setArticles] = useState(() => [createPostDraft()]);
-  const [topics, setTopics] = useState<TopicOption[]>(fallbackTopics);
+  const { data: fetchedTopics } = useListTopicsQuery();
+  const topics = fetchedTopics?.length ? fetchedTopics : fallbackTopics;
+  const [createArticle] = useCreateArticleMutation();
   const [errors, setErrors] = useState<Record<string, Record<string, string>>>({});
   const [savedVersion, setSavedVersion] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
@@ -35,16 +37,6 @@ export default function CreatePost() {
     const previousTitle = document.title;
     document.title = 'Créer une publication — Hamarino.io';
     return () => { document.title = previousTitle; };
-  }, []);
-
-  useEffect(() => {
-    api.listTopics()
-      .then((data) => {
-        if (data?.length) setTopics(data);
-      })
-      .catch(() => {
-        setTopics(fallbackTopics);
-      });
   }, []);
 
   function addArticle() {
@@ -76,16 +68,16 @@ export default function CreatePost() {
           throw new Error('La catégorie sélectionnée est introuvable.');
         }
 
-        await api.createArticle(
-          {
+        await createArticle({
+          payload: {
             title: article.title.trim(),
             content: article.content.trim(),
             topicId: topic.id,
           },
-          {
+          files: {
             images: article.media.map(item => item.file),
           },
-        );
+        }).unwrap();
       }
 
       setArticles([createPostDraft()]);

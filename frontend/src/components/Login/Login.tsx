@@ -3,8 +3,8 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ArrowRight, AtSign, Eye, EyeOff, LockKeyhole } from 'lucide-react';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
-import { api } from '../../lib/api';
 import { useAuth } from '../../lib/auth';
+import { useLoginMutation } from '../../store/api';
 
 function LoginBrand({ mobile = false }: { mobile?: boolean }) {
   return (
@@ -17,13 +17,13 @@ function LoginBrand({ mobile = false }: { mobile?: boolean }) {
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [loginRequest, { isLoading: loading }] = useLoginMutation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -36,16 +36,12 @@ const Login = () => {
     if (loading) return;
     setError('');
     setNotice('');
-    setLoading(true);
-
     try {
-      const response = await api.login({ email: email.trim(), password });
+      const response = await loginRequest({ email: email.trim(), password }).unwrap();
       login(response.access_token, remember);
       navigate('/');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de connexion');
-    } finally {
-      setLoading(false);
     }
   };
 

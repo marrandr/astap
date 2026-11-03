@@ -58,6 +58,15 @@ export class ArticleService {
 
     const filesToAnalyze = [...(uploadedCover ? [uploadedCover] : []), ...uploadedImages];
     const imageAnalyses = await Promise.all(filesToAnalyze.map((file) => this.aiornot.analyze(file)));
+    let textAnalysis: { aiScore: number; isAiGenerated: boolean; detail: Record<string, unknown> } | null = null;
+    const articleText = `${dto.title}\n\n${dto.content}`;
+    if (articleText.length >= 250 && articleText.length <= 500_000) {
+      try {
+        textAnalysis = await this.aiornot.analyzeText(articleText);
+      } catch {
+        // Keep article publishing available when the optional text detector is unavailable.
+      }
+    }
 
     let coverImageUrl = dto.coverImageUrl ?? null;
     if (uploadedCover) {
@@ -101,6 +110,16 @@ export class ArticleService {
         topicId: dto.topicId,
         parentArticleId: dto.parentArticleId ?? null,
         relationType: dto.relationType ? (dto.relationType as RelationType) : null,
+        aiAnalyses: textAnalysis
+          ? {
+              create: {
+                aiScore: textAnalysis.aiScore,
+                isAiGenerated: textAnalysis.isAiGenerated,
+                modelUsed: 'aiornot-text-v2',
+                detail: textAnalysis.detail as object,
+              },
+            }
+          : undefined,
         images: imageCreates.length > 0
           ? {
               create: imageCreates.map(({ fileUrl, analysis }) => ({
@@ -122,6 +141,7 @@ export class ArticleService {
         author: authorSelect,
         topic: true,
         images: { include: { analyses: true } },
+        aiAnalyses: true,
       },
     });
 
@@ -194,6 +214,7 @@ export class ArticleService {
         },
         evidences: true,
         images: { include: { analyses: true } },
+        aiAnalyses: true,
         comments: {
           include: {
             user: { select: { id: true, name: true } },
@@ -247,6 +268,7 @@ export class ArticleService {
           },
           topic: true,
           images: { include: { analyses: true } },
+          aiAnalyses: true,
           _count: {
             select: {
               verifications: true,

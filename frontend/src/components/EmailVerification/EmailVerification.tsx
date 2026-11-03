@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle2, RefreshCw } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
-import { api } from '../../lib/api';
 import { clearPendingEmail, getPendingEmail, getStoredToken, useAuth } from '../../lib/auth';
+import { useResendVerificationMutation, useVerifyEmailMutation } from '../../store/api';
 
 function Brand({ mobile = false }: { mobile?: boolean }) {
   return (
@@ -17,11 +17,11 @@ function Brand({ mobile = false }: { mobile?: boolean }) {
 export default function EmailVerification() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [verifyRequest, { isLoading: loading }] = useVerifyEmailMutation();
+  const [resendRequest, { isLoading: resendLoading }] = useResendVerificationMutation();
   const [email, setEmail] = useState<string>('');
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [resendLoading, setResendLoading] = useState(false);
 
   useEffect(() => {
     const pendingEmail = getPendingEmail();
@@ -53,10 +53,8 @@ export default function EmailVerification() {
       return;
     }
 
-    setLoading(true);
-
     try {
-      const response = await api.verifyEmail({ email, code });
+      const response = await verifyRequest({ email, code }).unwrap();
       if (response.access_token) {
         login(response.access_token);
       }
@@ -64,22 +62,17 @@ export default function EmailVerification() {
       navigate('/', { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Code invalide');
-    } finally {
-      setLoading(false);
     }
   };
 
   const handleResend = async () => {
     if (!email) return;
-    setResendLoading(true);
     setError('');
 
     try {
-      await api.resendVerification(email);
+      await resendRequest(email).unwrap();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Impossible de renvoyer le code');
-    } finally {
-      setResendLoading(false);
     }
   };
 

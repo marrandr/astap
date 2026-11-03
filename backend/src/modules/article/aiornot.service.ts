@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import type { UploadedFile } from '../../common/uploads.js';
 
 const IMAGE_ENDPOINT = 'https://api.aiornot.com/v2/image/sync';
+const TEXT_ENDPOINT = 'https://api.aiornot.com/v2/text/sync';
 
 @Injectable()
 export class AiornotService {
@@ -65,6 +66,76 @@ export class AiornotService {
     }
 
     return { aiScore, detail };
+  }
+
+  async analyzeText(text: string): Promise<{ aiScore: number; isAiGenerated: boolean; detail: Record<string, unknown> }> {
+    if (text.length < 250) {
+      throw new BadGatewayException('Le texte doit contenir au moins 250 caractères pour être analysé');
+    }
+    if (text.length > 500_000) {
+      throw new BadGatewayException('Le texte dépasse la limite de 500 000 caractères de AI or Not');
+    }
+
+    const apiKeys = this.getApiKeys();
+    if (apiKeys.length === 0) {
+      throw new InternalServerErrorException('Configurez AI_OR_NOT_API_KEYS ou AIORNOT_API_KEY');
+    }
+
+    const startIndex = this.nextKeyIndex % apiKeys.length;
+    this.nextKeyIndex = (startIndex + 1) % apiKeys.length;
+    let response: Response | undefined;
+
+    for (let attempt = 0; attempt < apiKeys.length; attempt += 1) {
+      const keyIndex = (startIndex + attempt) % apiKeys.length;
+      try {
+        response = await fetch(TEXT_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKeys[keyIndex]}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({ text }),
+        });
+      } catch {
+        throw new BadGatewayException("Le service d'analyse de texte est indisponible");
+      }
+
+      if (response.status === 402 || response.status === 429) {
+        if (attempt < apiKeys.length - 1) continue;
+        break;
+      }
+      if (!response.ok) {
+        throw new BadGatewayException(`AI or Not a refusé l'analyse du texte (HTTP ${response.status})`);
+      }
+      break;
+    }
+
+    if (!response?.ok) {
+      throw new BadGatewayException("Toutes les clés AI or Not ont atteint leur quota");
+    }
+
+    const payload: unknown = await response.json();
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+      throw new BadGatewayException("Réponse invalide du service d'analyse de texte");
+    }
+    const detail = payload as Record<string, unknown>;
+    const report = detail.report;
+    const aiText = report && typeof report === 'object' && !Array.isArray(report)
+      ? (report as Record<string, unknown>).ai_text
+      : null;
+    const aiScore = aiText && typeof aiText === 'object' && !Array.isArray(aiText)
+      ? (aiText as Record<string, unknown>).confidence
+      : null;
+    const isAiGenerated = aiText && typeof aiText === 'object' && !Array.isArray(aiText)
+      ? (aiText as Record<string, unknown>).is_detected
+      : null;
+    if (typeof aiScore !== 'number' || !Number.isFinite(aiScore) || aiScore < 0 || aiScore > 1) {
+      throw new BadGatewayException("Le rapport AI or Not ne contient pas de score texte exploitable");
+    }
+    if (typeof isAiGenerated !== 'boolean') {
+      throw new BadGatewayException("Le rapport AI or Not ne contient pas de verdict texte exploitable");
+    }
+    return { aiScore, isAiGenerated, detail };
   }
 
   private getApiKeys(): string[] {

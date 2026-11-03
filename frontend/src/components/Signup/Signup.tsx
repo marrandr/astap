@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { ArrowRight, AtSign, CreditCard, Eye, EyeOff, FileText, LockKeyhole, UserRound, X } from 'lucide-react';
 import hamarinoLogo from '../../assets/hamarino-io-logo-2048x518.png';
 import googleLogo from '../Login/Google.svg';
-import { api } from '../../lib/api';
+import { useRegisterMutation } from '../../store/api';
 import { setPendingEmail } from '../../lib/auth';
 import { validatePressCard } from './signupFiles';
 
@@ -50,6 +50,7 @@ function PressCardUpload({ side, file, disabled, onChange, onError }: {
 }
 
 export default function Signup() {
+  const [registerRequest, { isLoading: loading }] = useRegisterMutation();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -59,7 +60,6 @@ export default function Signup() {
   const [files, setFiles] = useState<{ front: File | null; back: File | null }>({ front: null, back: null });
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [loading, setLoading] = useState(false);
   const strength = password.length < 8 ? 1 : 1 + Number(/[a-z]/.test(password) && /[A-Z]/.test(password)) + Number(/\d/.test(password)) + Number(/[^a-zA-Z0-9]/.test(password));
   const strengthLabel = !password ? 'Au moins 8 caractères' : password.length < 8 ? 'Trop court · au moins 8 caractères' : ['Faible', 'Faible', 'Moyen', 'Bon', 'Fort'][strength];
 
@@ -77,14 +77,13 @@ export default function Signup() {
       setError('Renseignez tous les champs, un mot de passe de 8 caractères minimum et acceptez les conditions.'); return;
     }
     if (!files.front || !files.back) { setError('Importez le recto et le verso de votre carte de presse.'); return; }
-    setLoading(true);
     try {
-      await api.register({ name: name.trim(), email: email.trim(), password }, { front: files.front, back: files.back });
+      await registerRequest({ payload: { name: name.trim(), email: email.trim(), password }, files: { front: files.front, back: files.back } }).unwrap();
       setPendingEmail(email.trim());
       navigate('/auth/verify-email');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de l’inscription');
-    } finally { setLoading(false); }
+    }
   }
 
   return <main className='signup-page'>

@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router';
-import { useMemo, useState } from 'react';
 import Home from './components/Home/Home.tsx';
 import Login from './components/Login/Login.tsx';
 import Signup from './components/Signup/Signup.tsx';
@@ -12,36 +11,13 @@ import AdminRoute from './components/AdminRoute.tsx';
 import NewsWatch from './components/Admin/NewsWatch.tsx';
 import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
-import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
 import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
 import ProfilePage from './components/Profile/Profile.tsx';
 import PublicNewsWatch from './components/PublicNewsWatch/PublicNewsWatch.tsx';
 import Navbar from './components/SiteNavbar.tsx';
 
 function App() {
-  const [token, setToken] = useState<string | null>(() => getStoredToken());
-  const role = useMemo(() => getTokenRole(token), [token]);
-
-  const authValue = useMemo(
-    () => ({
-      token,
-      role,
-      isAuthenticated: !!token && role !== null,
-      isAdmin: role === 'ADMIN',
-      login: (newToken: string, remember = true) => {
-        setStoredToken(newToken, remember);
-        setToken(newToken);
-      },
-      logout: () => {
-        clearStoredToken();
-        setToken(null);
-      },
-    }),
-    [token, role],
-  );
-
   return (
-    <AuthContext.Provider value={authValue}>
       <BrowserRouter>
         <Routes>
           <Route element={<ProtectedRoute />}>
@@ -69,7 +45,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthContext.Provider>
   );
 }
 

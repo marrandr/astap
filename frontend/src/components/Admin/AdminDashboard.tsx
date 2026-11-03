@@ -1,74 +1,30 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2, ShieldAlert, XCircle } from 'lucide-react';
 import { Link } from 'react-router';
-import { adminApi } from '../../lib/admin-api';
-import type { AdminPendingUser, AdminUserDetail } from '../../types/admin';
+import { useGetAdminUserQuery, useListPendingUsersQuery, useValidateUserMutation } from '../../store/api';
 import './AdminDashboard.css';
 
 const fmtDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 
 export default function AdminDashboard() {
-  const [users, setUsers] = useState<AdminPendingUser[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [user, setUser] = useState<AdminUserDetail | null>(null);
-  const [loadingList, setLoadingList] = useState(true);
-  const [loadingUser, setLoadingUser] = useState(false);
   const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
-
-  const loadUsers = async () => {
-    setLoadingList(true);
-    setError('');
-    try {
-      const data = await adminApi.listPendingUsers();
-      setUsers(data);
-      if (data.length && !selectedId) setSelectedId(data[0].id);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Impossible de charger les comptes à valider');
-    } finally {
-      setLoadingList(false);
-    }
-  };
+  const { data: users = [], isLoading: loadingList, refetch: loadUsers } = useListPendingUsersQuery();
+  const { data: user, isLoading: loadingUser } = useGetAdminUserQuery(selectedId ?? 0, { skip: !selectedId });
+  const [validateUser, { isLoading: saving }] = useValidateUserMutation();
 
   useEffect(() => {
-    void loadUsers();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedId) {
-      setUser(null);
-      return;
-    }
-
-    let active = true;
-    setLoadingUser(true);
-    adminApi.getUser(selectedId)
-      .then((data) => {
-        if (active) setUser(data);
-      })
-      .catch((err) => {
-        if (active) setError(err instanceof Error ? err.message : 'Impossible de charger le profil');
-      })
-      .finally(() => {
-        if (active) setLoadingUser(false);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [selectedId]);
+    if (users.length && (!selectedId || !users.some(item => item.id === selectedId))) setSelectedId(users[0].id);
+  }, [selectedId, users]);
 
   const applyDecision = async (status: 'VALIDATE' | 'REFUSED') => {
     if (!selectedId) return;
-    setSaving(true);
     setError('');
     try {
-      await adminApi.validateUser({ id_user: selectedId, status });
+      await validateUser({ id_user: selectedId, status }).unwrap();
       await loadUsers();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Impossible de mettre à jour le statut');
-    } finally {
-      setSaving(false);
     }
   };
 

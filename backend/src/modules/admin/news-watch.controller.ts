@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { NewsWatchService } from './news-watch.service.js';
 
@@ -10,5 +10,11 @@ export class NewsWatchController {
   @ApiOperation({ summary: 'Consulter les dernières actualités de la veille Madagascar' })
   listLatest() {
     return this.newsWatch.listPublicLatest();
+  }
+
+  @Post('refresh')
+  @ApiOperation({ summary: 'Relancer immédiatement la recherche des actualités Madagascar' })
+  refreshLatest() {
+    return this.newsWatch.syncLatest();
   }
 }
