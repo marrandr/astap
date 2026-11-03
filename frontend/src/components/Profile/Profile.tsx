@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router';
 import { Award, BookOpenText, Camera, CheckCircle2, MapPin, ShieldCheck } from 'lucide-react';
 import './Profile.css';
-import NavBar from '../NavBar/NavBar';
 
 type ProfileData = {
   id: string;
@@ -80,8 +79,6 @@ export default function ProfilePage() {
 
   return (
     <div className="Profile">
-      <NavBar />
-
       <main className="profile-page">
         <div className="profile-shell">
           <section className="profile-hero">

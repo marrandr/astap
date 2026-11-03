@@ -7,7 +7,6 @@ import SavedPosts from './SavedPosts';
 import './CreatePost.css';
 import { api } from '../../lib/api';
 import type { TopicOption } from '../../types/api';
-import Navbar from '../NavBar/NavBar';
 
 const fallbackTopics: TopicOption[] = [
   { id: 1, label: 'Politique' },
@@ -103,7 +102,6 @@ export default function CreatePost() {
 
   return (
     <main className="create-post-page">
-      <Navbar />
       <div className="create-post-container">
         <section className="create-post-card" aria-labelledby="create-post-title">
           <header className="create-post-header">

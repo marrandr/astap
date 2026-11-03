@@ -1,0 +1,14 @@
+.MainContent {
+    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin: 0 auto;
+}
+
+.Maincontent {
+    flex-grow: 1;
+}

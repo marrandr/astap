@@ -4,7 +4,6 @@ import { api } from '../../lib/api';
 import type { NewsWatchItem } from '../../types/api';
 import '../Home/Home.css';
 import './PublicNewsWatch.css';
-import NavBar from '../NavBar/NavBar';
 
 const formatDate = (value: string | null) => value
   ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value))
@@ -31,8 +30,6 @@ export default function PublicNewsWatch() {
 
   return (
     <main className="news-watch-page">
-      <NavBar />
-
       <section className="news-watch-content">
         <div className="news-watch-title-row">
           <div>
