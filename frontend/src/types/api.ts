@@ -65,3 +65,10 @@ export interface ArticleDetail extends Omit<ArticleSummary, '_count'> {
   }>;
   images: Array<{ id: number; fileUrl: string }>;
 }
+
+export interface TopicOption {
+  id: number;
+  label: string;
+}
+
+export interface TopicListResponse extends Array<TopicOption> {}

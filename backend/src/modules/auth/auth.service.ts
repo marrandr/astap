@@ -212,8 +212,6 @@ export class AuthService {
         emailCodeSentAt: true,
       },
     });
-
-    // Réponse identique que l'utilisateur existe ou non (anti-énumération)
     const genericMessage =
       "Si un compte non vérifié correspond à cette adresse, un nouveau code vient d'être envoyé.";
 

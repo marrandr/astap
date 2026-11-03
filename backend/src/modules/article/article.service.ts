@@ -239,4 +239,29 @@ export class ArticleService {
       orderBy: { verifiedAt: 'desc' },
     });
   }
+
+  async getTopics() {
+    const topics = await this.prisma.topic.findMany({
+      orderBy: { label: 'asc' },
+      select: { id: true, label: true },
+    });
+
+    if (topics.length > 0) {
+      return topics;
+    }
+
+    const defaults = ['Politique', 'Économie', 'Société', 'Santé', 'Éducation', 'Technologie', 'Environnement', 'Autre'];
+    for (const label of defaults) {
+      await this.prisma.topic.upsert({
+        where: { label },
+        update: {},
+        create: { label },
+      });
+    }
+
+    return this.prisma.topic.findMany({
+      orderBy: { label: 'asc' },
+      select: { id: true, label: true },
+    });
+  }
 }

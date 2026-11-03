@@ -90,6 +90,12 @@ export class ArticleController {
     return this.articleService.listArticles(query);
   }
 
+  @Get('topics')
+  @ApiOperation({ summary: 'Lister les sujets disponibles pour les articles' })
+  getTopics() {
+    return this.articleService.getTopics();
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Consulter un article avec ses vérifications et preuves' })
   findOne(@Param('id', ParseIntPipe) id: number) {

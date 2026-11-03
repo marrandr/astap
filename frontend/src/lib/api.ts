@@ -5,6 +5,7 @@ import type {
   LoginResponse,
   RegisterResponse,
   VerifyEmailResponse,
+  TopicOption,
 } from '../types/api';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
@@ -27,7 +28,6 @@ async function request<T>(
   const data = contentType.includes('application/json') ? await response.json() : await response.text();
 
   if (!response.ok) {
-    // Si un token était présent et est rejeté, il est expiré : on déconnecte proprement.
     if (response.status === 401 && token) {
       clearStoredToken();
       window.location.assign('/auth/login');
@@ -96,6 +96,41 @@ export const api = {
       },
       body: JSON.stringify({ email }),
     }),
+
+  listTopics: () => request<TopicOption[]>('/article/topics'),
+
+  createArticle: (payload: {
+    title: string;
+    content: string;
+    topicId: number;
+    location?: string | null;
+    eventDate?: string | null;
+    coverImageUrl?: string | null;
+    parentArticleId?: number | null;
+    relationType?: 'SUPPORTS' | 'CONTRADICTS' | null;
+  }, files?: { coverImage?: File; images?: File[] }) => {
+    const formData = new FormData();
+
+    formData.append('title', payload.title);
+    formData.append('content', payload.content);
+    formData.append('topicId', String(payload.topicId));
+
+    if (payload.location) formData.append('location', payload.location);
+    if (payload.eventDate) formData.append('eventDate', payload.eventDate);
+    if (payload.coverImageUrl) formData.append('coverImageUrl', payload.coverImageUrl);
+    if (payload.parentArticleId) formData.append('parentArticleId', String(payload.parentArticleId));
+    if (payload.relationType) formData.append('relationType', payload.relationType);
+
+    if (files?.coverImage) formData.append('coverImage', files.coverImage);
+    if (files?.images?.length) {
+      files.images.forEach((file) => formData.append('images', file));
+    }
+
+    return request<{ message: string; article: unknown }>('/article', {
+      method: 'POST',
+      body: formData,
+    });
+  },
 
   listArticles: (params: { page?: number; limit?: number } = {}) => {
     const search = new URLSearchParams();

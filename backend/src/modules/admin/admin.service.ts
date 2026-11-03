@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { ValidateUserDto } from './dto/validateUser.dto';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 const adminSelect = {
   id: true,
@@ -31,7 +32,10 @@ const validateSelect = {
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly cloudinary: CloudinaryService,
+  ) {}
 
   async createAdmin(dto: CreateAdminDto) {
     const existingUser = await this.prisma.user.findUnique({
@@ -62,6 +66,67 @@ export class AdminService {
     return {
       message: 'Compte administrateur créé avec succès',
       admin,
+    };
+  }
+
+  async listPendingUsers() {
+    return this.prisma.user.findMany({
+      where: {
+        status: 'PENDING',
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        status: true,
+        verified: true,
+        registeredAt: true,
+        media: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: { registeredAt: 'asc' },
+    });
+  }
+
+  async getUserForReview(id: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        status: true,
+        verified: true,
+        reputation: true,
+        registeredAt: true,
+        proofFrontUrl: true,
+        proofBackUrl: true,
+        media: {
+          select: {
+            id: true,
+            name: true,
+            mediaType: true,
+            city: true,
+            website: true,
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException('Utilisateur introuvable');
+    }
+
+    return {
+      ...user,
+      proofFrontUrl: user.proofFrontUrl ? this.cloudinary.getSignedUrl(user.proofFrontUrl) : null,
+      proofBackUrl: user.proofBackUrl ? this.cloudinary.getSignedUrl(user.proofBackUrl) : null,
     };
   }
 

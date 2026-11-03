@@ -7,6 +7,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+RUN rm -rf ./src/generated/prisma
 RUN npx prisma generate
 RUN npm run build
 
@@ -20,6 +21,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 
 COPY prisma ./prisma
+RUN rm -rf ./src/generated/prisma
 RUN npx prisma generate
 
 COPY --from=build /app/dist ./dist
