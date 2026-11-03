@@ -42,6 +42,8 @@ function StatusBadge({ status }: { status: ArticleVerdict }) {
 
 function ArticleCard({ article }: { article: ArticleSummary }) {
   const imageSrc = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
+  const forCount = article.commentCounts?.for ?? 0;
+  const againstCount = article.commentCounts?.against ?? 0;
 
   return (
     <article className="article-card">
@@ -60,9 +62,16 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           <div className="article-stats">
             <span title="Vérifications"><ShieldCheck size={15} />{fmt(article._count.verifications)}</span>
             <span title="Preuves"><FileCheck2 size={15} />{fmt(article._count.evidences)}</span>
-            <span title="Commentaires"><MessageCircle size={15} />{fmt(article._count.comments)}</span>
+            <span title="Commentaires"><MessageCircle size={15} />{fmt(article.commentsCount ?? article._count.comments)}</span>
           </div>
         </div>
+        <div className="comment-stance-summary" aria-label="Répartition des commentaires">
+          <span className="stance-pill for-pill">Pour {fmt(forCount)}</span>
+          <span className="stance-pill against-pill">Contre {fmt(againstCount)}</span>
+        </div>
+        <Link className="secondary-button comments-link" to={`/articles/${article.id}`}>
+          Voir les commentaires
+        </Link>
       </div>
 
       <div className="article-image">

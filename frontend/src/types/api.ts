@@ -19,6 +19,15 @@ export interface AuthErrorResponse {
 export type ArticleVerdict = 'CONFIRMED' | 'CONTRADICTED' | 'NEW' | 'IN_PROGRESS'
   | 'PARTIALLY_TRUE' | 'MISLEADING' | 'MISSING_CONTEXT';
 
+export interface ArticleComment {
+  id: number;
+  content: string;
+  stance: 'FOR' | 'AGAINST';
+  justification: string;
+  commentedAt: string;
+  user: { id: number; name: string };
+}
+
 export interface ArticleSummary {
   id: number;
   title: string;
@@ -32,6 +41,12 @@ export interface ArticleSummary {
   author: { id: number; name: string };
   topic: { id: number; label: string };
   images?: Array<{ id: number; fileUrl: string }>;
+  comments?: ArticleComment[];
+  commentsCount?: number;
+  commentCounts?: {
+    for: number;
+    against: number;
+  };
   _count: {
     verifications: number;
     evidences: number;
@@ -64,6 +79,12 @@ export interface ArticleDetail extends Omit<ArticleSummary, '_count'> {
     description: string | null;
     addedAt: string;
   }>;
+  comments?: ArticleComment[];
+  commentsCount?: number;
+  commentCounts?: {
+    for: number;
+    against: number;
+  };
   images: Array<{ id: number; fileUrl: string }>;
 }
 

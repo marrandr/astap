@@ -38,6 +38,11 @@ enum RelationType {
   CONTRADICTS
 }
 
+enum CommentStance {
+  FOR
+  AGAINST
+}
+
 enum EvidenceType {
   DIRECT_WITNESS
   DOCUMENT
@@ -175,9 +180,11 @@ model Evidence {
 }
 
 model Comment {
-  id          Int      @id @default(autoincrement()) @map("comment_id")
-  content     String
-  commentedAt DateTime @default(now()) @map("commented_at")
+  id            Int           @id @default(autoincrement()) @map("comment_id")
+  content       String
+  stance        CommentStance
+  justification String
+  commentedAt   DateTime      @default(now()) @map("commented_at")
 
   userId    Int @map("user_id")
   articleId Int @map("article_id")

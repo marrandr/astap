@@ -10,8 +10,8 @@ import CreateSubPost from './components/CreateSubPost/CreateSubPost.tsx';
 import AdminDashboard from './components/Admin/AdminDashboard.tsx';
 import PublicOnlyRoute from './components/PublicOnlyRoute.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
-import AdminRoute from './components/AdminRoute';
 import { AuthContext, getStoredToken, getTokenRole, setStoredToken, clearStoredToken } from './lib/auth';
+import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
 
 function App() {
   const [token, setToken] = useState<string | null>(() => getStoredToken());
@@ -41,6 +41,9 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Home />} />
+            <Route path="/articles/:id" element={<ArticleDetail />} />
+            <Route path="/articles/new" element={<CreatePost />} />
+            <Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
           </Route>
 
           <Route element={<PublicOnlyRoute />}>
@@ -50,11 +53,6 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/articles/new" element={<CreatePost />} />
-            <Route path="/articles/:id/sub-post/new" element={<CreateSubPost />} />
-          </Route>
-
-          <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/validation" element={<AdminDashboard />} />
           </Route>

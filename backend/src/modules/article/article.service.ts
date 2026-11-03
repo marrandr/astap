@@ -7,6 +7,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { ListArticlesQueryDto } from './dto/list-articles.dto';
 import { VerifyArticleDto } from './dto/verify-article.dto';
 import { CreateEvidenceDto } from './dto/create-evidence.dto';
+import { CreateCommentDto, ArticleCommentStance } from './dto/create-comment.dto';
 
 interface UploadedArticleFiles {
   coverImage?: UploadedFile[];
@@ -102,6 +103,54 @@ export class ArticleService {
     };
   }
 
+  async addComment(userId: number, articleId: number, dto: CreateCommentDto) {
+    const article = await this.prisma.article.findUnique({
+      where: { id: articleId },
+      select: { id: true },
+    });
+
+    if (!article) {
+      throw new NotFoundException('Article introuvable');
+    }
+
+    const comment = await this.prisma.comment.create({
+      data: {
+        content: dto.content,
+        stance: dto.stance as ArticleCommentStance,
+        justification: dto.justification,
+        userId,
+        articleId,
+      },
+      include: {
+        user: { select: { id: true, name: true } },
+      },
+    });
+
+    return {
+      message: 'Commentaire ajouté',
+      comment,
+    };
+  }
+
+  async getCommentsByArticle(articleId: number) {
+    const article = await this.prisma.article.findUnique({
+      where: { id: articleId },
+      select: { id: true },
+    });
+
+    if (!article) {
+      throw new NotFoundException('Article introuvable');
+    }
+
+    return this.prisma.comment.findMany({
+      where: { articleId },
+      include: {
+        user: { select: { id: true, name: true } },
+      },
+      orderBy: { commentedAt: 'desc' },
+    });
+  }
+
   async getArticleById(id: number) {
     const article = await this.prisma.article.findUnique({
       where: { id },
@@ -117,6 +166,12 @@ export class ArticleService {
         },
         evidences: true,
         images: true,
+        comments: {
+          include: {
+            user: { select: { id: true, name: true } },
+          },
+          orderBy: { commentedAt: 'desc' },
+        },
       },
     });
 
@@ -128,7 +183,24 @@ export class ArticleService {
       article.coverImageUrl = article.images[0].fileUrl;
     }
 
-    return article;
+    const commentCounts = article.comments.reduce(
+      (acc, comment) => {
+        if (comment.stance === 'FOR') {
+          acc.for += 1;
+        }
+        if (comment.stance === 'AGAINST') {
+          acc.against += 1;
+        }
+        return acc;
+      },
+      { for: 0, against: 0 },
+    );
+
+    return {
+      ...article,
+      commentsCount: article.comments.length,
+      commentCounts,
+    };
   }
 
   async listArticles(query: ListArticlesQueryDto) {
@@ -156,15 +228,34 @@ export class ArticleService {
               comments: true,
             },
           },
+          comments: {
+            include: {
+              user: { select: { id: true, name: true } },
+            },
+            orderBy: { commentedAt: 'desc' },
+          },
         },
       }),
     ]);
 
     return {
-      items: items.map((article) => ({
-        ...article,
-        coverImageUrl: article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null,
-      })),
+      items: items.map((article) => {
+        const commentCounts = article.comments.reduce(
+          (acc, comment) => {
+            if (comment.stance === 'FOR') acc.for += 1;
+            if (comment.stance === 'AGAINST') acc.against += 1;
+            return acc;
+          },
+          { for: 0, against: 0 },
+        );
+
+        return {
+          ...article,
+          coverImageUrl: article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null,
+          commentsCount: article.comments.length,
+          commentCounts,
+        };
+      }),
       total,
       page,
       limit,

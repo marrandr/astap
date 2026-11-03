@@ -1,5 +1,6 @@
 import { clearStoredToken, getStoredToken } from './auth';
 import type {
+  ArticleComment,
   ArticleDetail,
   LoginResponse,
   PaginatedArticles,
@@ -141,4 +142,16 @@ export const api = {
   },
 
   getArticle: (id: number) => request<ArticleDetail>(`/article/${id}`),
+
+  createComment: (articleId: number, payload: {
+    stance: 'FOR' | 'AGAINST';
+    content: string;
+    justification: string;
+  }) => request<{ message: string; comment: ArticleComment }>(`/article/${articleId}/comment`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  }),
 };

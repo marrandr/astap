@@ -20,6 +20,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { ListArticlesQueryDto } from './dto/list-articles.dto';
 import { VerifyArticleDto } from './dto/verify-article.dto';
 import { CreateEvidenceDto } from './dto/create-evidence.dto';
+import { CreateCommentDto } from './dto/create-comment.dto';
 import type { AppRequestUser } from '../../common/request-user.js';
 import type { UploadedFile } from '../../common/uploads.js';
 
@@ -80,6 +81,23 @@ export class ArticleController {
     @UploadedFiles() files: UploadedArticleFiles,
   ) {
     return this.articleService.createArticle(req.user.sub, dto, files);
+  }
+
+  @UseGuards(AccountValidatedGuard)
+  @Post(':id/comment')
+  @ApiOperation({ summary: 'Ajouter un commentaire sur un article avec un avis pour/contre et justification' })
+  addComment(
+    @Req() req: { user: AppRequestUser },
+    @Param('id', ParseIntPipe) articleId: number,
+    @Body() dto: CreateCommentDto,
+  ) {
+    return this.articleService.addComment(req.user.sub, articleId, dto);
+  }
+
+  @Get(':id/comments')
+  @ApiOperation({ summary: 'Lister les commentaires d’un article' })
+  getComments(@Param('id', ParseIntPipe) id: number) {
+    return this.articleService.getCommentsByArticle(id);
   }
 
   @Get()
