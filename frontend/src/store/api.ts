@@ -33,6 +33,9 @@ export const api = createApi({
     createArticle: build.mutation<{ message: string; article: unknown }, { payload: { title: string; content: string; topicId: number; location?: string | null; eventDate?: string | null; coverImageUrl?: string | null; parentArticleId?: number | null; relationType?: 'SUPPORTS' | 'CONTRADICTS' | null }; files?: { coverImage?: File; images?: File[] } }>({
       query: ({ payload, files }) => { const body = new FormData(); Object.entries(payload).forEach(([k,v]) => { if (v !== undefined && v !== null) body.append(k, String(v)); }); if (files?.coverImage) body.append('coverImage', files.coverImage); files?.images?.forEach(f => body.append('images', f)); return { url: '/article', method: 'POST', body }; }, invalidatesTags: ['Articles'],
     }),
+    analyzeImage: build.mutation<{ aiScore: number; detail: Record<string, unknown> }, File>({
+      query: (image) => { const body = new FormData(); body.append('image', image); return { url: '/article/aiornot/test', method: 'POST', body }; },
+    }),
     listArticles: build.query<PaginatedArticles, { page?: number; limit?: number } | void>({ query: (params) => { const search = new URLSearchParams(); if (params?.page) search.set('page', String(params.page)); if (params?.limit) search.set('limit', String(params.limit)); return `/article${search.size ? `?${search}` : ''}`; }, providesTags: ['Articles'] }),
     getArticle: build.query<ArticleDetail, number>({ query: (id) => `/article/${id}`, providesTags: (_r,_e,id) => [{ type: 'Article', id }] }),
     getPublicWatchArticles: build.query<NewsWatchItem[], void>({ query: () => '/watch/articles', providesTags: ['Watch'] }),
@@ -45,4 +48,4 @@ export const api = createApi({
     syncWatchArticles: build.mutation<{ totalResults: number; received: number; saved: number; items: NewsWatchItem[] }, void>({ query: () => ({ url: '/admin/watch/sync', method: 'POST' }), invalidatesTags: ['Watch'] }),
   }),
 });
-export const { useLoginMutation, useGetCurrentUserQuery, useRegisterMutation, useVerifyEmailMutation, useResendVerificationMutation, useListTopicsQuery, useCreateArticleMutation, useListArticlesQuery, useGetArticleQuery, useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation, useCreateCommentMutation, useListPendingUsersQuery, useGetAdminUserQuery, useValidateUserMutation, useListAdminWatchArticlesQuery, useSyncWatchArticlesMutation } = api;
+export const { useLoginMutation, useGetCurrentUserQuery, useRegisterMutation, useVerifyEmailMutation, useResendVerificationMutation, useListTopicsQuery, useCreateArticleMutation, useAnalyzeImageMutation, useListArticlesQuery, useGetArticleQuery, useGetPublicWatchArticlesQuery, useRefreshPublicWatchMutation, useCreateCommentMutation, useListPendingUsersQuery, useGetAdminUserQuery, useValidateUserMutation, useListAdminWatchArticlesQuery, useSyncWatchArticlesMutation } = api;

@@ -107,7 +107,7 @@ export default function ArticleDetail() {
           <div className="detail-cover">
             <img src={detailCover} alt={`Illustration : ${article.title}`}/>
             {detailCoverAiScore !== undefined && (
-              <span className="detail-cover-ai-score">Score IA {Math.round(detailCoverAiScore * 100)}%</span>
+              <span className={`detail-cover-ai-score${detailCoverAiScore > 0.5 ? ' is-high' : ''}`}>Score IA {Math.round(detailCoverAiScore * 100)}%</span>
             )}
           </div>
         )}
@@ -213,7 +213,7 @@ export default function ArticleDetail() {
                     <a href={image.fileUrl} target="_blank" rel="noreferrer">
                       <img src={image.fileUrl} alt="Pièce jointe du dossier" loading="lazy"/>
                     </a>
-                    <figcaption>
+                    <figcaption className={score !== undefined && score > 0.5 ? 'is-high' : undefined}>
                       {score === undefined ? 'Non analysée par IA' : `Score IA : ${Math.round(score * 100)}%`}
                     </figcaption>
                   </figure>

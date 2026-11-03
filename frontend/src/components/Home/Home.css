@@ -487,6 +487,25 @@
   font-size: 10px;
 }
 
+.Home .article-ai-score.is-high {
+  border-color: #fecaca;
+  background: linear-gradient(110deg, #fff1f2, #fff8f8);
+}
+
+.Home .article-ai-score.is-high .article-ai-score-heading,
+.Home .article-ai-score.is-high .article-ai-score-heading strong,
+.Home .article-ai-score.is-high .article-ai-score-heading svg {
+  color: #b42333;
+}
+
+.Home .article-ai-score.is-high .article-ai-score-track {
+  background: #fee2e2;
+}
+
+.Home .article-ai-score.is-high .article-ai-score-track span {
+  background: #dc2626;
+}
+
 .Home .stance-pill {
   display: inline-flex;
   align-items: center;

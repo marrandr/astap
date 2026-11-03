@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute.tsx';
 import ArticleDetail from './components/ArticleDetail/ArticleDetail.tsx';
 import ProfilePage from './components/Profile/Profile.tsx';
 import PublicNewsWatch from './components/PublicNewsWatch/PublicNewsWatch.tsx';
+import ImageVerification from './components/ImageVerification/ImageVerification.tsx';
 import Navbar from './components/SiteNavbar.tsx';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<PublicNewsWatch />} />
               <Route path="/veille" element={<Navigate to="/" replace />} />
               <Route path="/verification" element={<Home />} />
+              <Route path="/verification-resource" element={<ImageVerification />} />
               <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/articles/:id" element={<ArticleDetail />} />
               <Route path="/articles/new" element={<CreatePost />} />

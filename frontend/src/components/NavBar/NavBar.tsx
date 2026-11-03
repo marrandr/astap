@@ -40,6 +40,7 @@ export default function Navbar() {
         <nav className="desktop-nav" aria-label="Navigation principale">
           <NavLink to="/" end style={{fontSize: '14px'}}>Accueil</NavLink>
           <NavLink to="/verification" style={{fontSize: '14px'}}>Vérifications</NavLink>
+          <NavLink to="/verification-resource" style={{fontSize: '14px'}}>Vérifier une image</NavLink>
           <NavLink to="/articles/new" style={{fontSize: '14px'}}>Publier</NavLink>
           {isAdmin && <NavLink to="/admin" style={{fontSize: '14px'}}>Administration</NavLink>}
         </nav>
@@ -84,6 +85,7 @@ export default function Navbar() {
         <nav className="mobile-nav" aria-label="Navigation mobile">
           <NavLink to="/" end onClick={() => setOpen(false)}>Accueil</NavLink>
           <NavLink to="/verification" onClick={() => setOpen(false)}>Vérifications</NavLink>
+          <NavLink to="/verification-resource" onClick={() => setOpen(false)}>Vérifier une image</NavLink>
           <a href="#a-propos" onClick={() => setOpen(false)}>À propos</a>
           <Link to="/profile/me" onClick={() => setOpen(false)}>Mon profil</Link>
           {isAdmin && <NavLink to="/admin" onClick={() => setOpen(false)}>Administration</NavLink>}

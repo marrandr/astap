@@ -79,7 +79,7 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           <span className="stance-pill against-pill">Contredit {fmt(againstCount)}</span>
         </div>
         {averageAiScore !== null && (
-          <div className="article-ai-score">
+          <div className={`article-ai-score${averageAiScore > 0.5 ? ' is-high' : ''}`}>
             <div className="article-ai-score-heading">
               <span><Sparkles size={15} /> Score IA moyen</span>
               <strong>{Math.round(averageAiScore * 100)}%</strong>
