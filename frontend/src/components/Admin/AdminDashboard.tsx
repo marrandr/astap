@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2, ShieldAlert, XCircle } from 'lucide-react';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { adminApi } from '../../lib/admin-api';
-import { useAuth } from '../../lib/auth';
 import type { AdminPendingUser, AdminUserDetail } from '../../types/admin';
 import Navbar from '../SiteNavbar';
 
 const fmtDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 
 export default function AdminDashboard() {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
   const [users, setUsers] = useState<AdminPendingUser[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [user, setUser] = useState<AdminUserDetail | null>(null);
