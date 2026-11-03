@@ -30,11 +30,13 @@ export interface UploadedProofs {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly auth: AuthService) { }
+  constructor(private readonly auth: AuthService) {}
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  @ApiOperation({ summary: 'Créer un compte utilisateur avec pièces d’identité' })
+  @ApiOperation({
+    summary: 'Créer un compte utilisateur avec pièces d’identité',
+  })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Données du compte et les deux photos du document d’identité',
@@ -84,7 +86,7 @@ export class AuthController {
         { name: 'front', maxCount: 1 },
         { name: 'back', maxCount: 1 },
       ],
-      { limits: { fileSize: 5 * 1024 * 1024 } }
+      { limits: { fileSize: 5 * 1024 * 1024 } },
     ),
   )
   register(@Body() dto: RegisterDto, @UploadedFiles() files: UploadedProofs) {
@@ -92,7 +94,7 @@ export class AuthController {
   }
   @Post('login')
   async login(@Body() dto: LoginDto) {
-    return this.auth.login(dto)
+    return this.auth.login(dto);
   }
   @Post('verify-email')
   @HttpCode(HttpStatus.OK)

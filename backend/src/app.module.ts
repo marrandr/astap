@@ -6,6 +6,8 @@ import { AdminModule } from './modules/admin/admin.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { UserModule } from './modules/user/user.module.js';
+import { PostsService } from './modules/posts/posts.service';
+import { PostsController } from './modules/posts/posts.controller';
 
 @Module({
   imports: [
@@ -16,8 +18,8 @@ import { UserModule } from './modules/user/user.module.js';
     AuthModule,
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  controllers: [AppController, PostsController],
+  providers: [AppService, PrismaService, PostsService],
   exports: [PrismaService],
 })
 export class AppModule {}
