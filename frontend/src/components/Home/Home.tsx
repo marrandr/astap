@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowUpRight, Check, FileCheck2, MessageCircle, Search, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Check, FileCheck2, MessageCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import "./Home.css";
 import NavBar from "../NavBar/NavBar";
@@ -40,10 +40,19 @@ function StatusBadge({ status }: { status: ArticleVerdict }) {
   );
 }
 
+function getImageAiScores(images?: ArticleSummary["images"]) {
+  return images?.flatMap((image) => image.analyses?.map((analysis) => analysis.aiScore) ?? [])
+    .filter((score) => Number.isFinite(score)) ?? [];
+}
+
 function ArticleCard({ article }: { article: ArticleSummary }) {
   const imageSrc = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
+  const aiScores = getImageAiScores(article.images);
+  const averageAiScore = aiScores.length
+    ? aiScores.reduce((total, score) => total + score, 0) / aiScores.length
+    : null;
 
   return (
     <article className="article-card">
@@ -69,6 +78,18 @@ function ArticleCard({ article }: { article: ArticleSummary }) {
           <span className="stance-pill for-pill">Pour {fmt(forCount)}</span>
           <span className="stance-pill against-pill">Contre {fmt(againstCount)}</span>
         </div>
+        {averageAiScore !== null && (
+          <div className="article-ai-score">
+            <div className="article-ai-score-heading">
+              <span><Sparkles size={15} /> Score IA moyen</span>
+              <strong>{Math.round(averageAiScore * 100)}%</strong>
+            </div>
+            <div className="article-ai-score-track" aria-label={`Confiance IA moyenne : ${Math.round(averageAiScore * 100)}%`}>
+              <span style={{ width: `${Math.max(0, Math.min(100, averageAiScore * 100))}%` }} />
+            </div>
+            <small>{aiScores.length} image{aiScores.length > 1 ? 's' : ''} analysée{aiScores.length > 1 ? 's' : ''}</small>
+          </div>
+        )}
         <Link className="secondary-button comments-link" to={`/articles/${article.id}`}>
           Voir les commentaires
         </Link>

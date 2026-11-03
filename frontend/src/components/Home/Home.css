@@ -505,6 +505,61 @@
   margin-top: 12px;
 }
 
+.Home .article-ai-score {
+  margin-top: 16px;
+  padding: 13px 14px;
+  border: 1px solid #d8e9e1;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #f3faf6, #f8fbff);
+}
+
+.Home .article-ai-score-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #315448;
+  font-size: 12px;
+}
+
+.Home .article-ai-score-heading span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.Home .article-ai-score-heading svg {
+  color: var(--emerald);
+}
+
+.Home .article-ai-score-heading strong {
+  color: var(--navy);
+  font-size: 17px;
+}
+
+.Home .article-ai-score-track {
+  height: 5px;
+  margin-top: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dce9e3;
+}
+
+.Home .article-ai-score-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #33a879, #15724f);
+}
+
+.Home .article-ai-score small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
 .Home .stance-pill {
   display: inline-flex;
   align-items: center;

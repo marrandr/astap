@@ -28,6 +28,19 @@ export interface ArticleComment {
   user: { id: number; name: string };
 }
 
+export interface ImageAiAnalysis {
+  id: number;
+  aiScore: number;
+  modelUsed: string;
+  analyzedAt: string;
+}
+
+export interface ArticleImage {
+  id: number;
+  fileUrl: string;
+  analyses?: ImageAiAnalysis[];
+}
+
 export interface ArticleSummary {
   id: number;
   title: string;
@@ -40,7 +53,7 @@ export interface ArticleSummary {
   relationType: 'SUPPORTS' | 'CONTRADICTS' | null;
   author: { id: number; name: string };
   topic: { id: number; label: string };
-  images?: Array<{ id: number; fileUrl: string }>;
+  images?: ArticleImage[];
   comments?: ArticleComment[];
   commentsCount?: number;
   commentCounts?: {
@@ -85,7 +98,7 @@ export interface ArticleDetail extends Omit<ArticleSummary, '_count'> {
     for: number;
     against: number;
   };
-  images: Array<{ id: number; fileUrl: string }>;
+  images: ArticleImage[];
 }
 
 export interface TopicOption {

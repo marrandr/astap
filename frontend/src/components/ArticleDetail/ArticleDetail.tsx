@@ -6,6 +6,7 @@ import { ArrowLeft, FileText, Link as LinkIcon, FileCheck2, ShieldCheck, MapPin,
 import { api } from '../../lib/api';
 import type { ArticleDetail as ArticleDetailData } from '../../types/api';
 import SiteNavbar from '../SiteNavbar';
+import type { ArticleImage } from '../../types/api';
 
 const verdictLabel = (status: string) => {
   switch (status) {
@@ -24,6 +25,7 @@ const fmtDate = (iso: string) =>
 
 const verdictFr = (verdict: string) => (verdict === 'CONFIRMED' ? 'Confirmé' : 'Contesté');
 const fmt = (n: number) => new Intl.NumberFormat('fr-FR').format(n);
+const imageAiScore = (image: ArticleImage) => image.analyses?.[0]?.aiScore;
 
 export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
@@ -101,6 +103,8 @@ export default function ArticleDetail() {
 
   const verdict = verdictLabel(article.status);
   const detailCover = article.coverImageUrl ?? article.images?.[0]?.fileUrl ?? null;
+  const detailCoverImage = article.images?.find((image) => image.fileUrl === detailCover);
+  const detailCoverAiScore = detailCoverImage ? imageAiScore(detailCoverImage) : undefined;
   const forCount = article.commentCounts?.for ?? 0;
   const againstCount = article.commentCounts?.against ?? 0;
 
@@ -124,7 +128,12 @@ export default function ArticleDetail() {
         </header>
 
         {detailCover && (
-          <div className="detail-cover"><img src={detailCover} alt={`Illustration : ${article.title}`}/></div>
+          <div className="detail-cover">
+            <img src={detailCover} alt={`Illustration : ${article.title}`}/>
+            {detailCoverAiScore !== undefined && (
+              <span className="detail-cover-ai-score">Score IA {Math.round(detailCoverAiScore * 100)}%</span>
+            )}
+          </div>
         )}
 
         <article className="detail-content">
@@ -211,11 +220,19 @@ export default function ArticleDetail() {
           <section className="detail-section">
             <h2><FileText size={18}/> Images du dossier</h2>
             <div className="detail-gallery">
-              {article.images.map((image) => (
-                <a key={image.id} href={image.fileUrl} target="_blank" rel="noreferrer">
-                  <img src={image.fileUrl} alt="Pièce jointe du dossier" loading="lazy"/>
-                </a>
-              ))}
+              {article.images.map((image) => {
+                const score = imageAiScore(image);
+                return (
+                  <figure className="detail-gallery-item" key={image.id}>
+                    <a href={image.fileUrl} target="_blank" rel="noreferrer">
+                      <img src={image.fileUrl} alt="Pièce jointe du dossier" loading="lazy"/>
+                    </a>
+                    <figcaption>
+                      {score === undefined ? 'Non analysée par IA' : `Score IA : ${Math.round(score * 100)}%`}
+                    </figcaption>
+                  </figure>
+                );
+              })}
             </div>
           </section>
         )}
