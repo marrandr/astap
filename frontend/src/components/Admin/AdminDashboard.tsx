@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { adminApi } from '../../lib/admin-api';
 import { useAuth } from '../../lib/auth';
 import type { AdminPendingUser, AdminUserDetail } from '../../types/admin';
+import Navbar from '../SiteNavbar';
 
 const fmtDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
 
@@ -76,7 +77,7 @@ export default function AdminDashboard() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#f3f6fb', padding: 24 }}>
-      <header style={{ maxWidth: 1200, margin: '0 auto 20px', background: '#fff', borderRadius: 18, boxShadow: '0 10px 30px rgba(15, 23, 42, .08)', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+      {/* <header style={{ maxWidth: 1200, margin: '0 auto 20px', background: '#fff', borderRadius: 18, boxShadow: '0 10px 30px rgba(15, 23, 42, .08)', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
           <strong style={{ fontSize: 18 }}>Admin</strong>
           <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -97,7 +98,8 @@ export default function AdminDashboard() {
         >
           Déconnexion
         </button>
-      </header>
+      </header> */}
+      <Navbar />
 
       <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 24 }}>
         <aside style={{ background: '#fff', borderRadius: 18, boxShadow: '0 10px 30px rgba(15, 23, 42, .08)', padding: 20 }}>

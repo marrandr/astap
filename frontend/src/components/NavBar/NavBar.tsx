@@ -40,7 +40,7 @@ export default function Navbar() {
           <a style={{fontSize: '14px'}} href="/">Accueil</a>
           <a style={{fontSize: '14px'}} href="/verification">Vérifications</a>
           <a style={{fontSize: '14px'}} href="/articles/new">Publier</a>
-          {isAdmin && <a href="/admin">Administration</a>}
+          {isAdmin && <a href="/admin" style={{fontSize: '14px'}}>Administration</a>}
         </nav>
         <div className="nav-actions" ref={menuRef}>
           <button type="button" className="icon-button" aria-label="Notifications">
